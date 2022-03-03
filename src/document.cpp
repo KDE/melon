@@ -14,6 +14,7 @@ SDocument::SDocument(QQuickWindow* displayedIn, QObject* parent) : QObject(paren
 	d->dirNavigator = new KCoreUrlNavigator(QUrl::fromLocalFile("/etc"), this);
 	connect(d->dirNavigator, &KCoreUrlNavigator::currentLocationUrlChanged, this, [this]() {
 		d->dirModel->openUrl(d->dirNavigator->currentLocationUrl());
+		Q_EMIT titleChanged();
 	});
 	d->dirModel->openUrl(d->dirNavigator->currentLocationUrl());
 }
@@ -21,6 +22,11 @@ SDocument::SDocument(QQuickWindow* displayedIn, QObject* parent) : QObject(paren
 SDocument::~SDocument()
 {
 
+}
+
+QString SDocument::title() const
+{
+	return d->dirNavigator->currentLocationUrl().path();
 }
 
 QQuickWindow* SDocument::displayedIn() const

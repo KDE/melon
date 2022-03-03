@@ -17,6 +17,10 @@ public:
 	explicit SDocument(QQuickWindow* window, QObject* parent = nullptr);
 	~SDocument();
 
+	Q_PROPERTY(QString title READ title NOTIFY titleChanged)
+	QString title() const;
+	Q_SIGNAL void titleChanged();
+
 	Q_PROPERTY(QQuickWindow* displayedIn READ displayedIn NOTIFY displayedInChanged)
 	QQuickWindow* displayedIn() const;
 	Q_SIGNAL void displayedInChanged();

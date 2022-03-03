@@ -1,3 +1,6 @@
+#include <KLocalizedContext>
+#include <QQmlContext>
+
 #include "app.h"
 #include "document.h"
 
@@ -6,6 +9,7 @@ SApp::SApp()
 	instance = this;
 
 	engine.reset(new QQmlEngine);
+	engine->rootContext()->setContextObject(new KLocalizedContext(engine.get()));
 	windowComponent.reset(new QQmlComponent(engine.get()));
 
 	QUrl windowQml("qrc:/Window.qml");
