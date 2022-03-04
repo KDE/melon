@@ -4,6 +4,8 @@
 #include <KDirModel>
 #include <KIO/KCoreUrlNavigator>
 
+#include "window.h"
+
 class SDocument : public QObject
 {
 	Q_OBJECT
@@ -14,8 +16,12 @@ class SDocument : public QObject
 	QScopedPointer<Private> d;
 
 public:
-	explicit SDocument(QObject* parent = nullptr);
+	explicit SDocument(SWindow* parent);
 	~SDocument();
+
+	Q_PROPERTY(SWindow* window READ window NOTIFY windowChanged)
+	SWindow* window() const;
+	Q_SIGNAL void windowChanged();
 
 	Q_PROPERTY(QString title READ title NOTIFY titleChanged)
 	QString title() const;
@@ -26,4 +32,6 @@ public:
 
 	Q_PROPERTY(KCoreUrlNavigator* navigator READ navigator CONSTANT)
 	KCoreUrlNavigator* navigator() const;
+
+	Q_INVOKABLE void moveTo(SWindow* window);
 };

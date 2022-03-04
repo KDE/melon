@@ -1,15 +1,16 @@
 #include "window.h"
+#include "document.h"
 
 struct SWindow::Private
 {
 	QQuickWindow* displayedIn;
-	SDocument* containing;
+	QList<SDocument*> containing;
 };
 
-SWindow::SWindow(QQuickWindow* displayedIn, SDocument* containing, QObject* parent) : QObject(parent), d(new Private)
+SWindow::SWindow(QQuickWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
 {
     d->displayedIn = displayedIn;
-    d->containing = containing;
+    newDocument();
 }
 
 SWindow::~SWindow()
@@ -17,7 +18,7 @@ SWindow::~SWindow()
 
 }
 
-SDocument* SWindow::document() const
+QList<SDocument*> SWindow::documents() const
 {
 	return d->containing;
 }
@@ -25,4 +26,30 @@ SDocument* SWindow::document() const
 QQuickWindow* SWindow::displayedIn() const
 {
 	return d->displayedIn;
+}
+
+void SWindow::newDocument()
+{
+    d->containing << new SDocument(this);
+    Q_EMIT documentsChanged();
+}
+
+void SWindow::closeDocument(int idx)
+{
+    auto taken = d->containing.takeAt(idx);
+    Q_EMIT documentsChanged();
+    taken->deleteLater();
+}
+
+void SWindow::transferDocumentTo(SDocument *document, SWindow *window)
+{
+    Q_ASSERT(d->containing.contains(document));
+
+    window->d->containing << document;
+    Q_EMIT window->documentsChanged();
+    d->containing.removeAll(document);
+    if (d->containing.isEmpty()) {
+        d->containing << new SDocument(this);
+    }
+    Q_EMIT documentsChanged();
 }

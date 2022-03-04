@@ -6,8 +6,12 @@
 
 class SWindow;
 
-struct SApp
+struct SApp : public QObject
 {
+	Q_OBJECT
+
+public:
+
 	static SApp* instance;
 
 	QList<SWindow*> windows;
@@ -18,5 +22,5 @@ struct SApp
 	SApp();
 	~SApp();
 	void start();
-	void newDocument();
+	Q_INVOKABLE void newWindow();
 };

@@ -16,15 +16,20 @@ class SWindow : public QObject
 	QScopedPointer<Private> d;
 
 public:
-	explicit SWindow(QQuickWindow* window, SDocument* containing, QObject* parent = nullptr);
+	explicit SWindow(QQuickWindow* window, QObject* parent = nullptr);
 	~SWindow();
 
-	Q_PROPERTY(SDocument* document READ document CONSTANT)
-	SDocument* document() const;
-	Q_SIGNAL void titleChanged();
+	Q_PROPERTY(QList<SDocument*> documents READ documents NOTIFY documentsChanged)
+	QList<SDocument*> documents() const;
+	Q_SIGNAL void documentsChanged();
+
+    Q_INVOKABLE void closeDocument(int idx);
+    Q_INVOKABLE void newDocument();
 
 	Q_PROPERTY(QQuickWindow* displayedIn READ displayedIn NOTIFY displayedInChanged)
 	QQuickWindow* displayedIn() const;
 	Q_SIGNAL void displayedInChanged();
+
+    Q_INVOKABLE void transferDocumentTo(SDocument* document, SWindow* window);
 
 };

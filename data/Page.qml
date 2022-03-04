@@ -13,6 +13,8 @@ QQC2.Page {
 	QQC2.ScrollView {
 		anchors.fill: parent
 
+        QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
+
 		Kirigami.Theme.colorSet: Kirigami.Theme.View
 		background: Rectangle {
 			Kirigami.Theme.colorSet: Kirigami.Theme.Window
@@ -62,6 +64,10 @@ QQC2.Page {
 				onClicked: document.navigator.goUp()
 			}
 			Item { Layout.fillWidth: true }
+            QQC2.ToolButton {
+                icon.name: "window-new"
+                onClicked: delfenojApp.newWindow()
+            }
 		}
 	}
 }

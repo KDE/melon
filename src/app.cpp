@@ -9,7 +9,10 @@ SApp::SApp()
 {
 	instance = this;
 
+	qRegisterMetaType<QList<SDocument*>>();
+
 	engine.reset(new QQmlEngine);
+	engine->rootContext()->setContextProperty("delfenojApp", this);
 	engine->rootContext()->setContextObject(new KLocalizedContext(engine.get()));
 	windowComponent.reset(new QQmlComponent(engine.get()));
 	pageComponent.reset(new QQmlComponent(engine.get()));
@@ -37,19 +40,20 @@ SApp* SApp::instance;
 void
 SApp::start()
 {
-	newDocument();
+	newWindow();
 }
 
 void
-SApp::newDocument()
+SApp::newWindow()
 {
 	auto win = qobject_cast<QQuickWindow*>(windowComponent->beginCreate(engine->rootContext()));
 	qWarning().noquote() << windowComponent->errorString();
 
-	auto document = new SDocument(engine.get());
-	auto window = new SWindow(win, document, engine.get());
+	auto window = new SWindow(win, engine.get());
 
 	windowComponent->setInitialProperties(win, {{"window", QVariant::fromValue(window)}});
 	windowComponent->completeCreate();
+
+	windows << window;
 }
 

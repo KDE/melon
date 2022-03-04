@@ -5,18 +5,30 @@ import QtQuick.Controls 2.15 as QQC2
 import org.kde.kirigami 2.15 as Kirigami
 import org.kde.delfenoj 1.0 as Delfenoj
 
-Window {
+QQC2.ApplicationWindow {
 	id: window
 
 	visible: true
-	title: i18n("%1 - Delfenoj", window.window.document.title)
+	title: i18n("%1 - Delfenoj", window.window.documents[tabBar.currentIndex].title)
 
 	required property Delfenoj.Window window
 
-	Page {
-		id: page
+	header: WindowTabBar {
+		id: tabBar
+		window: window.window
+	}
 
+	StackLayout {
+		currentIndex: tabBar.currentIndex
 		anchors.fill: parent
-		document: window.window.document
+
+		Repeater {
+			model: window.window.documents
+			delegate: Page {
+				required property Delfenoj.Document modelData
+
+				document: modelData
+			}
+		}
 	}
 }
