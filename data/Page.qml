@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15 as QQC2
 import org.kde.kirigami 2.15 as Kirigami
 import org.kde.delfenoj 1.0 as Delfenoj
+import QtGraphicalEffects 1.12
 
 QQC2.Page {
 	id: page
@@ -34,6 +35,16 @@ QQC2.Page {
 						anchors.left: parent.left
 						anchors.verticalCenter: parent.verticalCenter
 						source: del.decoration
+
+						layer.enabled: true
+						layer.effect: Desaturate {
+							desaturation: {
+								const diff = new Date() - del.fileItem.time(Delfenoj.FileItem.CreationTime)
+								const days = diff/(60 * 60 * 24 * 1000)
+								const power = Math.pow((days / 2000), 3/4)
+								return power
+							}
+						}
 					}
 				}
 
@@ -59,7 +70,7 @@ QQC2.Page {
 				required property var fileItem
 
 				text: del.display
-				subtitle: del.fileItem.mimetype
+				subtitle: del.fileItem.time(Delfenoj.FileItem.CreationTime).toLocaleString(Locale.ShortFormat)
 			}
 		}
 	}
