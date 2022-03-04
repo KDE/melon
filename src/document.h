@@ -34,4 +34,6 @@ public:
 	KCoreUrlNavigator* navigator() const;
 
 	Q_INVOKABLE void moveTo(SWindow* window);
+	Q_INVOKABLE void openItem(KFileItem item);
+	Q_INVOKABLE void openRightClickMenuFor(KFileItem item);
 };

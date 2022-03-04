@@ -8,12 +8,12 @@ import org.kde.delfenoj 1.0 as Delfenoj
 QQC2.Page {
 	id: page
 
-    required property Delfenoj.Document document
+	required property Delfenoj.Document document
 
 	QQC2.ScrollView {
 		anchors.fill: parent
 
-        QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
+		QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
 
 		Kirigami.Theme.colorSet: Kirigami.Theme.View
 		background: Rectangle {
@@ -37,11 +37,26 @@ QQC2.Page {
 					}
 				}
 
+				TapHandler {
+					acceptedButtons: Qt.RightButton
+					onTapped: doMenu()
+				}
+				TapHandler {
+					onDoubleTapped: if (del.fileItem.isDir) {
+						page.document.navigator.currentLocationUrl = del.fileItem.url
+					} else {
+						page.document.openItem(del.fileItem)
+					}
+					onLongPressed: doMenu()
+				}
+
+				function doMenu() {
+					page.document.openRightClickMenuFor(this.fileItem)
+				}
+
 				required property string display
 				required property var decoration
 				required property var fileItem
-
-				onClicked: page.document.navigator.currentLocationUrl = fileItem.url
 
 				text: del.display
 				subtitle: del.fileItem.mimetype
@@ -64,10 +79,10 @@ QQC2.Page {
 				onClicked: document.navigator.goUp()
 			}
 			Item { Layout.fillWidth: true }
-            QQC2.ToolButton {
-                icon.name: "window-new"
-                onClicked: delfenojApp.newWindow()
-            }
+			QQC2.ToolButton {
+				icon.name: "window-new"
+				onClicked: delfenojApp.newWindow()
+			}
 		}
 	}
 }
