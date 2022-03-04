@@ -9,14 +9,14 @@ Window {
 	id: window
 
 	visible: true
-	title: i18n("%1 - Delfenoj", document.title)
+	title: i18n("%1 - Delfenoj", window.window.document.title)
 
-	required property Delfenoj.Document document
+	required property Delfenoj.Window window
 
 	Page {
 		id: page
 
 		anchors.fill: parent
-		document: window.document
+		document: window.window.document
 	}
 }

@@ -2,14 +2,12 @@
 
 struct SDocument::Private
 {
-	QQuickWindow* displayedIn;
 	KDirModel* dirModel;
 	KCoreUrlNavigator* dirNavigator;
 };
 
-SDocument::SDocument(QQuickWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
+SDocument::SDocument(QObject* parent) : QObject(parent), d(new Private)
 {
-	d->displayedIn = displayedIn;
 	d->dirModel = new KDirModel(this);
 	d->dirNavigator = new KCoreUrlNavigator(QUrl::fromLocalFile("/etc"), this);
 	connect(d->dirNavigator, &KCoreUrlNavigator::currentLocationUrlChanged, this, [this]() {
@@ -27,11 +25,6 @@ SDocument::~SDocument()
 QString SDocument::title() const
 {
 	return d->dirNavigator->currentLocationUrl().path();
-}
-
-QQuickWindow* SDocument::displayedIn() const
-{
-	return d->displayedIn;
 }
 
 KDirModel* SDocument::dirModel() const

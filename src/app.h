@@ -4,13 +4,16 @@
 #include <QQmlEngine>
 #include <QQmlComponent>
 
+class SWindow;
+
 struct SApp
 {
 	static SApp* instance;
 
-	// std::vector<std::unique_ptr<BOpenDocument>> documents;
+	QList<SWindow*> windows;
 	QScopedPointer<QQmlEngine> engine;
 	QScopedPointer<QQmlComponent> windowComponent;
+	QScopedPointer<QQmlComponent> pageComponent;
 
 	SApp();
 	~SApp();

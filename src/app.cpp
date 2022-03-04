@@ -3,6 +3,7 @@
 
 #include "app.h"
 #include "document.h"
+#include "window.h"
 
 SApp::SApp()
 {
@@ -11,13 +12,19 @@ SApp::SApp()
 	engine.reset(new QQmlEngine);
 	engine->rootContext()->setContextObject(new KLocalizedContext(engine.get()));
 	windowComponent.reset(new QQmlComponent(engine.get()));
+	pageComponent.reset(new QQmlComponent(engine.get()));
 
 	QUrl windowQml("qrc:/Window.qml");
-	QFile it(":/Window.qml");
-	Q_ASSERT(it.open(QFile::ReadOnly));
-	const auto data = it.readAll();
+	QFile windowFile(":/Window.qml");
+	Q_ASSERT(windowFile.open(QFile::ReadOnly));
+	const auto windowData = windowFile.readAll();
+	windowComponent->setData(windowData, windowQml);
 
-	windowComponent->setData(data, windowQml);
+	QUrl pageQml("qrc:/Page.qml");
+	QFile pageFile(":/Page.qml");
+	Q_ASSERT(pageFile.open(QFile::ReadOnly));
+	const auto pageData = pageFile.readAll();
+	pageComponent->setData(pageData, windowQml);
 }
 
 SApp::~SApp()
@@ -39,9 +46,10 @@ SApp::newDocument()
 	auto win = qobject_cast<QQuickWindow*>(windowComponent->beginCreate(engine->rootContext()));
 	qWarning().noquote() << windowComponent->errorString();
 
-	auto document = new SDocument(win, engine.get());
+	auto document = new SDocument(engine.get());
+	auto window = new SWindow(win, document, engine.get());
 
-	windowComponent->setInitialProperties(win, {{"document", QVariant::fromValue(document)}});
+	windowComponent->setInitialProperties(win, {{"window", QVariant::fromValue(window)}});
 	windowComponent->completeCreate();
 }
 
