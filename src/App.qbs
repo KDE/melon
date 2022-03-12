@@ -1,12 +1,13 @@
 import qbs.Process
 
 QtApplication {
-	name: "Delfenoj"
+	name: "org.kde.Delfenoj"
 	files: [
 		"*.cpp",
 		"*.h",
 	]
     cpp.cxxLanguageVersion: "c++17"
+    install: true
 
     Probe {
         id: mu

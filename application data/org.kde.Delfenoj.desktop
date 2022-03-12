@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Delfenoj
+Exec=org.kde.Delfenoj
+Comment=File manager
+Categories=Qt;KDE;System;FileTools;FileManager;
+GenericName=File Manager
+Icon=org.kde.Delfenoj
+Terminal=false
+MimeType=inode/directory;
+InitialPreference=20
+Keywords=files;file management;file browsing;explorer;dolphin;finder;manager
+X-KDE-Shortcuts=Meta+E
