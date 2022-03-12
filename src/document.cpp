@@ -1,6 +1,12 @@
 #include <QMenu>
+#include <QStandardPaths>
 #include <KFileItemActions>
 #include <KFileItemListProperties>
+#include <KStandardAction>
+#include <QItemSelectionModel>
+#include <QGuiApplication>
+#include <QClipboard>
+#include <KIO/PasteJob>
 
 #include "document.h"
 
@@ -10,14 +16,17 @@ struct SDocument::Private
 	KDirModel* dirModel;
 	KCoreUrlNavigator* dirNavigator;
 	KFileItemActions* fileItemActions;
+	QItemSelectionModel* selectionModel;
 };
 
 SDocument::SDocument(SWindow* parent) : QObject(parent), d(new Private)
 {
 	d->window = parent;
 	d->dirModel = new KDirModel(this);
-	d->dirNavigator = new KCoreUrlNavigator(QUrl::fromLocalFile("/etc"), this);
+	const auto defaultPath = QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+	d->dirNavigator = new KCoreUrlNavigator(defaultPath, this);
 	d->fileItemActions = new KFileItemActions(this);
+	d->selectionModel = new QItemSelectionModel(d->dirModel, this);
 	connect(d->dirNavigator, &KCoreUrlNavigator::currentLocationUrlChanged, this, [this]() {
 		d->dirModel->openUrl(d->dirNavigator->currentLocationUrl());
 		Q_EMIT titleChanged();
@@ -61,9 +70,42 @@ void SDocument::openItem(KFileItem item)
 	d->fileItemActions->runPreferredApplications(KFileItemList{item});
 }
 
+void SDocument::copy()
+{
+	auto cboard = QGuiApplication::clipboard();
+	cboard->setMimeData(d->dirModel->mimeData(d->selectionModel->selectedIndexes()));
+}
+
+void SDocument::cut()
+{
+	// TODO: cut handling
+}
+
+void SDocument::paste()
+{
+	KIO::paste(QGuiApplication::clipboard()->mimeData(), d->dirNavigator->currentLocationUrl());
+}
+
+QItemSelectionModel* SDocument::selectionModel() const
+{
+	return d->selectionModel;
+}
+
 void SDocument::openRightClickMenuFor(KFileItem item)
 {
 	QPointer<QMenu> menu(new QMenu);
+
+	auto copy = KStandardAction::copy(this, &SDocument::copy, this),
+		 // cut = KStandardAction::cut(this, &SDocument::cut, this),
+		 paste = KStandardAction::paste(this, &SDocument::paste, this);
+
+	copy->setEnabled(d->selectionModel->hasSelection());
+	menu->addAction(copy);
+	// cut->setEnabled(d->selectionModel->hasSelection());
+	// menu->addAction(cut);
+	menu->addAction(paste);
+
+	menu->addSeparator();
 
 	d->fileItemActions->setItemListProperties(KFileItemListProperties(KFileItemList{item}));
 	d->fileItemActions->insertOpenWithActionsTo(nullptr, menu, QStringList{});

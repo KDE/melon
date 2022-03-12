@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
 	KLocalizedString::setApplicationDomain("org.kde.delfenoj");
 
 	QApplication app(argc, argv);
+	app.setDesktopFileName("org.kde.Delfenoj");
 	SApp sApp;
 
 	sApp.start();

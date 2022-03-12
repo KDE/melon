@@ -5,6 +5,7 @@ import QtQuick.Controls 2.15 as QQC2
 import org.kde.kirigami 2.15 as Kirigami
 import org.kde.delfenoj 1.0 as Delfenoj
 import QtGraphicalEffects 1.12
+import QtQml.Models 2.15
 
 QQC2.Page {
 	id: page
@@ -27,6 +28,8 @@ QQC2.Page {
 			activeFocusOnTab: true
 			delegate: Kirigami.BasicListItem {
 				id: del
+
+				highlighted: page.document.selectionModel.selectedIndexes.includes(del.modelIndex)
 
 				leading: Item {
 					width: icon.width
@@ -53,6 +56,14 @@ QQC2.Page {
 					onTapped: doMenu()
 				}
 				TapHandler {
+					onTapped: (eventPoint) => {
+						const selModel = page.document.selectionModel
+						if (eventPoint.event.modifiers & Qt.ControlModifier) {
+							selModel.select(del.modelIndex, ItemSelectionModel.Select)
+						} else {
+							selModel.select(del.modelIndex, ItemSelectionModel.ClearAndSelect)
+						}
+					}
 					onDoubleTapped: if (del.fileItem.isDir) {
 						page.document.navigator.currentLocationUrl = del.fileItem.url
 					} else {
@@ -68,6 +79,9 @@ QQC2.Page {
 				required property string display
 				required property var decoration
 				required property var fileItem
+				required property int index
+
+				readonly property var modelIndex: page.document.dirModel.index(del.index, 0)
 
 				text: del.display
 				subtitle: del.fileItem.time(Delfenoj.FileItem.CreationTime).toLocaleString(Locale.ShortFormat)
