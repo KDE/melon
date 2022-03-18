@@ -38,6 +38,25 @@ public:
 	Q_PROPERTY(KCoreUrlNavigator* navigator READ navigator CONSTANT)
 	KCoreUrlNavigator* navigator() const;
 
+	Q_PROPERTY(int numberOfFiles READ numberOfFiles NOTIFY statted)
+	int numberOfFiles() const;
+
+	Q_PROPERTY(int numberOfFolders READ numberOfFolders NOTIFY statted)
+	int numberOfFolders() const;
+
+	Q_PROPERTY(QString dirSize READ dirSize NOTIFY statted)
+	QString dirSize() const;
+
+	Q_PROPERTY(bool writable READ writable NOTIFY statted)
+	bool writable() const;
+
+	Q_PROPERTY(bool local READ local NOTIFY statted)
+	bool local() const;
+
+	Q_SIGNAL void statted();
+
+	void getFileCounts();
+
 	Q_INVOKABLE void copy();
 	Q_INVOKABLE void cut();
 	Q_INVOKABLE void paste();

@@ -7,6 +7,8 @@
 #include <QGuiApplication>
 #include <QClipboard>
 #include <KIO/PasteJob>
+#include <KIO/StatJob>
+#include <KFormat>
 
 #include "document.h"
 
@@ -17,6 +19,14 @@ struct SDocument::Private
 	KCoreUrlNavigator* dirNavigator;
 	KFileItemActions* fileItemActions;
 	QItemSelectionModel* selectionModel;
+	KIO::StatJob* fileCountsJob;
+
+	int folderCount = 0;
+	int fileCount = 0;
+	QString totalFileSize = 0;
+
+	bool writable = true;
+	bool local = true;
 };
 
 SDocument::SDocument(SWindow* parent) :
@@ -34,13 +44,85 @@ SDocument::SDocument(const QUrl& in, SWindow* parent) : QObject(parent), d(new P
 	connect(d->dirNavigator, &KCoreUrlNavigator::currentLocationUrlChanged, this, [this]() {
 		d->dirModel->openUrl(d->dirNavigator->currentLocationUrl());
 		Q_EMIT titleChanged();
+		getFileCounts();
 	});
 	d->dirModel->openUrl(d->dirNavigator->currentLocationUrl());
+	getFileCounts();
+}
+
+int SDocument::numberOfFiles() const
+{
+	return d->fileCount;
+}
+
+int SDocument::numberOfFolders() const
+{
+	return d->folderCount;
+}
+
+void SDocument::getFileCounts()
+{
+	d->fileCountsJob = KIO::statDetails(
+		d->dirNavigator->currentLocationUrl(),
+		KIO::StatJob::SourceSide, KIO::StatRecursiveSize, KIO::HideProgressInfo
+	);
+	connect(d->fileCountsJob, &KJob::result, this, [job = d->fileCountsJob, this]() {
+		const auto entry = job->statResult();
+		int folderCount = 0;
+		int fileCount = 0;
+		KIO::filesize_t totalFileSize = 0;
+		bool fileSizeCountNeeded = true;
+
+		if (entry.contains(KIO::UDSEntry::UDS_RECURSIVE_SIZE)) {
+			totalFileSize = static_cast<KIO::filesize_t>(entry.numberValue(KIO::UDSEntry::UDS_RECURSIVE_SIZE));
+			fileSizeCountNeeded = false;
+		}
+
+		const int itemCount = d->dirModel->rowCount();
+		for (int i = 0; i < itemCount; ++i) {
+			const auto item = d->dirModel->data(d->dirModel->index(i, 0), KDirModel::FileItemRole).value<KFileItem>();
+
+			if (item.isDir()) {
+				folderCount++;
+			} else {
+				fileCount++;
+				if (fileSizeCountNeeded) {
+					totalFileSize += item.size();
+				}
+			}
+		}
+
+		KFileItem item(entry, d->dirNavigator->currentLocationUrl());
+		item.isWritable();
+		item.isLocalFile();
+
+		d->totalFileSize = KFormat().formatByteSize(totalFileSize);
+		d->fileCount = fileCount;
+		d->folderCount = folderCount;
+		d->writable = item.isWritable();
+		d->local = !item.isSlow();
+		Q_EMIT statted();
+	});
 }
 
 SDocument::~SDocument()
 {
 
+}
+
+bool SDocument::writable() const
+{
+	return d->writable;
+}
+
+QString SDocument::dirSize() const
+{
+	return d->totalFileSize;
+}
+
+bool SDocument::local() const
+{
+	return d->local;
 }
 
 SWindow* SDocument::window() const

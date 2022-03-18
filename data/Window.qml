@@ -17,6 +17,10 @@ QQC2.ApplicationWindow {
 		id: tabBar
 		window: window.window
 	}
+	footer: WindowToolBar {
+		window: window.window
+		currentIndex: tabBar.currentIndex
+	}
 
 	StackLayout {
 		currentIndex: tabBar.currentIndex
