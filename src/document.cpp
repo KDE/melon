@@ -110,7 +110,7 @@ void SDocument::openRightClickMenuFor(KFileItem item)
 	d->fileItemActions->setItemListProperties(KFileItemListProperties(KFileItemList{item}));
 	d->fileItemActions->insertOpenWithActionsTo(nullptr, menu, QStringList{});
 	d->fileItemActions->addActionsTo(menu);
-	menu->winId();
+	menu->createWinId();
 	menu->windowHandle()->setTransientParent(d->window->displayedIn());
 	menu->exec(QCursor::pos());
 
