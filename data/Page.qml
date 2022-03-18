@@ -37,7 +37,13 @@ QQC2.Page {
 						id: icon
 						anchors.left: parent.left
 						anchors.verticalCenter: parent.verticalCenter
-						source: del.decoration
+						source: previewer.pixmapValid ? previewer.pixmap : del.decoration
+
+						Delfenoj.Previewer {
+							id: previewer
+							fileItem: del.fileItem
+							size: Qt.size(icon.width, icon.height)
+						}
 
 						layer.enabled: true
 						layer.effect: Desaturate {
