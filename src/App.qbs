@@ -17,10 +17,10 @@ QtApplication {
         configure: {
             var proc = new Process()
             var exitCode = proc.exec("bash", [mu.src + "/extract_flags.sh",
-                "find_package(KF5 5.70 REQUIRED COMPONENTS I18n Config KIO)\n" +
+                "find_package(KF5 5.70 REQUIRED COMPONENTS I18n Config KIO WindowSystem)\n" +
                 "",
 
-                "KF5::ConfigCore KF5::I18n KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets",
+                "KF5::ConfigCore KF5::I18n KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets KF5::WindowSystem",
             ])
             if (exitCode != 0) {
                 console.error(proc.readStdOut())

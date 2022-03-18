@@ -13,6 +13,13 @@ SWindow::SWindow(QQuickWindow* displayedIn, QObject* parent) : QObject(parent), 
     newDocument();
 }
 
+SWindow::SWindow(const QUrl& in, QQuickWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
+{
+    d->displayedIn = displayedIn;
+    d->containing << new SDocument(in, this);
+    Q_EMIT documentsChanged();
+}
+
 SWindow::~SWindow()
 {
 

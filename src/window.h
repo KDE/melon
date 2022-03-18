@@ -17,6 +17,7 @@ class SWindow : public QObject
 
 public:
 	explicit SWindow(QQuickWindow* window, QObject* parent = nullptr);
+	explicit SWindow(const QUrl& in, QQuickWindow* window, QObject* parent = nullptr);
 	~SWindow();
 
 	Q_PROPERTY(QList<SDocument*> documents READ documents NOTIFY documentsChanged)

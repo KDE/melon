@@ -19,12 +19,16 @@ struct SDocument::Private
 	QItemSelectionModel* selectionModel;
 };
 
-SDocument::SDocument(SWindow* parent) : QObject(parent), d(new Private)
+SDocument::SDocument(SWindow* parent) :
+	SDocument(QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)), parent)
+{
+}
+
+SDocument::SDocument(const QUrl& in, SWindow* parent) : QObject(parent), d(new Private)
 {
 	d->window = parent;
 	d->dirModel = new KDirModel(this);
-	const auto defaultPath = QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
-	d->dirNavigator = new KCoreUrlNavigator(defaultPath, this);
+	d->dirNavigator = new KCoreUrlNavigator(in, this);
 	d->fileItemActions = new KFileItemActions(this);
 	d->selectionModel = new QItemSelectionModel(d->dirModel, this);
 	connect(d->dirNavigator, &KCoreUrlNavigator::currentLocationUrlChanged, this, [this]() {

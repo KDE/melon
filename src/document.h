@@ -18,6 +18,7 @@ class SDocument : public QObject
 
 public:
 	explicit SDocument(SWindow* parent);
+	explicit SDocument(const QUrl& in, SWindow* parent);
 	~SDocument();
 
 	Q_PROPERTY(SWindow* window READ window NOTIFY windowChanged)

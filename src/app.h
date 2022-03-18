@@ -23,4 +23,6 @@ public:
 	~SApp();
 	void start();
 	Q_INVOKABLE void newWindow();
+	Q_INVOKABLE void newWindowAtUrl(const QUrl& url);
+	Q_INVOKABLE void ensureShown(const QUrl& url);
 };
