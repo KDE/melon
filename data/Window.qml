@@ -16,15 +16,24 @@ QQC2.ApplicationWindow {
 	header: WindowTabBar {
 		id: tabBar
 		window: window.window
+
+		LayoutMirroring.childrenInherit: Qt.application.layoutDirection == Qt.RightToLeft
+		LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
 	}
 	footer: WindowToolBar {
 		window: window.window
 		currentIndex: tabBar.currentIndex
+
+		LayoutMirroring.childrenInherit: Qt.application.layoutDirection == Qt.RightToLeft
+		LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
 	}
 
 	StackLayout {
 		currentIndex: tabBar.currentIndex
 		anchors.fill: parent
+
+		LayoutMirroring.childrenInherit: Qt.application.layoutDirection == Qt.RightToLeft
+		LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
 
 		Repeater {
 			model: window.window.documents
