@@ -45,6 +45,11 @@ QQC2.Page {
 							size: Qt.size(icon.width, icon.height)
 						}
 
+						DragHandler {
+							target: null
+							onActiveChanged: if (active) page.document.startDrag()
+						}
+
 						layer.enabled: true
 						layer.effect: Desaturate {
 							desaturation: {

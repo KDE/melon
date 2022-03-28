@@ -1,4 +1,5 @@
 #include <QMenu>
+#include <QDrag>
 #include <QStandardPaths>
 #include <KFileItemActions>
 #include <KFileItemListProperties>
@@ -165,6 +166,27 @@ void SDocument::copy()
 void SDocument::cut()
 {
 	// TODO: cut handling
+}
+
+void SDocument::startDrag()
+{
+	if (d->selectionModel->selectedIndexes().empty()) {
+		return;
+	}
+	auto mdata = d->dirModel->mimeData(d->selectionModel->selectedIndexes());
+	if (!mdata) {
+		return;
+	}
+
+	// TODO: better pixmap
+	auto pixmap = d->dirModel->data(d->selectionModel->selectedIndexes().first(), Qt::DecorationRole).value<QIcon>().pixmap(48);
+
+	QDrag* drag = new QDrag(d->window);
+	drag->setPixmap(pixmap);
+	const QPoint hotSpot((pixmap.width() / pixmap.devicePixelRatio()) / 2, 0);
+	drag->setHotSpot(hotSpot);
+	drag->setMimeData(mdata);
+	drag->exec(Qt::MoveAction | Qt::CopyAction | Qt::LinkAction, Qt::CopyAction);
 }
 
 void SDocument::paste()

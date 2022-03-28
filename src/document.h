@@ -60,6 +60,7 @@ public:
 	Q_INVOKABLE void copy();
 	Q_INVOKABLE void cut();
 	Q_INVOKABLE void paste();
+	Q_INVOKABLE void startDrag();
 	Q_INVOKABLE void moveTo(SWindow* window);
 	Q_INVOKABLE void openItem(KFileItem item);
 	Q_INVOKABLE void openRightClickMenuFor(KFileItem item);
