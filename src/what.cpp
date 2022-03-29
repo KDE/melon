@@ -28,9 +28,7 @@ What::What(QQuickItem* parent) : QQuickPaintedItem(parent), d(new Private)
     int height = gtk_widget_get_allocated_height(d->button);
 
     setImplicitSize(width, height);
-    QTimer::singleShot(500, [=]() {
-        update();
-    });
+    QTimer::singleShot(50, [this] { update(); });
 }
 
 What::~What()
@@ -45,7 +43,7 @@ void What::paint(QPainter* painter)
     if (err != nullptr) {
         qWarning() << err->message;
     }
-    QImage image(gdk_pixbuf_get_pixels(pixbuf), gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf), gdk_pixbuf_get_rowstride(pixbuf), QImage::Format_ARGB32);
+    QImage image(gdk_pixbuf_get_pixels(pixbuf), gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf), gdk_pixbuf_get_rowstride(pixbuf), QImage::Format_RGBA8888);
 
     painter->drawImage(0, 0, image);
 
