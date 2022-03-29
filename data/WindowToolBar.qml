@@ -35,5 +35,8 @@ QQC2.ToolBar {
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
         }
+        Delfenoj.What {
+
+        }
 	}
 }
