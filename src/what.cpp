@@ -14,10 +14,20 @@ struct What::Private
     GtkWidget* button;
 };
 
+QMap<GtkWidget*, What*> whats;
+
+gboolean damageEvent(GtkWidget* wid, GdkEventExpose, gpointer)
+{
+    QTimer::singleShot(0, [what = whats[wid]]{ what->update(); });
+    return false;
+}
+
 What::What(QQuickItem* parent) : QQuickPaintedItem(parent), d(new Private)
 {
     d->window = gtk_offscreen_window_new();
-    d->button = gtk_button_new_with_label("deine mutter");
+    d->button = gtk_button_new_with_label("hi from gtk");
+
+    whats[d->window] = this;
 
     gtk_container_add(GTK_CONTAINER(d->window), d->button);
     gtk_widget_show_all(d->window);
@@ -28,7 +38,7 @@ What::What(QQuickItem* parent) : QQuickPaintedItem(parent), d(new Private)
     int height = gtk_widget_get_allocated_height(d->button);
 
     setImplicitSize(width, height);
-    QTimer::singleShot(50, [this] { update(); });
+    g_signal_connect(G_OBJECT(d->window), "damage-event", G_CALLBACK(damageEvent), (void*)1);
 }
 
 What::~What()

@@ -38,5 +38,8 @@ QQC2.ToolBar {
         Delfenoj.What {
 
         }
+		QQC2.Button {
+			text: "hi from qt"
+		}
 	}
 }
