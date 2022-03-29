@@ -12,6 +12,34 @@ QQC2.Page {
 
 	required property Delfenoj.Document document
 
+	ColumnLayout {
+		// an instance of our object. in the KCM, this would just be the kcm object.
+		Delfenoj.FlagExample {
+			id: example
+		}
+		QQC2.CheckBox {
+			checked: example.whatToSet & Delfenoj.FlagExample.SetColorScheme
+			onToggled: example.whatToSet ^= Delfenoj.FlagExample.SetColorScheme
+		}
+		QQC2.CheckBox {
+			checked: example.whatToSet & Delfenoj.FlagExample.SetFont
+			onToggled: example.whatToSet ^= Delfenoj.FlagExample.SetFont
+		}
+		QQC2.CheckBox {
+			checked: example.whatToSet & Delfenoj.FlagExample.SetDesktopLayout
+			onToggled: example.whatToSet ^= Delfenoj.FlagExample.SetDesktopLayout
+		}
+		QQC2.CheckBox {
+			checked: example.whatToSet & Delfenoj.FlagExample.SetYourMom
+			onToggled: example.whatToSet ^= Delfenoj.FlagExample.SetYourMom
+		}
+		QQC2.Button {
+			text: "reset"
+			onClicked: example.whatToSet = undefined
+		}
+	}
+
+	/*
 	QQC2.ScrollView {
 		anchors.fill: parent
 
@@ -116,4 +144,5 @@ QQC2.Page {
 			}
 		}
 	}
+	*/
 }
