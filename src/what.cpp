@@ -1,6 +1,8 @@
 #include <QImage>
 #include <QPainter>
 #include <QTimer>
+#include <QScopeGuard>
+
 #include "what.h"
 
 #undef signals
@@ -16,9 +18,9 @@ struct What::Private
 
 QMap<GtkWidget*, What*> whats;
 
-gboolean damageEvent(GtkWidget* wid, GdkEventExpose, gpointer)
+gboolean damageEvent(GtkWidget*, GdkEventExpose*, What* what)
 {
-    QTimer::singleShot(0, [what = whats[wid]]{ what->update(); });
+    what->update();
     return false;
 }
 
@@ -38,7 +40,10 @@ What::What(QQuickItem* parent) : QQuickPaintedItem(parent), d(new Private)
     int height = gtk_widget_get_allocated_height(d->button);
 
     setImplicitSize(width, height);
-    g_signal_connect(G_OBJECT(d->window), "damage-event", G_CALLBACK(damageEvent), (void*)1);
+    g_signal_connect(G_OBJECT(d->window), "damage-event", G_CALLBACK(damageEvent), (void*)this);
+
+    setAcceptHoverEvents(true);
+    setAcceptedMouseButtons(Qt::LeftButton);
 }
 
 What::~What()
@@ -58,4 +63,21 @@ void What::paint(QPainter* painter)
     painter->drawImage(0, 0, image);
 
     g_object_unref(pixbuf);
+}
+
+void What::hoverEnterEvent(QHoverEvent*)
+{
+    gtk_widget_set_state_flags(d->button, GTK_STATE_FLAG_PRELIGHT, false);
+}
+void What::hoverLeaveEvent(QHoverEvent*)
+{
+    gtk_widget_unset_state_flags(d->button, GTK_STATE_FLAG_PRELIGHT);
+}
+void What::mousePressEvent(QMouseEvent*)
+{
+    gtk_widget_set_state_flags(d->button, GTK_STATE_FLAG_ACTIVE, false);
+}
+void What::mouseReleaseEvent(QMouseEvent*)
+{
+    gtk_widget_unset_state_flags(d->button, GTK_STATE_FLAG_ACTIVE);
 }
