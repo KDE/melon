@@ -31,6 +31,11 @@ public:
 	QQuickWindow* displayedIn() const;
 	Q_SIGNAL void displayedInChanged();
 
+	Q_PROPERTY(SDocument* activeDocument READ activeDocument WRITE setActiveDocument NOTIFY activeDocumentChanged)
+	SDocument* activeDocument() const;
+	void setActiveDocument(SDocument* document);
+	Q_SIGNAL void activeDocumentChanged();
+
     Q_INVOKABLE void transferDocumentTo(SDocument* document, SWindow* window);
 
 };

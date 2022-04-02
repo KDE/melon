@@ -10,8 +10,16 @@ QQC2.ScrollView {
 
 	required property Delfenoj.Document document
 
+	QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
+
 	Layout.fillHeight: true
 	Layout.preferredWidth: Kirigami.Units.gridUnit*10
+
+	Kirigami.Theme.colorSet: Kirigami.Theme.View
+	background: Rectangle {
+		Kirigami.Theme.colorSet: Kirigami.Theme.Window
+		color: Kirigami.Theme.backgroundColor
+	}
 
 	ListView {
 		model: delfenojApp.placesModel

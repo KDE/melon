@@ -5,6 +5,7 @@ struct SWindow::Private
 {
 	QQuickWindow* displayedIn;
 	QList<SDocument*> containing;
+    SDocument* activeDocument = nullptr;
 };
 
 SWindow::SWindow(QQuickWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
@@ -33,6 +34,20 @@ QList<SDocument*> SWindow::documents() const
 QQuickWindow* SWindow::displayedIn() const
 {
 	return d->displayedIn;
+}
+
+SDocument* SWindow::activeDocument() const
+{
+    return d->activeDocument;
+}
+
+void SWindow::setActiveDocument(SDocument* document)
+{
+    if (d->activeDocument == document)
+        return;
+
+    d->activeDocument = document;
+    Q_EMIT activeDocumentChanged();
 }
 
 void SWindow::newDocument()

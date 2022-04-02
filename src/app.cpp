@@ -14,6 +14,7 @@ SApp::SApp()
 	qRegisterMetaType<QList<SDocument*>>();
 
 	filePlacesModel = new KFilePlacesModel(this);
+	sMenuBar = new SMenuBar(this);
 	engine.reset(new QQmlEngine);
 	engine->rootContext()->setContextProperty("delfenojApp", this);
 	engine->rootContext()->setContextObject(new KLocalizedContext(engine.get()));
@@ -98,4 +99,15 @@ KFilePlacesModel*
 SApp::placesModel() const
 {
 	return filePlacesModel;
+}
+
+SWindow*
+SApp::swindowForWindow(QWindow* window)
+{
+	for (auto w : windows) {
+		if (w->displayedIn() == window) {
+			return w;
+		}
+	}
+	return nullptr;
 }

@@ -13,6 +13,12 @@ QQC2.ApplicationWindow {
 
 	required property Delfenoj.Window window
 
+	Binding {
+		target: window.window
+		property: "activeDocument"
+		value: window.window.documents[tabBar.currentIndex]
+	}
+
 	header: ColumnLayout {
 		width: parent && parent.width
 		spacing: 0

@@ -5,6 +5,8 @@
 #include <QQmlComponent>
 #include <KFilePlacesModel>
 
+#include "menubar.h"
+
 class SWindow;
 
 struct SApp : public QObject
@@ -20,6 +22,7 @@ public:
 	QScopedPointer<QQmlComponent> windowComponent;
 	QScopedPointer<QQmlComponent> pageComponent;
 	KFilePlacesModel* filePlacesModel;
+	SMenuBar* sMenuBar;
 
 	Q_PROPERTY(KFilePlacesModel* placesModel READ placesModel CONSTANT)
 	KFilePlacesModel* placesModel() const;
@@ -30,4 +33,5 @@ public:
 	Q_INVOKABLE void newWindow();
 	Q_INVOKABLE void newWindowAtUrl(const QUrl& url);
 	Q_INVOKABLE void ensureShown(const QUrl& url);
+	SWindow* swindowForWindow(QWindow* window);
 };
