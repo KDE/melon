@@ -1,4 +1,6 @@
 #include <KIO/PreviewJob>
+#include <QQuickItem>
+#include <QQuickWindow>
 
 #include "previewer.h"
 
@@ -6,7 +8,8 @@ struct SPreviewer::Private
 {
     SPreviewer* p;
     QPixmap pixmap;
-    KFileItem item;
+    KFileItem fileItem;
+    QQuickItem* quickItem = nullptr;
     KIO::PreviewJob* job = nullptr;
     QSize size;
     bool complete = false;
@@ -43,7 +46,9 @@ void SPreviewer::Private::makePixmap()
         job->deleteLater();
     }
 
-    job = new KIO::PreviewJob(KFileItemList{item}, size);
+    job = new KIO::PreviewJob(KFileItemList{fileItem}, size);
+    if (quickItem && quickItem->window()) job->setDevicePixelRatio(quickItem->window()->effectiveDevicePixelRatio());
+
     QObject::connect(job, &KIO::PreviewJob::failed, p, [this](const KFileItem& item) {
         Q_UNUSED(item)
 
@@ -80,16 +85,32 @@ void SPreviewer::componentComplete()
 
 KFileItem SPreviewer::fileItem() const
 {
-    return d->item;
+    return d->fileItem;
 }
 
 void SPreviewer::setFileItem(KFileItem item)
 {
-    if (d->item == item)
+    if (d->fileItem == item)
         return;
 
-    d->item = item;
+    d->fileItem = item;
     Q_EMIT fileItemChanged();
+
+    d->makePixmap();
+}
+
+QQuickItem* SPreviewer::item() const
+{
+    return d->quickItem;
+}
+
+void SPreviewer::setItem(QQuickItem* item)
+{
+    if (item == d->quickItem)
+        return;
+
+    d->quickItem = item;
+    Q_EMIT itemChanged();
 
     d->makePixmap();
 }

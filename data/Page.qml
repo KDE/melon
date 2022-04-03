@@ -41,6 +41,7 @@ QQC2.Page {
 
 						Delfenoj.Previewer {
 							id: previewer
+							item: icon
 							fileItem: del.fileItem
 							size: Qt.size(icon.width, icon.height)
 						}

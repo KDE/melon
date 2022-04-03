@@ -5,6 +5,8 @@
 #include <KFileItem>
 #include <QPixmap>
 
+class QQuickItem;
+
 class SPreviewer : public QObject, public QQmlParserStatus
 {
 
@@ -38,5 +40,10 @@ public:
     QSize size() const;
     void setSize(const QSize& size);
     Q_SIGNAL void sizeChanged();
+
+    Q_PROPERTY(QQuickItem* item READ item WRITE setItem NOTIFY itemChanged REQUIRED)
+    QQuickItem* item() const;
+    void setItem(QQuickItem* item);
+    Q_SIGNAL void itemChanged();
 
 };
