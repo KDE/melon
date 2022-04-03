@@ -3,6 +3,7 @@
 #include <QQuickWindow>
 #include <QQmlEngine>
 #include <QQmlComponent>
+#include <KFilePlacesModel>
 
 class SWindow;
 
@@ -18,6 +19,10 @@ public:
 	QScopedPointer<QQmlEngine> engine;
 	QScopedPointer<QQmlComponent> windowComponent;
 	QScopedPointer<QQmlComponent> pageComponent;
+	KFilePlacesModel* filePlacesModel;
+
+	Q_PROPERTY(KFilePlacesModel* placesModel READ placesModel CONSTANT)
+	KFilePlacesModel* placesModel() const;
 
 	SApp();
 	~SApp();

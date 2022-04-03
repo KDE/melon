@@ -100,26 +100,4 @@ QQC2.Page {
 			}
 		}
 	}
-
-	header: QQC2.ToolBar {
-		contentItem: RowLayout {
-			QQC2.ToolButton {
-				icon.name: "go-previous"
-				onClicked: document.navigator.goBack()
-			}
-			QQC2.ToolButton {
-				icon.name: "go-next"
-				onClicked: document.navigator.goForward()
-			}
-			QQC2.ToolButton {
-				icon.name: "go-up"
-				onClicked: document.navigator.goUp()
-			}
-			Item { Layout.fillWidth: true }
-			QQC2.ToolButton {
-				icon.name: "window-new"
-				onClicked: delfenojApp.newWindow()
-			}
-		}
-	}
 }

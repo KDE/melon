@@ -11,6 +11,7 @@
 #include <KIO/StatJob>
 #include <KFormat>
 
+#include "app.h"
 #include "document.h"
 
 struct SDocument::Private
@@ -131,9 +132,52 @@ SWindow* SDocument::window() const
 	return d->window;
 }
 
+// this logic yoinked from dolphin,
+// copyright (TODO find who wrote that code)
+QString SDocument::fancyPlacesTitle() const
+{
+	auto* placesModel = SApp::instance->placesModel();
+	const auto url = d->dirNavigator->currentLocationUrl();
+	const auto pattern = url.adjusted(QUrl::StripTrailingSlash).toString(QUrl::FullyEncoded).append("/?");
+	const auto& matchedPlaces = placesModel->match(
+		placesModel->index(0, 0),
+		KFilePlacesModel::UrlRole,
+		QRegularExpression::anchoredPattern(pattern),
+		1,
+		Qt::MatchRegularExpression
+	);
+
+    if (!matchedPlaces.isEmpty()) {
+        return placesModel->text(matchedPlaces.first());
+    }
+
+    if (!url.isLocalFile()) {
+        QUrl adjustedUrl = url.adjusted(QUrl::StripTrailingSlash);
+        QString caption;
+        if (!adjustedUrl.fileName().isEmpty()) {
+            caption = adjustedUrl.fileName();
+        } else if (!adjustedUrl.path().isEmpty() && adjustedUrl.path() != "/") {
+            caption = adjustedUrl.path();
+        } else if (!adjustedUrl.host().isEmpty()) {
+            caption = adjustedUrl.host();
+        } else {
+            caption = adjustedUrl.toString();
+        }
+        return caption;
+    }
+
+    QString fileName = url.adjusted(QUrl::StripTrailingSlash).fileName();
+    if (fileName.isEmpty()) {
+        fileName = '/';
+    }
+
+    return fileName;
+}
+
 QString SDocument::title() const
 {
-	return d->dirNavigator->currentLocationUrl().path();
+	return fancyPlacesTitle();
+	// return d->dirNavigator->currentLocationUrl().path();
 }
 
 KDirModel* SDocument::dirModel() const

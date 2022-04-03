@@ -16,6 +16,8 @@ class SDocument : public QObject
 	struct Private;
 	QScopedPointer<Private> d;
 
+	QString fancyPlacesTitle() const;
+
 public:
 	explicit SDocument(SWindow* parent);
 	explicit SDocument(const QUrl& in, SWindow* parent);

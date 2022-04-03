@@ -13,12 +13,24 @@ QQC2.ApplicationWindow {
 
 	required property Delfenoj.Window window
 
-	header: WindowTabBar {
-		id: tabBar
-		window: window.window
+	header: ColumnLayout {
+		width: parent && parent.width
+		spacing: 0
 
 		LayoutMirroring.childrenInherit: Qt.application.layoutDirection == Qt.RightToLeft
 		LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
+
+		WindowTabBar {
+			id: tabBar
+			window: window.window
+
+			Layout.fillWidth: true
+		}
+		PageToolBar {
+			document: window.window.documents[tabBar.currentIndex]
+
+			Layout.fillWidth: true
+		}
 	}
 	footer: WindowToolBar {
 		window: window.window
@@ -28,19 +40,33 @@ QQC2.ApplicationWindow {
 		LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
 	}
 
-	StackLayout {
-		currentIndex: tabBar.currentIndex
+	RowLayout {
 		anchors.fill: parent
 
 		LayoutMirroring.childrenInherit: Qt.application.layoutDirection == Qt.RightToLeft
 		LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
 
-		Repeater {
-			model: window.window.documents
-			delegate: Page {
-				required property Delfenoj.Document modelData
+		PlacesSidebar {
+			document: window.window.documents[tabBar.currentIndex]
+		}
 
-				document: modelData
+		Kirigami.Separator {
+			Layout.fillHeight: true
+		}
+
+		StackLayout {
+			currentIndex: tabBar.currentIndex
+
+			Layout.fillWidth: true
+			Layout.fillHeight: true
+
+			Repeater {
+				model: window.window.documents
+				delegate: Page {
+					required property Delfenoj.Document modelData
+
+					document: modelData
+				}
 			}
 		}
 	}

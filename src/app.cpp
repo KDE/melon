@@ -13,6 +13,7 @@ SApp::SApp()
 
 	qRegisterMetaType<QList<SDocument*>>();
 
+	filePlacesModel = new KFilePlacesModel(this);
 	engine.reset(new QQmlEngine);
 	engine->rootContext()->setContextProperty("delfenojApp", this);
 	engine->rootContext()->setContextObject(new KLocalizedContext(engine.get()));
@@ -93,3 +94,8 @@ SApp::ensureShown(const QUrl &url)
 	newWindowAtUrl(url);
 }
 
+KFilePlacesModel*
+SApp::placesModel() const
+{
+	return filePlacesModel;
+}
