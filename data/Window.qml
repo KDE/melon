@@ -41,6 +41,7 @@ QQC2.ApplicationWindow {
 	}
 
 	RowLayout {
+		spacing: 0
 		anchors.fill: parent
 
 		LayoutMirroring.childrenInherit: Qt.application.layoutDirection == Qt.RightToLeft
