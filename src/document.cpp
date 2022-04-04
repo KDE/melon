@@ -7,8 +7,12 @@
 #include <QItemSelectionModel>
 #include <QGuiApplication>
 #include <QClipboard>
+#include <QMimeDatabase>
+#include <KLocalizedString>
 #include <KIO/PasteJob>
 #include <KIO/StatJob>
+#include <KIO/CopyJob>
+#include <KIO/FileUndoManager>
 #include <KFormat>
 
 #include "app.h"
@@ -241,6 +245,142 @@ void SDocument::paste()
 QItemSelectionModel* SDocument::selectionModel() const
 {
 	return d->selectionModel;
+}
+
+KFileItemList SDocument::selectedFiles() const
+{
+	auto indexes = d->selectionModel->selectedIndexes();
+	if (indexes.isEmpty())
+		return {};
+
+	KFileItemList items;
+	items.reserve(indexes.size());
+	for (const auto& index : indexes) {
+		items << d->dirModel->data(index, KDirModel::FileItemRole).value<KFileItem>();
+	}
+
+	return items;
+}
+
+QList<QUrl> SDocument::selectedURLs() const
+{
+	auto indexes = d->selectionModel->selectedIndexes();
+	if (indexes.isEmpty())
+		return {};
+
+	QList<QUrl> items;
+	items.reserve(indexes.size());
+	for (const auto& index : indexes) {
+		items << d->dirModel->data(index, KDirModel::FileItemRole).value<KFileItem>().url();
+	}
+
+	return items;
+}
+
+void SDocument::openSelectedFiles()
+{
+	const auto files = selectedFiles();
+	if (files.isEmpty())
+		return;
+	d->fileItemActions->runPreferredApplications(files);
+}
+
+// this logic yoinked from dolphin,
+// copyright (TODO find who wrote that code)
+// TODO: select duplicated files
+void SDocument::duplicateSelectedFiles()
+{
+	const auto files = selectedFiles();
+	if (files.isEmpty())
+		return;
+
+    const QMimeDatabase db;
+
+    // Duplicate all selected items and append "copy" to the end of the file name
+    // but before the filename extension, if present
+    for (const auto &item : files) {
+        const QUrl originalURL  = item.url();
+        const QString originalDirectoryPath = originalURL.adjusted(QUrl::RemoveFilename).path();
+        const QString originalFileName = item.name();
+
+        QString extension = db.suffixForFileName(originalFileName);
+
+        QUrl duplicateURL = originalURL;
+
+        // No extension; new filename is "<oldfilename> copy"
+        if (extension.isEmpty()) {
+            duplicateURL.setPath(originalDirectoryPath + i18nc("<filename> copy", "%1 copy", originalFileName));
+        // There's an extension; new filename is "<oldfilename> copy.<extension>"
+        } else {
+            // Need to add a dot since QMimeDatabase::suffixForFileName() doesn't include it
+            extension = QLatin1String(".") + extension;
+            const QString originalFilenameWithoutExtension = originalFileName.chopped(extension.size());
+            // Preserve file's original filename extension in case the casing differs
+            // from what QMimeDatabase::suffixForFileName() returned
+            const QString originalExtension = originalFileName.right(extension.size());
+            duplicateURL.setPath(originalDirectoryPath + i18nc("<filename> copy", "%1 copy", originalFilenameWithoutExtension) + originalExtension);
+        }
+
+        KIO::CopyJob* job = KIO::copyAs(originalURL, duplicateURL);
+
+        if (job) {
+            KIO::FileUndoManager::self()->recordCopyJob(job);
+        }
+    }
+}
+
+
+// this logic yoinked from dolphin,
+// copyright (TODO find who wrote that code)
+// TODO: select duplicated files
+void SDocument::aliasSelectedFiles()
+{
+	const auto files = selectedFiles();
+	if (files.isEmpty())
+		return;
+
+    const QMimeDatabase db;
+
+    // Duplicate all selected items and append "copy" to the end of the file name
+    // but before the filename extension, if present
+    for (const auto &item : files) {
+        const QUrl originalURL  = item.url();
+        const QString originalDirectoryPath = originalURL.adjusted(QUrl::RemoveFilename).path();
+        const QString originalFileName = item.name();
+
+        QString extension = db.suffixForFileName(originalFileName);
+
+        QUrl aliasURL = originalURL;
+
+        // No extension; new filename is "<oldfilename> alias"
+        if (extension.isEmpty()) {
+            aliasURL.setPath(originalDirectoryPath + i18nc("<filename> alias", "%1 alias", originalFileName));
+        // There's an extension; new filename is "<oldfilename> alias.<extension>"
+        } else {
+            // Need to add a dot since QMimeDatabase::suffixForFileName() doesn't include it
+            extension = QLatin1String(".") + extension;
+            const QString originalFilenameWithoutExtension = originalFileName.chopped(extension.size());
+            // Preserve file's original filename extension in case the casing differs
+            // from what QMimeDatabase::suffixForFileName() returned
+            const QString originalExtension = originalFileName.right(extension.size());
+            aliasURL.setPath(originalDirectoryPath + i18nc("<filename> alias", "%1 alias", originalFilenameWithoutExtension) + originalExtension);
+        }
+
+        KIO::CopyJob* job = KIO::linkAs(originalURL, aliasURL);
+
+        if (job) {
+            KIO::FileUndoManager::self()->recordCopyJob(job);
+        }
+    }
+}
+
+void SDocument::trashSelectedFiles()
+{
+	const auto files = selectedURLs();
+	KIO::Job* job = KIO::trash(files);
+	if (job) {
+		KIO::FileUndoManager::self()->recordJob(KIO::FileUndoManager::Trash, files, QUrl("trash:/"), job);
+	}
 }
 
 void SDocument::openRightClickMenuFor(KFileItem item)

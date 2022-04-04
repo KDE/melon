@@ -40,6 +40,9 @@ public:
 	Q_PROPERTY(KCoreUrlNavigator* navigator READ navigator CONSTANT)
 	KCoreUrlNavigator* navigator() const;
 
+	KFileItemList selectedFiles() const;
+	QList<QUrl> selectedURLs() const;
+
 	Q_PROPERTY(int numberOfFiles READ numberOfFiles NOTIFY statted)
 	int numberOfFiles() const;
 
@@ -66,4 +69,8 @@ public:
 	Q_INVOKABLE void moveTo(SWindow* window);
 	Q_INVOKABLE void openItem(KFileItem item);
 	Q_INVOKABLE void openRightClickMenuFor(KFileItem item);
+	Q_INVOKABLE void openSelectedFiles();
+	Q_INVOKABLE void duplicateSelectedFiles();
+	Q_INVOKABLE void aliasSelectedFiles();
+	Q_INVOKABLE void trashSelectedFiles();
 };

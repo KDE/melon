@@ -45,5 +45,5 @@ QtApplication {
     Qt.qml.importName: "org.kde.delfenoj"
     Qt.qml.importVersion: "1.0"
 
-	Depends { name: "Qt"; submodules: ["core", "gui", "widgets", "quick", "quickcontrols2", "qml", "sql", "concurrent"] }
+	Depends { name: "Qt"; submodules: ["core", "gui", "gui-private", "widgets", "quick", "quickcontrols2", "qml", "sql", "concurrent"] }
 }

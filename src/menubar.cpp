@@ -6,22 +6,51 @@
 #include <QMenu>
 #include <QApplication>
 #include <KIO/FileUndoManager>
+#include <KFileItemActions>
+#include <KFileItemListProperties>
 
 #include "app.h"
 #include "menubar.h"
 #include "window.h"
 #include "document.h"
 
+
+// SHORTCUT CODE
+#include <QtGui/private/qguiapplication_p.h>
+
+static bool delfenojShortcutContextMatcher(QObject *, Qt::ShortcutContext context)
+{
+    switch (context) {
+    case Qt::ApplicationShortcut:
+        return true;
+    default:
+        return false;
+    }
+}
+
+static void registerShortcut(QAction* action)
+{
+	if (action->shortcut().isEmpty())
+		return;
+
+	auto* pApp = QGuiApplicationPrivate::instance();
+	pApp->shortcutMap.addShortcut(action, action->shortcut(), action->shortcutContext(), delfenojShortcutContextMatcher);
+}
+
+//
+
 struct SMenuBar::Private
 {
 	QScopedPointer<QMenuBar> menuBar;
 	QScopedPointer<KActionCollection> ac;
+	QScopedPointer<KFileItemActions> fileItemActions;
 };
 
 SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 {
 	d->menuBar.reset(new QMenuBar(nullptr));
 	d->ac.reset(new KActionCollection(d->menuBar.get()));
+	d->fileItemActions.reset(new KFileItemActions);
 
 	d->ac->add<QAction>(
 		"about", this, &SMenuBar::about);
@@ -94,7 +123,14 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 #define Menu(name) \
 	{ auto menu = d->menuBar->addMenu(name);
 #define Action(code, name, short) \
-	{ auto action = d->ac->action(code); action->setText(name); action->setShortcut(QKeySequence(short)); menu->addAction(action); }
+	{\
+		auto action = d->ac->action(code);\
+		action->setText(name);\
+		action->setShortcut(QKeySequence(short));\
+		menu->addAction(action);\
+		action->setShortcutContext(Qt::ApplicationShortcut);\
+		registerShortcut(action);\
+	}
 #define Separator menu->addSeparator();
 #define EndMenu }
 
@@ -120,6 +156,9 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 	EndMenu
 
 	Menu(i18n("Edit"))
+		Action("undo", i18n("Undo"), QKeySequence::Undo)
+		Action("redo", i18n("Redo"), QKeySequence::Redo)
+		Separator
 		Action("cut", i18n("Cut"), QKeySequence::Cut)
 		Action("copy", i18n("Copy"), QKeySequence::Copy)
 		Action("paste", i18n("Paste"), QKeySequence::Paste)
@@ -188,7 +227,9 @@ void SMenuBar::newFolder()
 
 void SMenuBar::open()
 {
-	qFatal("Not implemented");
+	ActionForWindow
+
+	swindow->activeDocument()->openSelectedFiles();
 }
 
 void SMenuBar::closeWindow()
@@ -200,17 +241,23 @@ void SMenuBar::closeWindow()
 
 void SMenuBar::duplicate()
 {
-	qFatal("Not implemented");
+	ActionForWindow
+
+	swindow->activeDocument()->duplicateSelectedFiles();
 }
 
 void SMenuBar::makeAlias()
 {
-	qFatal("Not implemented");
+	ActionForWindow
+
+	swindow->activeDocument()->aliasSelectedFiles();
 }
 
 void SMenuBar::moveToTrash()
 {
-	qFatal("Not implemented");
+	ActionForWindow
+
+	swindow->activeDocument()->trashSelectedFiles();
 }
 
 void SMenuBar::undo()
@@ -230,17 +277,21 @@ void SMenuBar::cut()
 
 void SMenuBar::copy()
 {
-	qFatal("Not implemented");
+	ActionForWindow
+
+	swindow->activeDocument()->copy();
 }
 
 void SMenuBar::paste()
 {
-	qFatal("Not implemented");
+	ActionForWindow
+
+	swindow->activeDocument()->paste();
 }
 
 void SMenuBar::selectAll()
 {
-	qFatal("Not implemented");
+	qFatal("not implemented");
 }
 
 void SMenuBar::viewAsIcons()
