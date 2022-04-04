@@ -36,6 +36,7 @@ QQC2.Control {
 		QQC2.TabBar {
 			id: tabBar
 
+			position: QQC2.TabBar.Footer
 			Layout.fillWidth: true
 
 			Repeater {

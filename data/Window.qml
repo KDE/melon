@@ -26,12 +26,6 @@ QQC2.ApplicationWindow {
 		LayoutMirroring.childrenInherit: Qt.application.layoutDirection == Qt.RightToLeft
 		LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
 
-		WindowTabBar {
-			id: tabBar
-			window: window.window
-
-			Layout.fillWidth: true
-		}
 		PageToolBar {
 			document: window.window.documents[tabBar.currentIndex]
 
@@ -61,18 +55,32 @@ QQC2.ApplicationWindow {
 			Layout.fillHeight: true
 		}
 
-		StackLayout {
-			currentIndex: tabBar.currentIndex
+		ColumnLayout {
+			spacing: 0
 
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 
-			Repeater {
-				model: window.window.documents
-				delegate: Page {
-					required property Delfenoj.Document modelData
+			WindowTabBar {
+				id: tabBar
+				window: window.window
 
-					document: modelData
+				Layout.fillWidth: true
+			}
+
+			StackLayout {
+				currentIndex: tabBar.currentIndex
+
+				Layout.fillWidth: true
+				Layout.fillHeight: true
+
+				Repeater {
+					model: window.window.documents
+					delegate: Page {
+						required property Delfenoj.Document modelData
+
+						document: modelData
+					}
 				}
 			}
 		}
