@@ -21,6 +21,7 @@ public:
 	QScopedPointer<QQmlEngine> engine;
 	QScopedPointer<QQmlComponent> windowComponent;
 	QScopedPointer<QQmlComponent> pageComponent;
+	QScopedPointer<QQmlComponent> aboutComponent;
 	KFilePlacesModel* filePlacesModel;
 	SMenuBar* sMenuBar;
 

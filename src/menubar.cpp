@@ -195,7 +195,9 @@ SMenuBar::~SMenuBar()
 
 void SMenuBar::about()
 {
-	qFatal("Not implemented");
+	auto win = qobject_cast<QQuickWindow*>(SApp::instance->aboutComponent->create());
+	win->show();
+	// TODO: delete these windows
 }
 
 void SMenuBar::preferences()

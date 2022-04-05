@@ -38,6 +38,8 @@ QQC2.Page {
 						anchors.left: parent.left
 						anchors.verticalCenter: parent.verticalCenter
 						source: previewer.pixmapValid ? previewer.pixmap : del.decoration
+						width: Kirigami.Units.iconSizes.small
+						height: Kirigami.Units.iconSizes.small
 
 						Delfenoj.Previewer {
 							id: previewer
@@ -96,7 +98,7 @@ QQC2.Page {
 				readonly property var modelIndex: page.document.dirModel.index(del.index, 0)
 
 				text: del.display
-				subtitle: del.fileItem.time(Delfenoj.FileItem.CreationTime).toLocaleString(Locale.ShortFormat)
+				// subtitle: del.fileItem.time(Delfenoj.FileItem.CreationTime).toLocaleString(Locale.ShortFormat)
 			}
 		}
 	}

@@ -14,6 +14,7 @@ QQC2.ToolBar {
     required property int currentIndex
 
     readonly property Delfenoj.Document document: control.window.documents[control.currentIndex]
+    implicitHeight: topPadding + contentItem.implicitHeight + bottomPadding
 
 	contentItem: RowLayout {
         Kirigami.Icon {
@@ -31,6 +32,7 @@ QQC2.ToolBar {
             Layout.alignment: Qt.AlignVCenter
         }
         QQC2.Label {
+            font: Kirigami.Theme.smallFont
             text: i18n("%1 File(s), %2 Folder(s), %3", control.document.numberOfFiles, control.document.numberOfFolders, control.document.dirSize)
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true

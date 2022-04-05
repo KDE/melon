@@ -13,6 +13,9 @@ QQC2.ApplicationWindow {
 
 	required property Delfenoj.Window window
 
+	width: Kirigami.Units.gridUnit * 40
+	height: Kirigami.Units.gridUnit * 20
+
 	Binding {
 		target: window.window
 		property: "activeDocument"
@@ -64,6 +67,7 @@ QQC2.ApplicationWindow {
 			WindowTabBar {
 				id: tabBar
 				window: window.window
+				visible: window.window.documents.length > 1
 
 				Layout.fillWidth: true
 			}

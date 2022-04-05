@@ -1,6 +1,7 @@
 #include <KLocalizedContext>
 #include <QQmlContext>
 #include <KWindowSystem>
+#include <KAboutData>
 
 #include "app.h"
 #include "dbus.h"
@@ -20,6 +21,7 @@ SApp::SApp()
 	engine->rootContext()->setContextObject(new KLocalizedContext(engine.get()));
 	windowComponent.reset(new QQmlComponent(engine.get()));
 	pageComponent.reset(new QQmlComponent(engine.get()));
+	aboutComponent.reset(new QQmlComponent(engine.get()));
 
 	QUrl windowQml("qrc:/Window.qml");
 	QFile windowFile(":/Window.qml");
@@ -31,7 +33,14 @@ SApp::SApp()
 	QFile pageFile(":/Page.qml");
 	Q_ASSERT(pageFile.open(QFile::ReadOnly));
 	const auto pageData = pageFile.readAll();
-	pageComponent->setData(pageData, windowQml);
+	pageComponent->setData(pageData, pageQml);
+
+	QUrl aboutQml("qrc:/AboutDialog.qml");
+	QFile aboutFile(":/AboutDialog.qml");
+	Q_ASSERT(aboutFile.open(QFile::ReadOnly));
+	const auto aboutData = aboutFile.readAll();
+	aboutComponent->setData(aboutData, aboutQml);
+
 	new SOrgFreedesktopFilemanager1(this);
 }
 

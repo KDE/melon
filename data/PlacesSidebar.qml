@@ -13,7 +13,7 @@ QQC2.ScrollView {
 	QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
 
 	Layout.fillHeight: true
-	Layout.preferredWidth: Kirigami.Units.gridUnit*10
+	Layout.preferredWidth: Kirigami.Units.gridUnit*7
 
 	Kirigami.Theme.colorSet: Kirigami.Theme.View
 	background: Rectangle {
@@ -25,7 +25,12 @@ QQC2.ScrollView {
 		model: delfenojApp.placesModel
 		section.property: "group"
 		section.delegate: Kirigami.ListSectionHeader {
+			id: del
+
 			label: section
+			contentItem: QQC2.Label {
+				text: del.label
+			}
 		}
 		delegate: Kirigami.BasicListItem {
 			id: del
@@ -38,6 +43,23 @@ QQC2.ScrollView {
 
 			icon: del.iconName
 			text: del.display
+
+			contentItem: RowLayout {
+				Kirigami.Icon {
+					source: del.iconName
+
+					Layout.preferredWidth: Kirigami.Units.iconSizes.small
+					Layout.preferredHeight: Kirigami.Units.iconSizes.small
+					Layout.alignment: Qt.AlignVCenter
+				}
+				QQC2.Label {
+					font: Kirigami.Theme.smallFont
+					text: del.display
+					elide: Text.ElideRight
+
+					Layout.fillWidth: true
+				}
+			}
 
 			onClicked: view.document.navigator.currentLocationUrl = del.url
 		}
