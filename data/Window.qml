@@ -30,14 +30,20 @@ QQC2.ApplicationWindow {
 		LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
 
 		PageToolBar {
+			visible: delfenojApp.showToolbar
 			document: window.window.documents[tabBar.currentIndex]
 
+			Layout.fillWidth: true
+		}
+		Kirigami.Separator {
+			visible: !delfenojApp.showToolbar
 			Layout.fillWidth: true
 		}
 	}
 	footer: WindowToolBar {
 		window: window.window
 		currentIndex: tabBar.currentIndex
+		visible: delfenojApp.showStatusBar
 
 		LayoutMirroring.childrenInherit: Qt.application.layoutDirection == Qt.RightToLeft
 		LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
@@ -51,10 +57,12 @@ QQC2.ApplicationWindow {
 		LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
 
 		PlacesSidebar {
+			visible: delfenojApp.showSidebar
 			document: window.window.documents[tabBar.currentIndex]
 		}
 
 		Kirigami.Separator {
+			visible: delfenojApp.showSidebar
 			Layout.fillHeight: true
 		}
 

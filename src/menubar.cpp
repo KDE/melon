@@ -182,6 +182,48 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		Action("forward", i18n("Forward"), QKeySequence::Forward)
 		Action("up", i18n("Containing Folder"), "Alt+Up")
 	EndMenu
+
+#define GA(name) d->ac->action(name)
+	{
+		auto evaluate = [act = GA("toggle_sidebar")] {
+			if (sApp->showSidebar())
+				act->setText("Hide Sidebar");
+			else
+				act->setText("Show Sidebar");
+		};
+		evaluate();
+		connect(sApp, &SApp::showSidebarChanged, this, evaluate);
+	}
+	{
+		auto evaluate = [act = GA("toggle_pathbar")] {
+			if (sApp->showPathBar())
+				act->setText("Hide Path Bar");
+			else
+				act->setText("Show Path Bar");
+		};
+		evaluate();
+		connect(sApp, &SApp::showPathBarChanged, this, evaluate);
+	}
+	{
+		auto evaluate = [act = GA("toggle_statusbar")] {
+			if (sApp->showStatusBar())
+				act->setText("Hide Status Bar");
+			else
+				act->setText("Show Status Bar");
+		};
+		evaluate();
+		connect(sApp, &SApp::showStatusBarChanged, this, evaluate);
+	}
+	{
+		auto evaluate = [act = GA("toggle_toolbar")] {
+			if (sApp->showToolbar())
+				act->setText("Hide Toolbar");
+			else
+				act->setText("Show Toolbar");
+		};
+		evaluate();
+		connect(sApp, &SApp::showToolbarChanged, this, evaluate);
+	}
 }
 
 #define ActionForWindow auto window = QGuiApplication::focusWindow();\
@@ -308,22 +350,22 @@ void SMenuBar::viewAsList()
 
 void SMenuBar::togglePathBar()
 {
-	qFatal("Not implemented");
+	sApp->setShowPathBar(!sApp->showPathBar());
 }
 
 void SMenuBar::toggleStatusBar()
 {
-	qFatal("Not implemented");
+	sApp->setShowStatusBar(!sApp->showStatusBar());
 }
 
 void SMenuBar::toggleSidebar()
 {
-	qFatal("Not implemented");
+	sApp->setShowSidebar(!sApp->showSidebar());
 }
 
 void SMenuBar::toggleToolbar()
 {
-	qFatal("Not implemented");
+	sApp->setShowToolbar(!sApp->showToolbar());
 }
 
 void SMenuBar::customiseToolbar()

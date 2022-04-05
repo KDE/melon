@@ -14,9 +14,9 @@ int main(int argc, char *argv[])
 
 	QApplication app(argc, argv);
 	app.setDesktopFileName("org.kde.Delfenoj");
-	SApp sApp;
+	SApp delfenojApp;
 
-	sApp.start();
+	delfenojApp.start();
 
 	return QCoreApplication::exec();
 }

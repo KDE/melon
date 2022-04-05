@@ -8,7 +8,15 @@
 #include "document.h"
 #include "window.h"
 
-SApp::SApp()
+struct SApp::Private
+{
+	bool showSidebar = true;
+	bool showStatusBar = true;
+	bool showToolbar = true;
+	bool showPathBar = true;
+};
+
+SApp::SApp() : QObject(), d(new Private)
 {
 	instance = this;
 
@@ -120,3 +128,60 @@ SApp::swindowForWindow(QWindow* window)
 	}
 	return nullptr;
 }
+
+bool SApp::showSidebar() const
+{
+	return d->showSidebar;
+}
+
+void SApp::setShowSidebar(bool show)
+{
+	if (d->showSidebar == show)
+		return;
+
+	d->showSidebar = show;
+	Q_EMIT showSidebarChanged();
+}
+
+bool SApp::showStatusBar() const
+{
+	return d->showStatusBar;
+}
+
+void SApp::setShowStatusBar(bool show)
+{
+	if (d->showStatusBar == show)
+		return;
+
+	d->showStatusBar = show;
+	Q_EMIT showStatusBarChanged();
+}
+
+bool SApp::showToolbar() const
+{
+	return d->showToolbar;
+}
+
+void SApp::setShowToolbar(bool show)
+{
+	if (d->showToolbar == show)
+		return;
+
+	d->showToolbar = show;
+	Q_EMIT showToolbarChanged();
+}
+
+bool SApp::showPathBar() const
+{
+	return d->showPathBar;
+}
+
+void SApp::setShowPathBar(bool show)
+{
+	if (d->showPathBar == show)
+		return;
+
+	d->showPathBar = show;
+	Q_EMIT showPathBarChanged();
+}
+

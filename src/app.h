@@ -7,11 +7,16 @@
 
 #include "menubar.h"
 
+#define sApp SApp::instance
+
 class SWindow;
 
 struct SApp : public QObject
 {
 	Q_OBJECT
+
+	struct Private;
+	QScopedPointer<Private> d;
 
 public:
 
@@ -35,4 +40,25 @@ public:
 	Q_INVOKABLE void newWindowAtUrl(const QUrl& url);
 	Q_INVOKABLE void ensureShown(const QUrl& url);
 	SWindow* swindowForWindow(QWindow* window);
+
+	Q_PROPERTY(bool showSidebar READ showSidebar WRITE setShowSidebar NOTIFY showSidebarChanged)
+	bool showSidebar() const;
+	void setShowSidebar(bool show);
+	Q_SIGNAL void showSidebarChanged();
+	
+	Q_PROPERTY(bool showStatusBar READ showStatusBar WRITE setShowStatusBar NOTIFY showStatusBarChanged)
+	bool showStatusBar() const;
+	void setShowStatusBar(bool show);
+	Q_SIGNAL void showStatusBarChanged();
+	
+	Q_PROPERTY(bool showToolbar READ showToolbar WRITE setShowToolbar NOTIFY showToolbarChanged)
+	bool showToolbar() const;
+	void setShowToolbar(bool show);
+	Q_SIGNAL void showToolbarChanged();
+	
+	Q_PROPERTY(bool showPathBar READ showPathBar WRITE setShowPathBar NOTIFY showPathBarChanged)
+	bool showPathBar() const;
+	void setShowPathBar(bool show);
+	Q_SIGNAL void showPathBarChanged();
+	
 };
