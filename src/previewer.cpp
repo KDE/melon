@@ -13,6 +13,7 @@ struct SPreviewer::Private
     KIO::PreviewJob* job = nullptr;
     QSize size;
     bool complete = false;
+    bool enabled = true;
 
     void makePixmap();
 };
@@ -27,6 +28,25 @@ SPreviewer::~SPreviewer()
 
 }
 
+bool SPreviewer::enabled() const
+{
+    return d->enabled;    
+}
+
+void SPreviewer::setEnabled(bool enabled)
+{
+    if (enabled == d->enabled)
+        return;
+
+    d->enabled = enabled;
+    Q_EMIT enabledChanged();
+
+    if (!d->enabled) {
+        d->pixmap = QPixmap();
+        Q_EMIT pixmapChanged();
+    }
+}
+
 QPixmap SPreviewer::pixmap() const
 {
     return d->pixmap;
@@ -39,7 +59,7 @@ QSize SPreviewer::size() const
 
 void SPreviewer::Private::makePixmap()
 {
-    if (!complete)
+    if (!complete || !enabled)
         return;
 
     if (job) {
@@ -51,6 +71,9 @@ void SPreviewer::Private::makePixmap()
 
     QObject::connect(job, &KIO::PreviewJob::failed, p, [this](const KFileItem& item) {
         Q_UNUSED(item)
+
+        pixmap = QPixmap();
+        Q_EMIT p->pixmapChanged();
 
         job->deleteLater();
         job = nullptr;

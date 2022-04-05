@@ -30,6 +30,7 @@ QQC2.ScrollView {
 			label: section
 			contentItem: QQC2.Label {
 				text: del.label
+				elide: Text.ElideRight
 			}
 		}
 		delegate: Kirigami.BasicListItem {

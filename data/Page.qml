@@ -6,6 +6,7 @@ import org.kde.kirigami 2.15 as Kirigami
 import org.kde.delfenoj 1.0 as Delfenoj
 import QtGraphicalEffects 1.12
 import QtQml.Models 2.15
+import org.kde.qqc2desktopstyle.private 1.0 as QQC2DesktopStyle
 
 QQC2.Page {
 	id: page
@@ -15,55 +16,33 @@ QQC2.Page {
 	QQC2.ScrollView {
 		anchors.fill: parent
 
-		QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
-
 		Kirigami.Theme.colorSet: Kirigami.Theme.View
 		background: Rectangle {
 			Kirigami.Theme.colorSet: Kirigami.Theme.Window
 			color: Kirigami.Theme.backgroundColor
 		}
 
-		ListView {
+		contentItem: TableView {
+			id: tableView
+
+			property var columnWidths: [10, 4, 7, 5, 6, 6, 10]
+			columnWidthProvider: (column) => columnWidths[column] * Kirigami.Units.gridUnit
+
+			clip: true
 			model: page.document.dirModel
-			activeFocusOnTab: true
-			delegate: Kirigami.BasicListItem {
+			topMargin: headerView.height
+			delegate: QQC2.Control {
 				id: del
 
-				highlighted: page.document.selectionModel.selectedIndexes.includes(del.modelIndex)
-
-				leading: Item {
-					width: icon.width
-					Kirigami.Icon {
-						id: icon
-						anchors.left: parent.left
-						anchors.verticalCenter: parent.verticalCenter
-						source: previewer.pixmapValid ? previewer.pixmap : del.decoration
-						width: Kirigami.Units.iconSizes.small
-						height: Kirigami.Units.iconSizes.small
-
-						Delfenoj.Previewer {
-							id: previewer
-							item: icon
-							fileItem: del.fileItem
-							size: Qt.size(icon.width, icon.height)
-						}
-
-						DragHandler {
-							target: null
-							onActiveChanged: if (active) page.document.startDrag()
-						}
-
-						layer.enabled: true
-						layer.effect: Desaturate {
-							desaturation: {
-								const diff = new Date() - del.fileItem.time(Delfenoj.FileItem.CreationTime)
-								const days = diff/(60 * 60 * 24 * 1000)
-								const power = Math.pow((days / 2000), 3/4)
-								return power
-							}
-						}
-					}
-				}
+				required property var decoration
+				required property var fileItem
+				required property int row
+				required property int column
+				required property string display
+				readonly property var modelIndex: page.document.dirModel.index(row, 0)
+				property bool pooled: false
+				TableView.onPooled: pooled = true
+				TableView.onReused: pooled = false
 
 				TapHandler {
 					acceptedButtons: Qt.RightButton
@@ -90,15 +69,66 @@ QQC2.Page {
 					page.document.openRightClickMenuFor(this.fileItem)
 				}
 
-				required property string display
-				required property var decoration
-				required property var fileItem
-				required property int index
+				background: Rectangle {
+					color: {
+						if (page.document.selectionModel.selectedIndexes.includes(del.modelIndex))
+							return Kirigami.Theme.highlightColor
 
-				readonly property var modelIndex: page.document.dirModel.index(del.index, 0)
+						return (row % 2 == 0) ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
+					}
+				}
+				contentItem: RowLayout {
+					Kirigami.Icon {
+						id: icon
 
-				text: del.display
-				// subtitle: del.fileItem.time(Delfenoj.FileItem.CreationTime).toLocaleString(Locale.ShortFormat)
+						source: previewer.pixmapValid ? previewer.pixmap : del.decoration
+						visible: Boolean(del.decoration)
+
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Kirigami.Units.iconSizes.small
+                        Delfenoj.Previewer {
+                            id: previewer
+                            item: icon
+                            fileItem: del.fileItem
+							enabled: !del.pooled && Boolean(del.decoration)
+                            size: Qt.size(icon.width, icon.height)
+                        }
+
+						DragHandler {
+							target: null
+							onActiveChanged: if (active) page.document.startDrag()
+						}
+
+						layer.enabled: true
+						layer.effect: Desaturate {
+							desaturation: {
+								const diff = new Date() - del.fileItem.time(Delfenoj.FileItem.CreationTime)
+								const days = diff/(60 * 60 * 24 * 1000)
+								const power = Math.pow((days / 2000), 3/4)
+								return power
+							}
+						}
+					}
+					QQC2.Label {
+						text: del.display
+						elide: Text.ElideRight
+						Layout.fillWidth: true
+					}
+				}
+			}
+		}
+	}
+	QQC2.HorizontalHeaderView {
+		id: headerView
+		syncView: tableView
+		clip: true
+		delegate: QQC2.AbstractButton {
+			id: control
+			background: QQC2DesktopStyle.StyleItem {
+				elementType: "header"
+				sunken: control.down
+				hover: control.hovered
+				text: model.display || ""
 			}
 		}
 	}

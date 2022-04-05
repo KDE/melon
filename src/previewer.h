@@ -41,6 +41,11 @@ public:
     void setSize(const QSize& size);
     Q_SIGNAL void sizeChanged();
 
+    Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged REQUIRED)
+    bool enabled() const;
+    void setEnabled(bool enabled);
+    Q_SIGNAL void enabledChanged();
+
     Q_PROPERTY(QQuickItem* item READ item WRITE setItem NOTIFY itemChanged REQUIRED)
     QQuickItem* item() const;
     void setItem(QQuickItem* item);
