@@ -13,6 +13,11 @@ QQC2.Page {
 
 	required property Delfenoj.Document document
 
+	footer: PathBar {
+		visible: delfenojApp.showPathBar
+		document: page.document
+	}
+
 	QQC2.ScrollView {
 		anchors.fill: parent
 

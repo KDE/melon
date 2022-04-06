@@ -17,6 +17,8 @@ class SDocument : public QObject
 	QScopedPointer<Private> d;
 
 	QString fancyPlacesTitle() const;
+	QString fancyNameFor(const QUrl& url) const;
+	void recomputePathSegments();
 
 public:
 	explicit SDocument(SWindow* parent);
@@ -57,6 +59,14 @@ public:
 
 	Q_PROPERTY(bool local READ local NOTIFY statted)
 	bool local() const;
+
+	Q_PROPERTY(QStringList pathSegmentStrings READ pathSegmentStrings NOTIFY pathSegmentChanged)
+	QStringList pathSegmentStrings() const;
+
+	Q_PROPERTY(QList<QUrl> pathSegmentURLs READ pathSegmentURLs NOTIFY pathSegmentChanged)
+	QList<QUrl> pathSegmentURLs() const;
+
+	Q_SIGNAL void pathSegmentChanged();
 
 	Q_SIGNAL void statted();
 

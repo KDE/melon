@@ -33,6 +33,9 @@ struct SDocument::Private
 
 	bool writable = true;
 	bool local = true;
+
+	QStringList pathSegmentStrings;
+	QList<QUrl> pathSegmentURLs;
 };
 
 SDocument::SDocument(SWindow* parent) :
@@ -50,9 +53,11 @@ SDocument::SDocument(const QUrl& in, SWindow* parent) : QObject(parent), d(new P
 	connect(d->dirNavigator, &KCoreUrlNavigator::currentLocationUrlChanged, this, [this]() {
 		d->dirModel->openUrl(d->dirNavigator->currentLocationUrl());
 		Q_EMIT titleChanged();
+		recomputePathSegments();
 		getFileCounts();
 	});
 	d->dirModel->openUrl(d->dirNavigator->currentLocationUrl());
+	recomputePathSegments();
 	getFileCounts();
 }
 
@@ -136,12 +141,74 @@ SWindow* SDocument::window() const
 	return d->window;
 }
 
+void SDocument::recomputePathSegments()
+{
+	const auto url = [u = d->dirNavigator->currentLocationUrl()](int index) {
+		if (index < 0) {
+			index = 0;
+		}
+
+		QUrl url = u;
+		QString path = url.path();
+		if (!path.isEmpty()) {
+			if (index == 0) {
+#ifdef Q_OS_WIN
+				path = path.length() > 1 ? path.left(2) : QDir::rootPath();
+#else
+				path = "/";
+#endif
+			} else {
+				path = path.section('/', 0, index);
+			}
+		}
+
+		url.setPath(path);
+		return url;
+	};
+
+	d->pathSegmentStrings.clear();
+	d->pathSegmentURLs.clear();
+
+	QUrl currentUrl = d->dirNavigator->currentLocationUrl();
+	if (!currentUrl.isValid()) {
+		Q_EMIT pathSegmentChanged();
+		return;
+	}
+
+	const QString path = currentUrl.path();
+	int idx = 0;
+	bool hasNext = true;
+	do {
+		const bool isFirst = idx == 0;
+		const QString dirName = path.section('/', idx, idx);
+		hasNext = isFirst || !dirName.isEmpty();
+
+		const auto dirUrl = url(idx);
+		d->pathSegmentURLs << dirUrl;
+		d->pathSegmentStrings << fancyNameFor(dirUrl);
+		idx++;
+	} while (hasNext);
+	d->pathSegmentStrings.takeLast();
+	d->pathSegmentURLs.takeLast();
+
+	Q_EMIT pathSegmentChanged();
+}
+
+QStringList SDocument::pathSegmentStrings() const
+{
+	return d->pathSegmentStrings;
+}
+
+QList<QUrl> SDocument::pathSegmentURLs() const
+{
+	return d->pathSegmentURLs;
+}
+
 // this logic yoinked from dolphin,
 // copyright (TODO find who wrote that code)
-QString SDocument::fancyPlacesTitle() const
+QString SDocument::fancyNameFor(const QUrl& url) const
 {
 	auto* placesModel = SApp::instance->placesModel();
-	const auto url = d->dirNavigator->currentLocationUrl();
 	const auto pattern = url.adjusted(QUrl::StripTrailingSlash).toString(QUrl::FullyEncoded).append("/?");
 	const auto& matchedPlaces = placesModel->match(
 		placesModel->index(0, 0),
@@ -176,6 +243,12 @@ QString SDocument::fancyPlacesTitle() const
     }
 
     return fileName;
+}
+
+
+QString SDocument::fancyPlacesTitle() const
+{
+	return fancyNameFor(d->dirNavigator->currentLocationUrl());
 }
 
 QString SDocument::title() const
