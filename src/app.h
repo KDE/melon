@@ -19,7 +19,6 @@ struct SApp : public QObject
 	QScopedPointer<Private> d;
 
 public:
-
 	static SApp* instance;
 
 	QList<SWindow*> windows;
@@ -45,20 +44,19 @@ public:
 	bool showSidebar() const;
 	void setShowSidebar(bool show);
 	Q_SIGNAL void showSidebarChanged();
-	
+
 	Q_PROPERTY(bool showStatusBar READ showStatusBar WRITE setShowStatusBar NOTIFY showStatusBarChanged)
 	bool showStatusBar() const;
 	void setShowStatusBar(bool show);
 	Q_SIGNAL void showStatusBarChanged();
-	
+
 	Q_PROPERTY(bool showToolbar READ showToolbar WRITE setShowToolbar NOTIFY showToolbarChanged)
 	bool showToolbar() const;
 	void setShowToolbar(bool show);
 	Q_SIGNAL void showToolbarChanged();
-	
+
 	Q_PROPERTY(bool showPathBar READ showPathBar WRITE setShowPathBar NOTIFY showPathBarChanged)
 	bool showPathBar() const;
 	void setShowPathBar(bool show);
 	Q_SIGNAL void showPathBarChanged();
-	
 };

@@ -6,134 +6,133 @@
 
 struct SPreviewer::Private
 {
-    SPreviewer* p;
-    QPixmap pixmap;
-    KFileItem fileItem;
-    QQuickItem* quickItem = nullptr;
-    KIO::PreviewJob* job = nullptr;
-    QSize size;
-    bool complete = false;
-    bool enabled = true;
+	SPreviewer* p;
+	QPixmap pixmap;
+	KFileItem fileItem;
+	QQuickItem* quickItem = nullptr;
+	KIO::PreviewJob* job = nullptr;
+	QSize size;
+	bool complete = false;
+	bool enabled = true;
 
-    void makePixmap();
+	void makePixmap();
 };
 
 SPreviewer::SPreviewer(QObject* parent) : QObject(parent), d(new Private)
 {
-    d->p = this;
+	d->p = this;
 }
 
 SPreviewer::~SPreviewer()
 {
-
 }
 
 bool SPreviewer::enabled() const
 {
-    return d->enabled;    
+	return d->enabled;
 }
 
 void SPreviewer::setEnabled(bool enabled)
 {
-    if (enabled == d->enabled)
-        return;
+	if (enabled == d->enabled)
+		return;
 
-    d->enabled = enabled;
-    Q_EMIT enabledChanged();
+	d->enabled = enabled;
+	Q_EMIT enabledChanged();
 
-    if (!d->enabled) {
-        d->pixmap = QPixmap();
-        Q_EMIT pixmapChanged();
-    }
+	if (!d->enabled) {
+		d->pixmap = QPixmap();
+		Q_EMIT pixmapChanged();
+	}
 }
 
 QPixmap SPreviewer::pixmap() const
 {
-    return d->pixmap;
+	return d->pixmap;
 }
 
 QSize SPreviewer::size() const
 {
-    return d->size;
+	return d->size;
 }
 
 void SPreviewer::Private::makePixmap()
 {
-    if (!complete || !enabled)
-        return;
+	if (!complete || !enabled)
+		return;
 
-    if (job) {
-        job->deleteLater();
-    }
+	if (job) {
+		job->deleteLater();
+	}
 
-    job = new KIO::PreviewJob(KFileItemList{fileItem}, size);
-    if (quickItem && quickItem->window()) job->setDevicePixelRatio(quickItem->window()->effectiveDevicePixelRatio());
+	job = new KIO::PreviewJob(KFileItemList{fileItem}, size);
+	if (quickItem && quickItem->window()) job->setDevicePixelRatio(quickItem->window()->effectiveDevicePixelRatio());
 
-    QObject::connect(job, &KIO::PreviewJob::failed, p, [this](const KFileItem& item) {
-        Q_UNUSED(item)
+	QObject::connect(job, &KIO::PreviewJob::failed, p, [this](const KFileItem& item) {
+		Q_UNUSED(item)
 
-        pixmap = QPixmap();
-        Q_EMIT p->pixmapChanged();
+		pixmap = QPixmap();
+		Q_EMIT p->pixmapChanged();
 
-        job->deleteLater();
-        job = nullptr;
-    });
-    QObject::connect(job, &KIO::PreviewJob::gotPreview, p, [this](const KFileItem& item, const QPixmap& preview) {
-        Q_UNUSED(item)
+		job->deleteLater();
+		job = nullptr;
+	});
+	QObject::connect(job, &KIO::PreviewJob::gotPreview, p, [this](const KFileItem& item, const QPixmap& preview) {
+		Q_UNUSED(item)
 
-        pixmap = preview;
-        Q_EMIT p->pixmapChanged();
+		pixmap = preview;
+		Q_EMIT p->pixmapChanged();
 
-        job->deleteLater();
-        job = nullptr;
-    });
+		job->deleteLater();
+		job = nullptr;
+	});
 }
 
 void SPreviewer::setSize(const QSize& size)
 {
-    if (d->size == size)
-        return;
+	if (d->size == size)
+		return;
 
-    d->size = size;
-    Q_EMIT sizeChanged();
+	d->size = size;
+	Q_EMIT sizeChanged();
 
-    d->makePixmap();
+	d->makePixmap();
 }
 
 void SPreviewer::componentComplete()
 {
-    d->complete = true;
-    d->makePixmap();
+	d->complete = true;
+	d->makePixmap();
 }
 
 KFileItem SPreviewer::fileItem() const
 {
-    return d->fileItem;
+	return d->fileItem;
 }
 
 void SPreviewer::setFileItem(KFileItem item)
 {
-    if (d->fileItem == item)
-        return;
+	if (d->fileItem == item)
+		return;
 
-    d->fileItem = item;
-    Q_EMIT fileItemChanged();
+	d->fileItem = item;
+	Q_EMIT fileItemChanged();
 
-    d->makePixmap();
+	d->makePixmap();
 }
 
 QQuickItem* SPreviewer::item() const
 {
-    return d->quickItem;
+	return d->quickItem;
 }
 
 void SPreviewer::setItem(QQuickItem* item)
 {
-    if (item == d->quickItem)
-        return;
+	if (item == d->quickItem)
+		return;
 
-    d->quickItem = item;
-    Q_EMIT itemChanged();
+	d->quickItem = item;
+	Q_EMIT itemChanged();
 
-    d->makePixmap();
+	d->makePixmap();
 }

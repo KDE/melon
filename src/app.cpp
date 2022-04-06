@@ -54,19 +54,16 @@ SApp::SApp() : QObject(), d(new Private)
 
 SApp::~SApp()
 {
-
 }
 
 SApp* SApp::instance;
 
-void
-SApp::start()
+void SApp::start()
 {
 	newWindow();
 }
 
-void
-SApp::newWindow()
+void SApp::newWindow()
 {
 	auto win = qobject_cast<QQuickWindow*>(windowComponent->beginCreate(engine->rootContext()));
 	qWarning().noquote() << windowComponent->errorString();
@@ -80,8 +77,7 @@ SApp::newWindow()
 	KWindowSystem::activateWindow(window->displayedIn());
 }
 
-void
-SApp::newWindowAtUrl(const QUrl &url)
+void SApp::newWindowAtUrl(const QUrl& url)
 {
 	auto win = qobject_cast<QQuickWindow*>(windowComponent->beginCreate(engine->rootContext()));
 	qWarning().noquote() << windowComponent->errorString();
@@ -95,8 +91,7 @@ SApp::newWindowAtUrl(const QUrl &url)
 	KWindowSystem::activateWindow(window->displayedIn());
 }
 
-void
-SApp::ensureShown(const QUrl &url)
+void SApp::ensureShown(const QUrl& url)
 {
 	for (auto* window : windows) {
 		auto docs = window->documents();
@@ -184,4 +179,3 @@ void SApp::setShowPathBar(bool show)
 	d->showPathBar = show;
 	Q_EMIT showPathBarChanged();
 }
-

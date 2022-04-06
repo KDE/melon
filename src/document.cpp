@@ -38,8 +38,7 @@ struct SDocument::Private
 	QList<QUrl> pathSegmentURLs;
 };
 
-SDocument::SDocument(SWindow* parent) :
-	SDocument(QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)), parent)
+SDocument::SDocument(SWindow* parent) : SDocument(QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)), parent)
 {
 }
 
@@ -75,8 +74,7 @@ void SDocument::getFileCounts()
 {
 	d->fileCountsJob = KIO::statDetails(
 		d->dirNavigator->currentLocationUrl(),
-		KIO::StatJob::SourceSide, KIO::StatRecursiveSize, KIO::HideProgressInfo
-	);
+		KIO::StatJob::SourceSide, KIO::StatRecursiveSize, KIO::HideProgressInfo);
 	connect(d->fileCountsJob, &KJob::result, this, [job = d->fileCountsJob, this]() {
 		const auto entry = job->statResult();
 		int folderCount = 0;
@@ -118,7 +116,6 @@ void SDocument::getFileCounts()
 
 SDocument::~SDocument()
 {
-
 }
 
 bool SDocument::writable() const
@@ -215,34 +212,33 @@ QString SDocument::fancyNameFor(const QUrl& url) const
 		KFilePlacesModel::UrlRole,
 		QRegularExpression::anchoredPattern(pattern),
 		1,
-		Qt::MatchRegularExpression
-	);
+		Qt::MatchRegularExpression);
 
-    if (!matchedPlaces.isEmpty()) {
-        return placesModel->text(matchedPlaces.first());
-    }
+	if (!matchedPlaces.isEmpty()) {
+		return placesModel->text(matchedPlaces.first());
+	}
 
-    if (!url.isLocalFile()) {
-        QUrl adjustedUrl = url.adjusted(QUrl::StripTrailingSlash);
-        QString caption;
-        if (!adjustedUrl.fileName().isEmpty()) {
-            caption = adjustedUrl.fileName();
-        } else if (!adjustedUrl.path().isEmpty() && adjustedUrl.path() != "/") {
-            caption = adjustedUrl.path();
-        } else if (!adjustedUrl.host().isEmpty()) {
-            caption = adjustedUrl.host();
-        } else {
-            caption = adjustedUrl.toString();
-        }
-        return caption;
-    }
+	if (!url.isLocalFile()) {
+		QUrl adjustedUrl = url.adjusted(QUrl::StripTrailingSlash);
+		QString caption;
+		if (!adjustedUrl.fileName().isEmpty()) {
+			caption = adjustedUrl.fileName();
+		} else if (!adjustedUrl.path().isEmpty() && adjustedUrl.path() != "/") {
+			caption = adjustedUrl.path();
+		} else if (!adjustedUrl.host().isEmpty()) {
+			caption = adjustedUrl.host();
+		} else {
+			caption = adjustedUrl.toString();
+		}
+		return caption;
+	}
 
-    QString fileName = url.adjusted(QUrl::StripTrailingSlash).fileName();
-    if (fileName.isEmpty()) {
-        fileName = '/';
-    }
+	QString fileName = url.adjusted(QUrl::StripTrailingSlash).fileName();
+	if (fileName.isEmpty()) {
+		fileName = '/';
+	}
 
-    return fileName;
+	return fileName;
 }
 
 
@@ -367,39 +363,39 @@ void SDocument::duplicateSelectedFiles()
 	if (files.isEmpty())
 		return;
 
-    const QMimeDatabase db;
+	const QMimeDatabase db;
 
-    // Duplicate all selected items and append "copy" to the end of the file name
-    // but before the filename extension, if present
-    for (const auto &item : files) {
-        const QUrl originalURL  = item.url();
-        const QString originalDirectoryPath = originalURL.adjusted(QUrl::RemoveFilename).path();
-        const QString originalFileName = item.name();
+	// Duplicate all selected items and append "copy" to the end of the file name
+	// but before the filename extension, if present
+	for (const auto& item : files) {
+		const QUrl originalURL = item.url();
+		const QString originalDirectoryPath = originalURL.adjusted(QUrl::RemoveFilename).path();
+		const QString originalFileName = item.name();
 
-        QString extension = db.suffixForFileName(originalFileName);
+		QString extension = db.suffixForFileName(originalFileName);
 
-        QUrl duplicateURL = originalURL;
+		QUrl duplicateURL = originalURL;
 
-        // No extension; new filename is "<oldfilename> copy"
-        if (extension.isEmpty()) {
-            duplicateURL.setPath(originalDirectoryPath + i18nc("<filename> copy", "%1 copy", originalFileName));
-        // There's an extension; new filename is "<oldfilename> copy.<extension>"
-        } else {
-            // Need to add a dot since QMimeDatabase::suffixForFileName() doesn't include it
-            extension = QLatin1String(".") + extension;
-            const QString originalFilenameWithoutExtension = originalFileName.chopped(extension.size());
-            // Preserve file's original filename extension in case the casing differs
-            // from what QMimeDatabase::suffixForFileName() returned
-            const QString originalExtension = originalFileName.right(extension.size());
-            duplicateURL.setPath(originalDirectoryPath + i18nc("<filename> copy", "%1 copy", originalFilenameWithoutExtension) + originalExtension);
-        }
+		// No extension; new filename is "<oldfilename> copy"
+		if (extension.isEmpty()) {
+			duplicateURL.setPath(originalDirectoryPath + i18nc("<filename> copy", "%1 copy", originalFileName));
+			// There's an extension; new filename is "<oldfilename> copy.<extension>"
+		} else {
+			// Need to add a dot since QMimeDatabase::suffixForFileName() doesn't include it
+			extension = QLatin1String(".") + extension;
+			const QString originalFilenameWithoutExtension = originalFileName.chopped(extension.size());
+			// Preserve file's original filename extension in case the casing differs
+			// from what QMimeDatabase::suffixForFileName() returned
+			const QString originalExtension = originalFileName.right(extension.size());
+			duplicateURL.setPath(originalDirectoryPath + i18nc("<filename> copy", "%1 copy", originalFilenameWithoutExtension) + originalExtension);
+		}
 
-        KIO::CopyJob* job = KIO::copyAs(originalURL, duplicateURL);
+		KIO::CopyJob* job = KIO::copyAs(originalURL, duplicateURL);
 
-        if (job) {
-            KIO::FileUndoManager::self()->recordCopyJob(job);
-        }
-    }
+		if (job) {
+			KIO::FileUndoManager::self()->recordCopyJob(job);
+		}
+	}
 }
 
 
@@ -412,39 +408,39 @@ void SDocument::aliasSelectedFiles()
 	if (files.isEmpty())
 		return;
 
-    const QMimeDatabase db;
+	const QMimeDatabase db;
 
-    // Duplicate all selected items and append "copy" to the end of the file name
-    // but before the filename extension, if present
-    for (const auto &item : files) {
-        const QUrl originalURL  = item.url();
-        const QString originalDirectoryPath = originalURL.adjusted(QUrl::RemoveFilename).path();
-        const QString originalFileName = item.name();
+	// Duplicate all selected items and append "copy" to the end of the file name
+	// but before the filename extension, if present
+	for (const auto& item : files) {
+		const QUrl originalURL = item.url();
+		const QString originalDirectoryPath = originalURL.adjusted(QUrl::RemoveFilename).path();
+		const QString originalFileName = item.name();
 
-        QString extension = db.suffixForFileName(originalFileName);
+		QString extension = db.suffixForFileName(originalFileName);
 
-        QUrl aliasURL = originalURL;
+		QUrl aliasURL = originalURL;
 
-        // No extension; new filename is "<oldfilename> alias"
-        if (extension.isEmpty()) {
-            aliasURL.setPath(originalDirectoryPath + i18nc("<filename> alias", "%1 alias", originalFileName));
-        // There's an extension; new filename is "<oldfilename> alias.<extension>"
-        } else {
-            // Need to add a dot since QMimeDatabase::suffixForFileName() doesn't include it
-            extension = QLatin1String(".") + extension;
-            const QString originalFilenameWithoutExtension = originalFileName.chopped(extension.size());
-            // Preserve file's original filename extension in case the casing differs
-            // from what QMimeDatabase::suffixForFileName() returned
-            const QString originalExtension = originalFileName.right(extension.size());
-            aliasURL.setPath(originalDirectoryPath + i18nc("<filename> alias", "%1 alias", originalFilenameWithoutExtension) + originalExtension);
-        }
+		// No extension; new filename is "<oldfilename> alias"
+		if (extension.isEmpty()) {
+			aliasURL.setPath(originalDirectoryPath + i18nc("<filename> alias", "%1 alias", originalFileName));
+			// There's an extension; new filename is "<oldfilename> alias.<extension>"
+		} else {
+			// Need to add a dot since QMimeDatabase::suffixForFileName() doesn't include it
+			extension = QLatin1String(".") + extension;
+			const QString originalFilenameWithoutExtension = originalFileName.chopped(extension.size());
+			// Preserve file's original filename extension in case the casing differs
+			// from what QMimeDatabase::suffixForFileName() returned
+			const QString originalExtension = originalFileName.right(extension.size());
+			aliasURL.setPath(originalDirectoryPath + i18nc("<filename> alias", "%1 alias", originalFilenameWithoutExtension) + originalExtension);
+		}
 
-        KIO::CopyJob* job = KIO::linkAs(originalURL, aliasURL);
+		KIO::CopyJob* job = KIO::linkAs(originalURL, aliasURL);
 
-        if (job) {
-            KIO::FileUndoManager::self()->recordCopyJob(job);
-        }
-    }
+		if (job) {
+			KIO::FileUndoManager::self()->recordCopyJob(job);
+		}
+	}
 }
 
 void SDocument::trashSelectedFiles()
@@ -462,7 +458,7 @@ void SDocument::openRightClickMenuFor(KFileItem item)
 
 	auto copy = KStandardAction::copy(this, &SDocument::copy, this),
 		 // cut = KStandardAction::cut(this, &SDocument::cut, this),
-		 paste = KStandardAction::paste(this, &SDocument::paste, this);
+		paste = KStandardAction::paste(this, &SDocument::paste, this);
 
 	copy->setEnabled(d->selectionModel->hasSelection());
 	menu->addAction(copy);

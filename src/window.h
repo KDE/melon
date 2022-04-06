@@ -24,8 +24,8 @@ public:
 	QList<SDocument*> documents() const;
 	Q_SIGNAL void documentsChanged();
 
-    Q_INVOKABLE void closeDocument(int idx);
-    Q_INVOKABLE void newDocument();
+	Q_INVOKABLE void closeDocument(int idx);
+	Q_INVOKABLE void newDocument();
 
 	Q_PROPERTY(QQuickWindow* displayedIn READ displayedIn NOTIFY displayedInChanged)
 	QQuickWindow* displayedIn() const;
@@ -36,6 +36,5 @@ public:
 	void setActiveDocument(SDocument* document);
 	Q_SIGNAL void activeDocumentChanged();
 
-    Q_INVOKABLE void transferDocumentTo(SDocument* document, SWindow* window);
-
+	Q_INVOKABLE void transferDocumentTo(SDocument* document, SWindow* window);
 };

@@ -10,57 +10,54 @@
 
 SOrgFreedesktopFilemanager1::SOrgFreedesktopFilemanager1(QObject* parent) : QObject(parent)
 {
-    QDBusConnection::sessionBus().registerObject(
-        "/org/freedesktop/FileManager1", this,
-        QDBusConnection::ExportScriptableContents | QDBusConnection::ExportAdaptors
-    );
+	QDBusConnection::sessionBus().registerObject(
+		"/org/freedesktop/FileManager1", this,
+		QDBusConnection::ExportScriptableContents | QDBusConnection::ExportAdaptors);
 
-    auto sessionInterface = QDBusConnection::sessionBus().interface();
-    if (sessionInterface) {
-        sessionInterface->registerService(QStringLiteral("org.freedesktop.FileManager1")).error();
-    }
+	auto sessionInterface = QDBusConnection::sessionBus().interface();
+	if (sessionInterface) {
+		sessionInterface->registerService(QStringLiteral("org.freedesktop.FileManager1")).error();
+	}
 }
 
 SOrgFreedesktopFilemanager1::~SOrgFreedesktopFilemanager1()
 {
-
 }
 
 auto toUriList(const QStringList& strl)
 {
-    const auto cwd = QDir::currentPath();
-    QList<QUrl> urls;
-    urls.reserve(strl.length());
+	const auto cwd = QDir::currentPath();
+	QList<QUrl> urls;
+	urls.reserve(strl.length());
 
-    for (const QString& str : strl) {
-        urls << QUrl::fromUserInput(str, cwd, QUrl::AssumeLocalFile);
-    }
+	for (const QString& str : strl) {
+		urls << QUrl::fromUserInput(str, cwd, QUrl::AssumeLocalFile);
+	}
 
-    return urls;
+	return urls;
 }
 
 void SOrgFreedesktopFilemanager1::ShowFolders(const QStringList& uriList, const QString& startupID)
 {
-    auto urls = toUriList(uriList);
-    KWindowSystem::setCurrentXdgActivationToken(startupID);
-    for (const auto& url : urls)
-        SApp::instance->ensureShown(url);
+	auto urls = toUriList(uriList);
+	KWindowSystem::setCurrentXdgActivationToken(startupID);
+	for (const auto& url : urls)
+		SApp::instance->ensureShown(url);
 }
 
 void SOrgFreedesktopFilemanager1::ShowItems(const QStringList& uriList, const QString& startupID)
 {
-    auto urls = toUriList(uriList);
-    KWindowSystem::setCurrentXdgActivationToken(startupID);
-    for (const auto& url : urls)
-        SApp::instance->ensureShown(url);
+	auto urls = toUriList(uriList);
+	KWindowSystem::setCurrentXdgActivationToken(startupID);
+	for (const auto& url : urls)
+		SApp::instance->ensureShown(url);
 }
 
 void SOrgFreedesktopFilemanager1::ShowItemProperties(const QStringList& uriList, const QString& startupID)
 {
-    Q_UNUSED(uriList)
-    Q_UNUSED(startupID)
+	Q_UNUSED(uriList)
+	Q_UNUSED(startupID)
 
-    // we don't support this yet
-    // auto urls = toUriList(uriList);
+	// we don't support this yet
+	// auto urls = toUriList(uriList);
 }
-

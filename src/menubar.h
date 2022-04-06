@@ -41,5 +41,4 @@ public:
 	void back();
 	void forward();
 	void up();
-
 };
