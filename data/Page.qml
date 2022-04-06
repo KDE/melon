@@ -78,36 +78,14 @@ QQC2.Page {
 					}
 				}
 				contentItem: RowLayout {
-					Kirigami.Icon {
-						id: icon
-
-						source: previewer.pixmapValid ? previewer.pixmap : del.decoration
-						visible: Boolean(del.decoration)
+					FileIcon {
+						document: page.document
+						enablePreview: !del.pooled
+						normalIcon: del.decoration
+						fileItem: del.fileItem
 
 						Layout.preferredWidth: Kirigami.Units.iconSizes.small
 						Layout.preferredHeight: Kirigami.Units.iconSizes.small
-                        Delfenoj.Previewer {
-                            id: previewer
-                            item: icon
-                            fileItem: del.fileItem
-							enabled: !del.pooled && Boolean(del.decoration)
-                            size: Qt.size(icon.width, icon.height)
-                        }
-
-						DragHandler {
-							target: null
-							onActiveChanged: if (active) page.document.startDrag()
-						}
-
-						layer.enabled: true
-						layer.effect: Desaturate {
-							desaturation: {
-								const diff = new Date() - del.fileItem.time(Delfenoj.FileItem.CreationTime)
-								const days = diff/(60 * 60 * 24 * 1000)
-								const power = Math.pow((days / 2000), 3/4)
-								return power
-							}
-						}
 					}
 					QQC2.Label {
 						text: del.display
