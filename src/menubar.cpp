@@ -8,6 +8,7 @@
 #include <KIO/FileUndoManager>
 #include <KFileItemActions>
 #include <KFileItemListProperties>
+#include <KNewFileMenu>
 
 #include "app.h"
 #include "menubar.h"
@@ -40,11 +41,17 @@ static void registerShortcut(QAction* action)
 
 //
 
+#define ActionForWindow \
+	auto window = QGuiApplication::focusWindow(); \
+	auto swindow = SApp::instance->swindowForWindow(window); \
+	if (!swindow) return;
+
 struct SMenuBar::Private
 {
 	QScopedPointer<QMenuBar> menuBar;
 	QScopedPointer<KActionCollection> ac;
 	QScopedPointer<KFileItemActions> fileItemActions;
+	QScopedPointer<KNewFileMenu> newFileMenu;
 };
 
 SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
@@ -52,6 +59,7 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 	d->menuBar.reset(new QMenuBar(nullptr));
 	d->ac.reset(new KActionCollection(d->menuBar.get()));
 	d->fileItemActions.reset(new KFileItemActions);
+	d->newFileMenu.reset(new KNewFileMenu(d->ac.get(), "new_file", this));
 
 	d->ac->add<QAction>(
 		"about", this, &SMenuBar::about);
@@ -68,7 +76,6 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		"new_tab", this, &SMenuBar::newTab);
 	d->ac->add<QAction>(
 		"new_folder", this, &SMenuBar::newFolder);
-
 
 	d->ac->add<QAction>(
 		"open", this, &SMenuBar::open);
@@ -146,9 +153,17 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 	EndMenu
 
 	Menu(i18n("File"))
+		connect(menu, &QMenu::aboutToShow, d->newFileMenu.get(), [this] {
+			ActionForWindow
+
+			d->newFileMenu->setPopupFiles(QList<QUrl> {swindow->activeDocument()->navigator()->currentLocationUrl()});
+			d->newFileMenu->checkUpToDate();
+		});
+
 		Action("new_window", i18n("New Window"), QKeySequence::New)
 		Action("new_tab", i18n("New Tab"), QKeySequence::AddTab)
 		Action("new_folder", i18n("New Folder..."), )
+		Action("new_file", i18n("New File"),)
 		Action("open", i18n("Open"), QKeySequence::Open)
 		Action("close_window", i18n("Close Window"), QKeySequence::Close)
 		Separator
@@ -229,11 +244,6 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		connect(sApp, &SApp::showToolbarChanged, this, evaluate);
 	}
 }
-
-#define ActionForWindow \
-	auto window = QGuiApplication::focusWindow(); \
-	auto swindow = SApp::instance->swindowForWindow(window); \
-	if (!swindow) return;
 
 SMenuBar::~SMenuBar()
 {
