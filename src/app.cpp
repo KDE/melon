@@ -74,6 +74,7 @@ void SApp::newWindow()
 	windowComponent->completeCreate();
 
 	windows << window;
+	connect(window, &SWindow::closing, this, &SApp::windowClosing);
 	KWindowSystem::activateWindow(window->displayedIn());
 }
 
@@ -88,7 +89,14 @@ void SApp::newWindowAtUrl(const QUrl& url)
 	windowComponent->completeCreate();
 
 	windows << window;
+	connect(window, &SWindow::closing, this, &SApp::windowClosing);
 	KWindowSystem::activateWindow(window->displayedIn());
+}
+
+void SApp::windowClosing(SWindow* window)
+{
+	windows.removeAll(window);
+	window->deleteLater();
 }
 
 void SApp::ensureShown(const QUrl& url)

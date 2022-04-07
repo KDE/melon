@@ -17,6 +17,7 @@
 
 // SHORTCUT CODE
 #include <QtGui/private/qguiapplication_p.h>
+#include <QtQuick/private/qquickevents_p_p.h>
 
 static bool delfenojShortcutContextMatcher(QObject*, Qt::ShortcutContext context)
 {
@@ -135,54 +136,56 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 #define Separator menu->addSeparator();
 #define EndMenu }
 
+	// clang-format off
 	Menu(i18n("Delfenoj"))
 		Action("about", i18n("About Delfenoj"), )
-			Separator
-				Action("preferences", i18n("Preferences"), QKeySequence::Preferences)
-					Separator
-						Action("empty_trash", i18n("Empty Trash"), "Ctrl+Shift+Del")
-							EndMenu
+		Separator
+		Action("preferences", i18n("Preferences"), QKeySequence::Preferences)
+		Separator
+		Action("empty_trash", i18n("Empty Trash"), "Ctrl+Shift+Del")
+	EndMenu
 
-							Menu(i18n("File"))
-								Action("new_window", i18n("New Window"), QKeySequence::New)
-									Action("new_tab", i18n("New Tab"), QKeySequence::AddTab)
-										Action("new_folder", i18n("New Folder..."), )
-											Action("open", i18n("Open"), QKeySequence::Open)
-												Action("close_window", i18n("Close Window"), QKeySequence::Close)
-													Separator
-														Action("duplicate", i18n("Duplicate"), "Ctrl+D")
-															Action("make_alias", i18n("Make Alias"), "Ctrl+L")
-																Separator
-																	Action("move_to_trash", i18n("Move To Trash"), "Ctrl+Del")
-																		EndMenu
+	Menu(i18n("File"))
+		Action("new_window", i18n("New Window"), QKeySequence::New)
+		Action("new_tab", i18n("New Tab"), QKeySequence::AddTab)
+		Action("new_folder", i18n("New Folder..."), )
+		Action("open", i18n("Open"), QKeySequence::Open)
+		Action("close_window", i18n("Close Window"), QKeySequence::Close)
+		Separator
+		Action("duplicate", i18n("Duplicate"), "Ctrl+D")
+		Action("make_alias", i18n("Make Alias"), "Ctrl+L")
+		Separator
+		Action("move_to_trash", i18n("Move To Trash"), "Ctrl+Del")
+	EndMenu
 
-																		Menu(i18n("Edit"))
-																			Action("undo", i18n("Undo"), QKeySequence::Undo)
-																				Action("redo", i18n("Redo"), QKeySequence::Redo)
-																					Separator
-																						Action("cut", i18n("Cut"), QKeySequence::Cut)
-																							Action("copy", i18n("Copy"), QKeySequence::Copy)
-																								Action("paste", i18n("Paste"), QKeySequence::Paste)
-																									Action("select_all", i18n("Select All"), QKeySequence::SelectAll)
-																										EndMenu
+	Menu(i18n("Edit"))
+		Action("undo", i18n("Undo"), QKeySequence::Undo)
+		Action("redo", i18n("Redo"), QKeySequence::Redo)
+		Separator
+		Action("cut", i18n("Cut"), QKeySequence::Cut)
+		Action("copy", i18n("Copy"), QKeySequence::Copy)
+		Action("paste", i18n("Paste"), QKeySequence::Paste)
+		Action("select_all", i18n("Select All"), QKeySequence::SelectAll)
+	EndMenu
 
-																										Menu(i18n("View"))
-																											Action("view_as_icons", i18n("as Icons"), )
-																												Action("view_as_list", i18n("as List"), )
-																													Separator
-																														Action("toggle_pathbar", i18n("Show Path Bar"), )
-																															Action("toggle_statusbar", i18n("Show Status Bar"), )
-																																Action("toggle_sidebar", i18n("Show Sidebar"), )
-																																	Separator
-																																		Action("toggle_toolbar", i18n("Show Toolbar"), )
-																																			Action("customise_toolbar", i18n("Customise Toolbar..."), )
-																																				EndMenu
+	Menu(i18n("View"))
+		Action("view_as_icons", i18n("as Icons"), )
+		Action("view_as_list", i18n("as List"), )
+		Separator
+		Action("toggle_pathbar", i18n("Show Path Bar"), )
+		Action("toggle_statusbar", i18n("Show Status Bar"), )
+		Action("toggle_sidebar", i18n("Show Sidebar"), )
+		Separator
+		Action("toggle_toolbar", i18n("Show Toolbar"), )
+		Action("customise_toolbar", i18n("Customise Toolbar..."), )
+	EndMenu
 
-																																				Menu(i18n("Go"))
-																																					Action("back", i18n("Back"), QKeySequence::Back)
-																																						Action("forward", i18n("Forward"), QKeySequence::Forward)
-																																							Action("up", i18n("Containing Folder"), "Alt+Up")
-																																								EndMenu
+	Menu(i18n("Go"))
+		Action("back", i18n("Back"), QKeySequence::Back)
+		Action("forward", i18n("Forward"), QKeySequence::Forward)
+		Action("up", i18n("Containing Folder"), "Alt+Up")
+	EndMenu
+	// clang-format on
 
 #define GA(name) d->ac->action(name)
 	{
@@ -240,7 +243,9 @@ void SMenuBar::about()
 {
 	auto win = qobject_cast<QQuickWindow*>(SApp::instance->aboutComponent->create());
 	win->show();
-	// TODO: delete these windows
+	connect(win, &QQuickWindow::closing, this, [win]() {
+		win->deleteLater();
+	});
 }
 
 void SMenuBar::preferences()

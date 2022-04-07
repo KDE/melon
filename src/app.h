@@ -18,6 +18,8 @@ struct SApp : public QObject
 	struct Private;
 	QScopedPointer<Private> d;
 
+	void windowClosing(SWindow* window);
+
 public:
 	static SApp* instance;
 

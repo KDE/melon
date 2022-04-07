@@ -1,3 +1,5 @@
+#include <QtQuick/private/qquickevents_p_p.h>
+
 #include "window.h"
 #include "document.h"
 
@@ -12,6 +14,7 @@ SWindow::SWindow(QQuickWindow* displayedIn, QObject* parent) : QObject(parent), 
 {
 	d->displayedIn = displayedIn;
 	newDocument();
+	init();
 }
 
 SWindow::SWindow(const QUrl& in, QQuickWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
@@ -19,6 +22,16 @@ SWindow::SWindow(const QUrl& in, QQuickWindow* displayedIn, QObject* parent) : Q
 	d->displayedIn = displayedIn;
 	d->containing << new SDocument(in, this);
 	Q_EMIT documentsChanged();
+	init();
+}
+
+void SWindow::init()
+{
+	auto win = d->displayedIn;
+	connect(win, &QQuickWindow::closing, this, [this, win]() {
+		win->deleteLater();
+		Q_EMIT closing(this);
+	});
 }
 
 SWindow::~SWindow()

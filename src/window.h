@@ -15,6 +15,8 @@ class SWindow : public QObject
 	struct Private;
 	QScopedPointer<Private> d;
 
+	void init();
+
 public:
 	explicit SWindow(QQuickWindow* window, QObject* parent = nullptr);
 	explicit SWindow(const QUrl& in, QQuickWindow* window, QObject* parent = nullptr);
@@ -35,6 +37,8 @@ public:
 	SDocument* activeDocument() const;
 	void setActiveDocument(SDocument* document);
 	Q_SIGNAL void activeDocumentChanged();
+
+	Q_SIGNAL void closing(SWindow* self);
 
 	Q_INVOKABLE void transferDocumentTo(SDocument* document, SWindow* window);
 };
