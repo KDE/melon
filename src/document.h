@@ -66,6 +66,10 @@ public:
 	Q_PROPERTY(QList<QUrl> pathSegmentURLs READ pathSegmentURLs NOTIFY pathSegmentChanged)
 	QList<QUrl> pathSegmentURLs() const;
 
+	Q_PROPERTY(bool loading READ loading NOTIFY loadingChanged)
+	bool loading() const;
+	Q_SIGNAL void loadingChanged();
+
 	Q_SIGNAL void pathSegmentChanged();
 
 	Q_SIGNAL void statted();

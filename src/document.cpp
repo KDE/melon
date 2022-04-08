@@ -9,6 +9,8 @@
 #include <QClipboard>
 #include <QMimeDatabase>
 #include <KLocalizedString>
+#include <KCoreDirLister>
+#include <KDirLister>
 #include <KIO/PasteJob>
 #include <KIO/StatJob>
 #include <KIO/CopyJob>
@@ -33,6 +35,7 @@ struct SDocument::Private
 
 	bool writable = true;
 	bool local = true;
+	bool loading = false;
 
 	QStringList pathSegmentStrings;
 	QList<QUrl> pathSegmentURLs;
@@ -54,6 +57,18 @@ SDocument::SDocument(const QUrl& in, SWindow* parent) : QObject(parent), d(new P
 		Q_EMIT titleChanged();
 		recomputePathSegments();
 		getFileCounts();
+	});
+	connect(d->dirModel->dirLister(), &KCoreDirLister::started, this, [=] {
+		d->loading = true;
+		Q_EMIT loadingChanged();
+	});
+	connect(d->dirModel->dirLister(), &KCoreDirLister::listingDirCompleted, this, [=] {
+		d->loading = false;
+		Q_EMIT loadingChanged();
+	});
+	connect(d->dirModel->dirLister(), qOverload<>(&KCoreDirLister::canceled), this, [=] {
+		d->loading = false;
+		Q_EMIT loadingChanged();
 	});
 	d->dirModel->openUrl(d->dirNavigator->currentLocationUrl());
 	recomputePathSegments();
@@ -478,4 +493,9 @@ void SDocument::openRightClickMenuFor(KFileItem item)
 	if (menu) {
 		menu->deleteLater();
 	}
+}
+
+bool SDocument::loading() const
+{
+	return d->loading;
 }
