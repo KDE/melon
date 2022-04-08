@@ -7,6 +7,8 @@
 
 #include "window.h"
 
+class QQuickDropEvent;
+
 class SDocument : public QObject
 {
 	Q_OBJECT
@@ -83,6 +85,7 @@ public:
 	Q_INVOKABLE void moveTo(SWindow* window);
 	Q_INVOKABLE void openItem(KFileItem item);
 	Q_INVOKABLE void openRightClickMenuFor(KFileItem item);
+	Q_INVOKABLE void drop(QQuickItem* target, QQuickDropEvent* event);
 	Q_INVOKABLE void openSelectedFiles();
 	Q_INVOKABLE void duplicateSelectedFiles();
 	Q_INVOKABLE void aliasSelectedFiles();

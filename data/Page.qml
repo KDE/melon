@@ -18,6 +18,10 @@ QQC2.Page {
 		document: page.document
 	}
 
+	DropArea {
+		anchors.fill: parent
+		onDropped: (event) => page.document.drop(page, event)
+	}
 	QQC2.ScrollView {
 		anchors.fill: parent
 
@@ -49,6 +53,10 @@ QQC2.Page {
 				TableView.onPooled: pooled = true
 				TableView.onReused: pooled = false
 
+				DropArea {
+					anchors.fill: parent
+					onDropped: (event) => page.document.drop(del, event)
+				}
 				TapHandler {
 					acceptedButtons: Qt.RightButton
 					onTapped: doMenu()

@@ -192,7 +192,7 @@ void SApp::setShowPathBar(bool show)
 	Q_EMIT showPathBarChanged();
 }
 
-QString SApp::kaomoji(const QString &str)
+QString SApp::kaomoji(const QString& str)
 {
 	if (d->uuumauma)
 		return "(ﾟ∀ﾟ)";

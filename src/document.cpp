@@ -14,8 +14,15 @@
 #include <KIO/PasteJob>
 #include <KIO/StatJob>
 #include <KIO/CopyJob>
+#include <KIO/DropJob>
 #include <KIO/FileUndoManager>
 #include <KFormat>
+#include <QQuickItem>
+#include <QMimeData>
+
+#define private public
+#include <QtQuick/private/qquickdroparea_p.h>
+#undef private
 
 #include "app.h"
 #include "document.h"
@@ -498,4 +505,32 @@ void SDocument::openRightClickMenuFor(KFileItem item)
 bool SDocument::loading() const
 {
 	return d->loading;
+}
+
+void SDocument::drop(QQuickItem* target, QQuickDropEvent* event)
+{
+	qWarning() << "drop!" << event;
+
+	const QMimeData* mimeData = event->event->mimeData();
+	qWarning() << "mime data" << mimeData;
+	if (mimeData == nullptr) {
+		return;
+	}
+
+	KFileItem item = target->property("fileItem").value<KFileItem>();
+	// const int x = event->x();
+	// const int y = event->y();
+	// const QPoint dropPos = {x, y};
+
+	// auto proposedAction = event->proposedAction();
+	// auto possibleActions = event->supportedActions();
+	// auto buttons = event->event->mouseButtons();
+	// auto modifiers = event->event->keyboardModifiers();
+
+	// auto pos = target->mapToScene(dropPos).toPoint();
+	// pos = target->window()->mapToGlobal(pos);
+	// QDropEvent ev(pos, possibleActions, mimeData, buttons, modifiers);
+	// ev.setDropAction(proposedAction);
+
+	KIO::drop(event->event, item.isDir() ? item.url() : d->dirNavigator->currentLocationUrl());
 }
