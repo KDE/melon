@@ -116,7 +116,7 @@ QQC2.Page {
 		}
 	}
 	Kirigami.PlaceholderMessage {
-		text: `¯\\_(ツ)_/¯`
+		text: delfenojApp.kaomoji(`¯\\_(ツ)_/¯`)
 		explanation: i18n("There are no objects in this directory")
 		visible: tableView.rows === 0 && !page.document.loading
 

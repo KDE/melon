@@ -2,6 +2,8 @@
 #include <QQmlContext>
 #include <KWindowSystem>
 #include <KAboutData>
+#include <QFile>
+#include <QDir>
 
 #include "app.h"
 #include "dbus.h"
@@ -14,10 +16,12 @@ struct SApp::Private
 	bool showStatusBar = true;
 	bool showToolbar = true;
 	bool showPathBar = true;
+	bool uuumauma = false;
 };
 
 SApp::SApp() : QObject(), d(new Private)
 {
+	d->uuumauma = QFile::exists(QDir::homePath() + QDir::separator() + ".ｳｯｰｳｯｰｳﾏｳﾏ");
 	instance = this;
 
 	qRegisterMetaType<QList<SDocument*>>();
@@ -186,4 +190,11 @@ void SApp::setShowPathBar(bool show)
 
 	d->showPathBar = show;
 	Q_EMIT showPathBarChanged();
+}
+
+QString SApp::kaomoji(const QString &str)
+{
+	if (d->uuumauma)
+		return "(ﾟ∀ﾟ)";
+	return str;
 }

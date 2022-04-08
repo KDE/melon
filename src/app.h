@@ -42,6 +42,8 @@ public:
 	Q_INVOKABLE void ensureShown(const QUrl& url);
 	SWindow* swindowForWindow(QWindow* window);
 
+	Q_INVOKABLE QString kaomoji(const QString& str);
+
 	Q_PROPERTY(bool showSidebar READ showSidebar WRITE setShowSidebar NOTIFY showSidebarChanged)
 	bool showSidebar() const;
 	void setShowSidebar(bool show);
