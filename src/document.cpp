@@ -46,13 +46,11 @@ struct SDocument::Private
 
 	QStringList pathSegmentStrings;
 	QList<QUrl> pathSegmentURLs;
+
+	QUuid uuid;
 };
 
-SDocument::SDocument(SWindow* parent) : SDocument(QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)), parent)
-{
-}
-
-SDocument::SDocument(const QUrl& in, SWindow* parent) : QObject(parent), d(new Private)
+void SDocument::preInit(SWindow* parent, const QUrl& in)
 {
 	d->window = parent;
 	d->dirModel = new KDirModel(this);
@@ -77,9 +75,26 @@ SDocument::SDocument(const QUrl& in, SWindow* parent) : QObject(parent), d(new P
 		d->loading = false;
 		Q_EMIT loadingChanged();
 	});
+}
+
+void SDocument::postInit()
+{
+	if (d->uuid.isNull())
+		d->uuid = QUuid::createUuid();
+
 	d->dirModel->openUrl(d->dirNavigator->currentLocationUrl());
 	recomputePathSegments();
 	getFileCounts();
+}
+
+SDocument::SDocument(SWindow* parent) : SDocument(QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)), parent)
+{
+}
+
+SDocument::SDocument(const QUrl& in, SWindow* parent) : QObject(parent), d(new Private)
+{
+	preInit(parent, in);
+	postInit();
 }
 
 int SDocument::numberOfFiles() const
@@ -533,4 +548,26 @@ void SDocument::drop(QQuickItem* target, QQuickDropEvent* event)
 	// ev.setDropAction(proposedAction);
 
 	KIO::drop(event->event, item.isDir() ? item.url() : d->dirNavigator->currentLocationUrl());
+}
+
+SDocument::SDocument(const KConfigGroup& config, SWindow* parent) : QObject(parent), d(new Private)
+{
+	const auto homeDir = QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+
+	preInit(parent, config.readEntry<QUrl>("currentUrl", homeDir));
+
+	d->uuid = config.readEntry<QUuid>("id", QUuid::createUuid());
+
+	postInit();
+}
+
+void SDocument::saveTo(KConfigGroup& config) const
+{
+	config.writeEntry("currentUrl", d->dirNavigator->currentLocationUrl());
+	config.writeEntry("id", d->uuid);
+}
+
+QUuid SDocument::id() const
+{
+	return d->uuid;
 }

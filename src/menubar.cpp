@@ -71,6 +71,9 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		"empty_trash", this, &SMenuBar::emptyTrash);
 
 	d->ac->add<QAction>(
+		"quit", qApp, &QGuiApplication::quit);
+
+	d->ac->add<QAction>(
 		"new_window", this, &SMenuBar::newWindow);
 	d->ac->add<QAction>(
 		"new_tab", this, &SMenuBar::newTab);
@@ -150,6 +153,8 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		Action("preferences", i18n("Preferences"), QKeySequence::Preferences)
 		Separator
 		Action("empty_trash", i18n("Empty Trash"), "Ctrl+Shift+Del")
+		Separator
+		Action("quit", i18n("Quit Delfenoj"), QKeySequence::Quit)
 	EndMenu
 
 	Menu(i18n("File"))

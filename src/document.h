@@ -21,6 +21,8 @@ class SDocument : public QObject
 	QString fancyPlacesTitle() const;
 	QString fancyNameFor(const QUrl& url) const;
 	void recomputePathSegments();
+	void preInit(SWindow* parent, const QUrl& in);
+	void postInit();
 
 public:
 	explicit SDocument(SWindow* parent);
@@ -90,4 +92,9 @@ public:
 	Q_INVOKABLE void duplicateSelectedFiles();
 	Q_INVOKABLE void aliasSelectedFiles();
 	Q_INVOKABLE void trashSelectedFiles();
+
+	// persistence functionality
+	explicit SDocument(const KConfigGroup& config, SWindow* parent);
+	void saveTo(KConfigGroup& configGroup) const;
+	QUuid id() const;
 };

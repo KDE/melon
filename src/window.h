@@ -3,6 +3,7 @@
 #include <QQuickWindow>
 #include <KDirModel>
 #include <KIO/KCoreUrlNavigator>
+#include <KConfigGroup>
 
 class SDocument;
 
@@ -41,4 +42,10 @@ public:
 	Q_SIGNAL void closing(SWindow* self);
 
 	Q_INVOKABLE void transferDocumentTo(SDocument* document, SWindow* window);
+
+	// persistence functionality
+	explicit SWindow(const KConfigGroup& config, QQuickWindow* window, QObject* parent = nullptr);
+	void afterComponentComplete(const KConfigGroup& config);
+	void saveTo(KConfigGroup& configGroup) const;
+	QUuid id() const;
 };

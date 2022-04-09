@@ -37,6 +37,8 @@ public:
 	SApp();
 	~SApp();
 	void start();
+	void load();
+	void save();
 	Q_INVOKABLE void newWindow();
 	Q_INVOKABLE void newWindowAtUrl(const QUrl& url);
 	Q_INVOKABLE void ensureShown(const QUrl& url);

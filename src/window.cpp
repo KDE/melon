@@ -1,3 +1,6 @@
+#include <KWindowConfig>
+#include <QUuid>
+#include <ConversionCheck>
 #include <QtQuick/private/qquickevents_p_p.h>
 
 #include "window.h"
@@ -8,6 +11,7 @@ struct SWindow::Private
 	QQuickWindow* displayedIn;
 	QList<SDocument*> containing;
 	SDocument* activeDocument = nullptr;
+	QUuid uuid;
 };
 
 SWindow::SWindow(QQuickWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
@@ -25,8 +29,54 @@ SWindow::SWindow(const QUrl& in, QQuickWindow* displayedIn, QObject* parent) : Q
 	init();
 }
 
+SWindow::SWindow(const KConfigGroup& config, QQuickWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
+{
+	d->displayedIn = displayedIn;
+	d->uuid = config.readEntry<QUuid>("id", QUuid::createUuid());
+
+	KWindowConfig::restoreWindowPosition(d->displayedIn, config);
+	KWindowConfig::restoreWindowSize(d->displayedIn, config);
+
+	for (const auto& groupName : config.groupList()) {
+		if (!groupName.startsWith("document")) {
+			continue;
+		}
+		const auto group = config.group(groupName);
+
+		d->containing << new SDocument(group, this);
+	}
+
+	Q_EMIT documentsChanged();
+	init();
+}
+
+void SWindow::afterComponentComplete(const KConfigGroup& config)
+{
+	KWindowConfig::restoreWindowPosition(d->displayedIn, config);
+	KWindowConfig::restoreWindowSize(d->displayedIn, config);
+}
+
+void SWindow::saveTo(KConfigGroup& config) const
+{
+	KWindowConfig::saveWindowPosition(d->displayedIn, config);
+	KWindowConfig::saveWindowSize(d->displayedIn, config);
+
+	for (const auto* document : d->containing) {
+		auto subgroup = config.group("document-" + document->id().toString(QUuid::WithoutBraces));
+		document->saveTo(subgroup);
+	}
+}
+
+QUuid SWindow::id() const
+{
+	return d->uuid;
+}
+
 void SWindow::init()
 {
+	if (d->uuid.isNull())
+		d->uuid = QUuid::createUuid();
+
 	auto win = d->displayedIn;
 	connect(win, &QQuickWindow::closing, this, [this, win]() {
 		win->deleteLater();

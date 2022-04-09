@@ -4,8 +4,12 @@
 #include <KAboutData>
 #include <QFile>
 #include <QDir>
+#include <KSharedConfig>
+#include <QUuid>
+#include <QGuiApplication>
 
 #include "app.h"
+#include "conversioncheck.h"
 #include "dbus.h"
 #include "document.h"
 #include "window.h"
@@ -17,10 +21,12 @@ struct SApp::Private
 	bool showToolbar = true;
 	bool showPathBar = true;
 	bool uuumauma = false;
+	KSharedConfigPtr config;
 };
 
 SApp::SApp() : QObject(), d(new Private)
 {
+	d->config = KSharedConfig::openConfig();
 	d->uuumauma = QFile::exists(QDir::homePath() + QDir::separator() + ".ｳｯｰｳｯｰｳﾏｳﾏ");
 	instance = this;
 
@@ -53,6 +59,8 @@ SApp::SApp() : QObject(), d(new Private)
 	const auto aboutData = aboutFile.readAll();
 	aboutComponent->setData(aboutData, aboutQml);
 
+	connect(qApp, &QGuiApplication::aboutToQuit, this, &SApp::save);
+
 	new SOrgFreedesktopFilemanager1(this);
 }
 
@@ -64,7 +72,52 @@ SApp* SApp::instance;
 
 void SApp::start()
 {
-	newWindow();
+	bool hasConfig = false;
+	for (const auto& group : d->config->groupList())
+		if (group.startsWith("window-")) {
+			hasConfig = true;
+			break;
+		}
+
+	if (hasConfig)
+		load();
+	else
+		newWindow();
+}
+
+void SApp::load()
+{
+	for (const auto& group : d->config->groupList()) {
+		if (!group.startsWith("window-"))
+			continue;
+
+		auto subgroup = d->config->group(group);
+
+		auto win = qobject_cast<QQuickWindow*>(windowComponent->beginCreate(engine->rootContext()));
+		qWarning().noquote() << windowComponent->errorString();
+
+		auto window = new SWindow(subgroup, win, engine.get());
+
+		windowComponent->setInitialProperties(win, {{"window", QVariant::fromValue(window)}});
+		windowComponent->completeCreate();
+
+		window->afterComponentComplete(subgroup);
+
+		windows << window;
+		connect(window, &SWindow::closing, this, &SApp::windowClosing);
+	}
+}
+
+void SApp::save()
+{
+	for (const auto& group : d->config->groupList())
+		if (group.startsWith("window-"))
+			d->config->deleteGroup(group);
+
+	for (const auto* window : windows) {
+		auto subgroup = d->config->group("window-" + window->id().toString(QUuid::WithoutBraces));
+		window->saveTo(subgroup);
+	}
 }
 
 void SApp::newWindow()
