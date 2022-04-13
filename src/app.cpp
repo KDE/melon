@@ -24,11 +24,21 @@ struct SApp::Private
 	KSharedConfigPtr config;
 };
 
+
+SApp* SApp::instance()
+{
+	static SApp* sAppInstance = nullptr;
+	if (sAppInstance == nullptr) {
+		sAppInstance = (SApp*)malloc(sizeof(SApp));
+		new (sAppInstance) SApp;
+	}
+	return sAppInstance;
+}
+
 SApp::SApp() : QObject(), d(new Private)
 {
 	d->config = KSharedConfig::openConfig();
 	d->uuumauma = QFile::exists(QDir::homePath() + QDir::separator() + ".ｳｯｰｳｯｰｳﾏｳﾏ");
-	instance = this;
 
 	qRegisterMetaType<QList<SDocument*>>();
 
@@ -59,66 +69,42 @@ SApp::SApp() : QObject(), d(new Private)
 	const auto aboutData = aboutFile.readAll();
 	aboutComponent->setData(aboutData, aboutQml);
 
-	connect(qApp, &QGuiApplication::aboutToQuit, this, &SApp::save);
-
 	new SOrgFreedesktopFilemanager1(this);
 }
 
 SApp::~SApp()
 {
+	qWarning() << "self destruct";
 }
-
-SApp* SApp::instance;
 
 void SApp::start()
 {
-	bool hasConfig = false;
-	for (const auto& group : d->config->groupList())
-		if (group.startsWith("window-")) {
-			hasConfig = true;
-			break;
-		}
-
-	if (hasConfig)
-		load();
-	else
+	if (windows.isEmpty())
 		newWindow();
 }
 
-void SApp::load()
-{
-	for (const auto& group : d->config->groupList()) {
-		if (!group.startsWith("window-"))
-			continue;
+// void SApp::load()
+// {
+// 	for (const auto& group : d->config->groupList()) {
+// 		if (!group.startsWith("window-"))
+// 			continue;
 
-		auto subgroup = d->config->group(group);
+// 		auto subgroup = d->config->group(group);
 
-		auto win = qobject_cast<QQuickWindow*>(windowComponent->beginCreate(engine->rootContext()));
-		qWarning().noquote() << windowComponent->errorString();
+// 		auto win = qobject_cast<QQuickWindow*>(windowComponent->beginCreate(engine->rootContext()));
+// 		qWarning().noquote() << windowComponent->errorString();
 
-		auto window = new SWindow(subgroup, win, engine.get());
+// 		auto window = new SWindow(subgroup, win, engine.get());
 
-		windowComponent->setInitialProperties(win, {{"window", QVariant::fromValue(window)}});
-		windowComponent->completeCreate();
+// 		windowComponent->setInitialProperties(win, {{"window", QVariant::fromValue(window)}});
+// 		windowComponent->completeCreate();
 
-		window->afterComponentComplete(subgroup);
+// 		window->afterComponentComplete(subgroup);
 
-		windows << window;
-		connect(window, &SWindow::closing, this, &SApp::windowClosing);
-	}
-}
-
-void SApp::save()
-{
-	for (const auto& group : d->config->groupList())
-		if (group.startsWith("window-"))
-			d->config->deleteGroup(group);
-
-	for (const auto* window : windows) {
-		auto subgroup = d->config->group("window-" + window->id().toString(QUuid::WithoutBraces));
-		window->saveTo(subgroup);
-	}
-}
+// 		windows << window;
+// 		connect(window, &SWindow::closing, this, &SApp::windowClosing);
+// 	}
+// }
 
 void SApp::newWindow()
 {

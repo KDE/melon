@@ -43,7 +43,7 @@ static void registerShortcut(QAction* action)
 
 #define ActionForWindow \
 	auto window = QGuiApplication::focusWindow(); \
-	auto swindow = SApp::instance->swindowForWindow(window); \
+	auto swindow = sApp->swindowForWindow(window); \
 	if (!swindow) return;
 
 struct SMenuBar::Private
@@ -256,7 +256,7 @@ SMenuBar::~SMenuBar()
 
 void SMenuBar::about()
 {
-	auto win = qobject_cast<QQuickWindow*>(SApp::instance->aboutComponent->create());
+	auto win = qobject_cast<QQuickWindow*>(sApp->aboutComponent->create());
 	win->show();
 	connect(win, &QQuickWindow::closing, this, [win]() {
 		win->deleteLater();
@@ -275,7 +275,7 @@ void SMenuBar::emptyTrash()
 
 void SMenuBar::newWindow()
 {
-	SApp::instance->newWindow();
+	sApp->newWindow();
 }
 
 void SMenuBar::newTab()

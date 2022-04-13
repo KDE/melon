@@ -42,7 +42,7 @@ void SOrgFreedesktopFilemanager1::ShowFolders(const QStringList& uriList, const 
 	auto urls = toUriList(uriList);
 	KWindowSystem::setCurrentXdgActivationToken(startupID);
 	for (const auto& url : urls)
-		SApp::instance->ensureShown(url);
+		sApp->ensureShown(url);
 }
 
 void SOrgFreedesktopFilemanager1::ShowItems(const QStringList& uriList, const QString& startupID)
@@ -50,7 +50,7 @@ void SOrgFreedesktopFilemanager1::ShowItems(const QStringList& uriList, const QS
 	auto urls = toUriList(uriList);
 	KWindowSystem::setCurrentXdgActivationToken(startupID);
 	for (const auto& url : urls)
-		SApp::instance->ensureShown(url);
+		sApp->ensureShown(url);
 }
 
 void SOrgFreedesktopFilemanager1::ShowItemProperties(const QStringList& uriList, const QString& startupID)

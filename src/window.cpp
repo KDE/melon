@@ -5,6 +5,7 @@
 
 #include "window.h"
 #include "document.h"
+#include "app.h"
 
 struct SWindow::Private
 {
@@ -29,10 +30,10 @@ SWindow::SWindow(const QUrl& in, QQuickWindow* displayedIn, QObject* parent) : Q
 	init();
 }
 
-SWindow::SWindow(const KConfigGroup& config, QQuickWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
+SWindow::SWindow(QUuid id, const KConfigGroup& config, QQuickWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
 {
 	d->displayedIn = displayedIn;
-	d->uuid = config.readEntry<QUuid>("id", QUuid::createUuid());
+	d->uuid = id;
 
 	KWindowConfig::restoreWindowPosition(d->displayedIn, config);
 	KWindowConfig::restoreWindowSize(d->displayedIn, config);
@@ -56,7 +57,7 @@ void SWindow::afterComponentComplete(const KConfigGroup& config)
 	KWindowConfig::restoreWindowSize(d->displayedIn, config);
 }
 
-void SWindow::saveTo(KConfigGroup& config) const
+NGSavable::SaveInformation SWindow::save(KConfigGroup& config) const
 {
 	KWindowConfig::saveWindowPosition(d->displayedIn, config);
 	KWindowConfig::saveWindowSize(d->displayedIn, config);
@@ -65,9 +66,11 @@ void SWindow::saveTo(KConfigGroup& config) const
 		auto subgroup = config.group("document-" + document->id().toString(QUuid::WithoutBraces));
 		document->saveTo(subgroup);
 	}
+
+	return SaveInformation{"SWindowRestorer*", true};
 }
 
-QUuid SWindow::id() const
+QUuid SWindow::identifier() const
 {
 	return d->uuid;
 }
@@ -76,6 +79,8 @@ void SWindow::init()
 {
 	if (d->uuid.isNull())
 		d->uuid = QUuid::createUuid();
+
+	qApp->registerSavable(this);
 
 	auto win = d->displayedIn;
 	connect(win, &QQuickWindow::closing, this, [this, win]() {
@@ -86,6 +91,7 @@ void SWindow::init()
 
 SWindow::~SWindow()
 {
+	qApp->unregisterSavable(this);
 }
 
 QList<SDocument*> SWindow::documents() const

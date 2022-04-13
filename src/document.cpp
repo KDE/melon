@@ -242,7 +242,7 @@ QList<QUrl> SDocument::pathSegmentURLs() const
 // copyright (TODO find who wrote that code)
 QString SDocument::fancyNameFor(const QUrl& url) const
 {
-	auto* placesModel = SApp::instance->placesModel();
+	auto* placesModel = sApp->placesModel();
 	const auto pattern = url.adjusted(QUrl::StripTrailingSlash).toString(QUrl::FullyEncoded).append("/?");
 	const auto& matchedPlaces = placesModel->match(
 		placesModel->index(0, 0),

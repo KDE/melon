@@ -1,13 +1,16 @@
 #pragma once
 
+#include "NGAppMain.h"
 #include <QQuickWindow>
 #include <KDirModel>
 #include <KIO/KCoreUrlNavigator>
 #include <KConfigGroup>
 
+#include <NGLib.h>
+
 class SDocument;
 
-class SWindow : public QObject
+class SWindow : public QObject, public NGSavable
 {
 	Q_OBJECT
 	QML_NAMED_ELEMENT(Window)
@@ -44,8 +47,9 @@ public:
 	Q_INVOKABLE void transferDocumentTo(SDocument* document, SWindow* window);
 
 	// persistence functionality
-	explicit SWindow(const KConfigGroup& config, QQuickWindow* window, QObject* parent = nullptr);
+	explicit SWindow(QUuid id, const KConfigGroup& config, QQuickWindow* window, QObject* parent = nullptr);
 	void afterComponentComplete(const KConfigGroup& config);
-	void saveTo(KConfigGroup& configGroup) const;
-	QUuid id() const;
+
+	NGSavable::SaveInformation save(KConfigGroup& configGroup) const override;
+	QUuid identifier() const override;
 };

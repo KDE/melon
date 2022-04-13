@@ -7,8 +7,6 @@
 
 #include "menubar.h"
 
-#define sApp SApp::instance
-
 class SWindow;
 
 struct SApp : public QObject
@@ -18,10 +16,9 @@ struct SApp : public QObject
 	struct Private;
 	QScopedPointer<Private> d;
 
-	void windowClosing(SWindow* window);
 
 public:
-	static SApp* instance;
+	static SApp* instance();
 
 	QList<SWindow*> windows;
 	QScopedPointer<QQmlEngine> engine;
@@ -37,12 +34,11 @@ public:
 	SApp();
 	~SApp();
 	void start();
-	void load();
-	void save();
 	Q_INVOKABLE void newWindow();
 	Q_INVOKABLE void newWindowAtUrl(const QUrl& url);
 	Q_INVOKABLE void ensureShown(const QUrl& url);
 	SWindow* swindowForWindow(QWindow* window);
+	void windowClosing(SWindow* window);
 
 	Q_INVOKABLE QString kaomoji(const QString& str);
 
@@ -66,3 +62,5 @@ public:
 	void setShowPathBar(bool show);
 	Q_SIGNAL void showPathBarChanged();
 };
+
+#define sApp SApp::instance()
