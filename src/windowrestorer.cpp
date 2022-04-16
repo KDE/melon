@@ -28,4 +28,4 @@ void SWindowRestorer::restore(QUuid id, const KConfigGroup& state, CompletionHan
 	completionHandler();
 }
 
-NGMetaTypeRegisterer<SWindowRestorer*> registerer;
+static NGMetaTypeRegisterer<SWindowRestorer*> registerer;

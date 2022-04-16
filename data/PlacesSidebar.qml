@@ -33,17 +33,44 @@ QQC2.ScrollView {
 				elide: Text.ElideRight
 			}
 		}
-		delegate: Kirigami.BasicListItem {
+		delegate: QQC2.Control {
 			id: del
 
 			required property string iconName
 			required property string display
+			required property var index
 			required property url url
 
-			highlighted: false
+			background: ListItemBackground {
+				hovered: hoverHandler.hovered
+				pressed: tapHandler.pressed
+				item: del
+			}
 
-			icon: del.iconName
-			text: del.display
+			width: parent && parent.width > 0 ? parent.width : implicitWidth
+			Layout.fillWidth: true
+
+			HoverHandler {
+				id: hoverHandler
+			}
+			TapHandler {
+				id: tapHandler
+				onTapped: view.document.navigator.currentLocationUrl = del.url
+			}
+			DragHandler {
+				target: null
+				onActiveChanged: if (active) dragThing.startDrag()
+			}
+			Delfenoj.DragThing {
+				id: dragThing
+				Delfenoj.ModelWrapper {
+					id: modelWrapper
+					model: delfenojApp.placesModel
+				}
+				mimeData: () => modelWrapper.mimeData([delfenojApp.placesModel.index(del.index, 0)])
+				parent: del
+				anchors.fill: parent
+			}
 
 			contentItem: RowLayout {
 				Kirigami.Icon {
@@ -61,8 +88,6 @@ QQC2.ScrollView {
 					Layout.fillWidth: true
 				}
 			}
-
-			onClicked: view.document.navigator.currentLocationUrl = del.url
 		}
 	}
 }
