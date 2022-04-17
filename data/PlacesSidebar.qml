@@ -49,6 +49,9 @@ QQC2.ScrollView {
 			required property string display
 			required property var index
 			required property url url
+			required property bool isSetupNeeded
+			required property bool isTeardownAllowed
+			required property bool isEjectAllowed
 
 			width: parent && parent.width > 0 ? parent.width : implicitWidth
 			Layout.fillWidth: true
@@ -156,6 +159,21 @@ QQC2.ScrollView {
 					elide: Text.ElideRight
 
 					Layout.fillWidth: true
+				}
+				SmallIconButton {
+					icon.name: "media-mount"
+					visible: del.isSetupNeeded
+					onClicked: delfenojApp.placesModel.requestSetup(delfenojApp.placesModel.index(del.index, 0))
+				}
+				SmallIconButton {
+					icon.name: "media-eject"
+					visible: del.isTeardownAllowed && !del.isEjectAllowed
+					onClicked: delfenojApp.placesModel.requestTeardown(delfenojApp.placesModel.index(del.index, 0))
+				}
+				SmallIconButton {
+					icon.name: "media-eject"
+					visible: del.isEjectAllowed
+					onClicked: delfenojApp.placesModel.requestEject(delfenojApp.placesModel.index(del.index, 0))
 				}
 			}
 		}
