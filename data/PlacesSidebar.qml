@@ -3,12 +3,12 @@ import QtQuick.Window 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15 as QQC2
 import org.kde.kirigami 2.15 as Kirigami
-import org.kde.delfenoj 1.0 as Delfenoj
+import org.kde.melon 1.0 as Melon
 
 QQC2.ScrollView {
 	id: view
 
-	required property Delfenoj.Document document
+	required property Melon.Document document
 
 	QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
 
@@ -24,12 +24,12 @@ QQC2.ScrollView {
 	readonly property int betweenTargetSize: 12
 
 	ListView {
-		model: delfenojApp.placesModel
+		model: melonApp.placesModel
 		section.property: "group"
-		Delfenoj.BeaconController {
+		Melon.BeaconController {
 			id: beaconController
 			anchors.fill: parent
-			delegate: Delfenoj.PlacesDelegate {
+			delegate: Melon.PlacesDelegate {
 
 			}
 		}
@@ -56,7 +56,7 @@ QQC2.ScrollView {
 			width: parent && parent.width > 0 ? parent.width : implicitWidth
 			Layout.fillWidth: true
 
-			Delfenoj.Beacon {
+			Melon.Beacon {
 				id: aboveBeacon
 
 				controller: beaconController
@@ -68,7 +68,7 @@ QQC2.ScrollView {
 				anchors.right: parent.right
 			}
 
-			Delfenoj.Beacon {
+			Melon.Beacon {
 				id: belowBeacon
 
 				controller: beaconController
@@ -80,7 +80,7 @@ QQC2.ScrollView {
 				anchors.right: parent.right
 			}
 
-			Delfenoj.Beacon {
+			Melon.Beacon {
 				id: onBeacon
 
 				controller: beaconController
@@ -129,13 +129,13 @@ QQC2.ScrollView {
 				target: null
 				onActiveChanged: if (active) dragThing.startDrag()
 			}
-			Delfenoj.DragThing {
+			Melon.DragThing {
 				id: dragThing
-				Delfenoj.ModelWrapper {
+				Melon.ModelWrapper {
 					id: modelWrapper
-					model: delfenojApp.placesModel
+					model: melonApp.placesModel
 				}
-				mimeData: () => modelWrapper.mimeData([delfenojApp.placesModel.index(del.index, 0)])
+				mimeData: () => modelWrapper.mimeData([melonApp.placesModel.index(del.index, 0)])
 				parent: del
 				anchors.fill: parent
 			}
@@ -163,17 +163,17 @@ QQC2.ScrollView {
 				SmallIconButton {
 					icon.name: "media-mount"
 					visible: del.isSetupNeeded
-					onClicked: delfenojApp.placesModel.requestSetup(delfenojApp.placesModel.index(del.index, 0))
+					onClicked: melonApp.placesModel.requestSetup(melonApp.placesModel.index(del.index, 0))
 				}
 				SmallIconButton {
 					icon.name: "media-eject"
 					visible: del.isTeardownAllowed && !del.isEjectAllowed
-					onClicked: delfenojApp.placesModel.requestTeardown(delfenojApp.placesModel.index(del.index, 0))
+					onClicked: melonApp.placesModel.requestTeardown(melonApp.placesModel.index(del.index, 0))
 				}
 				SmallIconButton {
 					icon.name: "media-eject"
 					visible: del.isEjectAllowed
-					onClicked: delfenojApp.placesModel.requestEject(delfenojApp.placesModel.index(del.index, 0))
+					onClicked: melonApp.placesModel.requestEject(melonApp.placesModel.index(del.index, 0))
 				}
 			}
 		}

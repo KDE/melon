@@ -1,7 +1,7 @@
 import qbs.Process
 
 QtApplication {
-	name: "org.kde.Delfenoj"
+	name: "org.kde.Melon"
 	files: [
 		"*.cpp",
 		"*.h",
@@ -44,7 +44,7 @@ QtApplication {
 		Qt.core.resourcePrefix: "/"
 	}
 
-	Qt.qml.importName: "org.kde.delfenoj"
+	Qt.qml.importName: "org.kde.melon"
 	Qt.qml.importVersion: "1.0"
 
 	Depends { name: "Qt"; submodules: ["core", "gui", "gui-private", "widgets", "quick", "quick-private", "quickcontrols2", "qml", "sql", "concurrent"] }

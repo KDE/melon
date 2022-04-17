@@ -3,10 +3,10 @@ import Qt.labs.platform 1.1
 
 MenuBar {
 	Menu {
-		title: i18n("Delfenoj")
+		title: i18n("Melon")
 
 		MenuItem {
-			text: i18n("About Delfenoj")
+			text: i18n("About Melon")
 		}
 
 		MenuSeparator { }

@@ -1,11 +1,11 @@
 [Desktop Entry]
 Type=Application
-Name=Delfenoj
-Exec=org.kde.Delfenoj
+Name=Melon
+Exec=org.kde.Melon
 Comment=File manager
 Categories=Qt;KDE;System;FileTools;FileManager;
 GenericName=File Manager
-Icon=org.kde.Delfenoj
+Icon=org.kde.Melon
 Terminal=false
 MimeType=inode/directory;
 InitialPreference=20

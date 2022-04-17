@@ -3,7 +3,7 @@ import QtQuick.Window 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15 as QQC2
 import org.kde.kirigami 2.15 as Kirigami
-import org.kde.delfenoj 1.0 as Delfenoj
+import org.kde.melon 1.0 as Melon
 import QtGraphicalEffects 1.12
 import QtQml.Models 2.15
 import org.kde.qqc2desktopstyle.private 1.0 as QQC2DesktopStyle
@@ -11,10 +11,10 @@ import org.kde.qqc2desktopstyle.private 1.0 as QQC2DesktopStyle
 QQC2.Page {
 	id: page
 
-	required property Delfenoj.Document document
+	required property Melon.Document document
 
 	footer: PathBar {
-		visible: delfenojApp.showPathBar
+		visible: melonApp.showPathBar
 		document: page.document
 	}
 
@@ -124,7 +124,7 @@ QQC2.Page {
 		}
 	}
 	Kirigami.PlaceholderMessage {
-		text: delfenojApp.kaomoji(`¯\\_(ツ)_/¯`)
+		text: melonApp.kaomoji(`¯\\_(ツ)_/¯`)
 		explanation: i18n("There are no objects in this directory")
 		visible: tableView.rows === 0 && !page.document.loading
 

@@ -3,15 +3,15 @@ import QtQuick.Window 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15 as QQC2
 import org.kde.kirigami 2.15 as Kirigami
-import org.kde.delfenoj 1.0 as Delfenoj
+import org.kde.melon 1.0 as Melon
 
 QQC2.ApplicationWindow {
 	id: window
 
 	visible: true
-	title: i18n("%1 - Delfenoj", window.window.documents[tabBar.currentIndex].title)
+	title: i18n("%1 - Melon", window.window.documents[tabBar.currentIndex].title)
 
-	required property Delfenoj.Window window
+	required property Melon.Window window
 
 	width: Kirigami.Units.gridUnit * 40
 	height: Kirigami.Units.gridUnit * 20
@@ -30,20 +30,20 @@ QQC2.ApplicationWindow {
 		LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
 
 		PageToolBar {
-			visible: delfenojApp.showToolbar
+			visible: melonApp.showToolbar
 			document: window.window.documents[tabBar.currentIndex]
 
 			Layout.fillWidth: true
 		}
 		Kirigami.Separator {
-			visible: !delfenojApp.showToolbar
+			visible: !melonApp.showToolbar
 			Layout.fillWidth: true
 		}
 	}
 	footer: WindowToolBar {
 		window: window.window
 		currentIndex: tabBar.currentIndex
-		visible: delfenojApp.showStatusBar
+		visible: melonApp.showStatusBar
 
 		LayoutMirroring.childrenInherit: Qt.application.layoutDirection == Qt.RightToLeft
 		LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
@@ -57,12 +57,12 @@ QQC2.ApplicationWindow {
 		LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
 
 		PlacesSidebar {
-			visible: delfenojApp.showSidebar
+			visible: melonApp.showSidebar
 			document: window.window.documents[tabBar.currentIndex]
 		}
 
 		Kirigami.Separator {
-			visible: delfenojApp.showSidebar
+			visible: melonApp.showSidebar
 			Layout.fillHeight: true
 		}
 
@@ -89,7 +89,7 @@ QQC2.ApplicationWindow {
 				Repeater {
 					model: window.window.documents
 					delegate: Page {
-						required property Delfenoj.Document modelData
+						required property Melon.Document modelData
 
 						document: modelData
 					}

@@ -3,11 +3,11 @@ import QtQuick.Window 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15 as QQC2
 import org.kde.kirigami 2.19 as Kirigami
-import org.kde.delfenoj 1.0 as Delfenoj
+import org.kde.melon 1.0 as Melon
 
 // TODO port to kirigami about item
 QQC2.ApplicationWindow {
-    title: i18n("About Delfenoj")
+    title: i18n("About Melon")
 
     flags: Qt.Dialog
     minimumWidth: cont.implicitWidth
@@ -36,7 +36,7 @@ QQC2.ApplicationWindow {
         bottomPadding: verticalPadding
         contentItem: ColumnLayout {
             Kirigami.Icon {
-                source: "org.kde.Delfenoj"
+                source: "org.kde.Melon"
 
                 Layout.alignment: Qt.AlignHCenter
                 Layout.preferredWidth: Kirigami.Units.iconSizes.enormous
@@ -44,7 +44,7 @@ QQC2.ApplicationWindow {
             }
 
             QQC2.Label {
-                text: i18n("Delfenoj")
+                text: i18n("Melon")
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
 
@@ -57,7 +57,7 @@ QQC2.ApplicationWindow {
                 Layout.fillWidth: true
             }
             QQC2.Label {
-                text: i18n("Delfenoj Git Master Version")
+                text: i18n("Melon Git Master Version")
                 horizontalAlignment: Text.AlignHCenter
                 font: Kirigami.Theme.smallFont
 

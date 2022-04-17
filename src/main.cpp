@@ -9,8 +9,8 @@
 int main(int argc, char *argv[])
 {
 	auto appData = NGAppData{
-		.translationDomain = "org.kde.delfenoj",
-		.desktopFile = "org.kde.Delfenoj",
+		.translationDomain = "org.kde.melon",
+		.desktopFile = "org.kde.Melon",
 		.aboutData = KAboutData(),
 		.initialisedCallback = [] { sApp->start(); },
 	};

@@ -3,17 +3,17 @@ import QtQuick.Window 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15 as QQC2
 import org.kde.kirigami 2.15 as Kirigami
-import org.kde.delfenoj 1.0 as Delfenoj
+import org.kde.melon 1.0 as Melon
 
 QQC2.ToolBar {
 	id: control
 
     position: QQC2.ToolBar.Footer
 
-	required property Delfenoj.Window window
+	required property Melon.Window window
     required property int currentIndex
 
-    readonly property Delfenoj.Document document: control.window.documents[control.currentIndex]
+    readonly property Melon.Document document: control.window.documents[control.currentIndex]
     implicitHeight: topPadding + contentItem.implicitHeight + bottomPadding
 
 	contentItem: RowLayout {

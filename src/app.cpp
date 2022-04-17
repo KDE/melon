@@ -45,7 +45,7 @@ SApp::SApp() : QObject(), d(new Private)
 	filePlacesModel = new KFilePlacesModel(this);
 	sMenuBar = new SMenuBar(this);
 	engine.reset(new QQmlEngine);
-	engine->rootContext()->setContextProperty("delfenojApp", this);
+	engine->rootContext()->setContextProperty("melonApp", this);
 	engine->rootContext()->setContextObject(new KLocalizedContext(engine.get()));
 	windowComponent.reset(new QQmlComponent(engine.get()));
 	pageComponent.reset(new QQmlComponent(engine.get()));

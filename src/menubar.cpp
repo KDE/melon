@@ -20,7 +20,7 @@
 #include <QtGui/private/qguiapplication_p.h>
 #include <QtQuick/private/qquickevents_p_p.h>
 
-static bool delfenojShortcutContextMatcher(QObject*, Qt::ShortcutContext context)
+static bool melonShortcutContextMatcher(QObject*, Qt::ShortcutContext context)
 {
 	switch (context) {
 	case Qt::ApplicationShortcut:
@@ -36,7 +36,7 @@ static void registerShortcut(QAction* action)
 		return;
 
 	auto* pApp = QGuiApplicationPrivate::instance();
-	pApp->shortcutMap.addShortcut(action, action->shortcut(), action->shortcutContext(), delfenojShortcutContextMatcher);
+	pApp->shortcutMap.addShortcut(action, action->shortcut(), action->shortcutContext(), melonShortcutContextMatcher);
 }
 
 //
@@ -147,14 +147,14 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 #define EndMenu }
 
 	// clang-format off
-	Menu(i18n("Delfenoj"))
-		Action("about", i18n("About Delfenoj"), )
+	Menu(i18n("Melon"))
+		Action("about", i18n("About Melon"), )
 		Separator
 		Action("preferences", i18n("Preferences"), QKeySequence::Preferences)
 		Separator
 		Action("empty_trash", i18n("Empty Trash"), "Ctrl+Shift+Del")
 		Separator
-		Action("quit", i18n("Quit Delfenoj"), QKeySequence::Quit)
+		Action("quit", i18n("Quit Melon"), QKeySequence::Quit)
 	EndMenu
 
 	Menu(i18n("File"))
