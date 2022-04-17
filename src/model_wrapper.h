@@ -10,15 +10,14 @@ class ModelWrapper : public QObject
 	QML_NAMED_ELEMENT(ModelWrapper)
 
 public:
-    Q_PROPERTY(QAbstractItemModel* model MEMBER model)
-    QAbstractItemModel* model;
+	Q_PROPERTY(QAbstractItemModel* model MEMBER model)
+	QAbstractItemModel* model;
 
-    ModelWrapper(QObject* parent = nullptr) : QObject(parent) {}
-    ~ModelWrapper() {}
+	ModelWrapper(QObject* parent = nullptr) : QObject(parent) { }
+	~ModelWrapper() { }
 
-    Q_INVOKABLE QMimeData* mimeData(const QModelIndexList& indexes) const
-    {
-        return model->mimeData(indexes);
-    }
-
+	Q_INVOKABLE QMimeData* mimeData(const QModelIndexList& indexes) const
+	{
+		return model->mimeData(indexes);
+	}
 };

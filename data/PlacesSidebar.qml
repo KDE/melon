@@ -21,9 +21,18 @@ QQC2.ScrollView {
 		color: Kirigami.Theme.backgroundColor
 	}
 
+	readonly property int betweenTargetSize: 12
+
 	ListView {
 		model: delfenojApp.placesModel
 		section.property: "group"
+		Delfenoj.BeaconController {
+			id: beaconController
+			anchors.fill: parent
+			delegate: Delfenoj.PlacesDelegate {
+
+			}
+		}
 		section.delegate: Kirigami.ListSectionHeader {
 			id: del
 
@@ -41,14 +50,70 @@ QQC2.ScrollView {
 			required property var index
 			required property url url
 
-			background: ListItemBackground {
-				hovered: hoverHandler.hovered
-				pressed: tapHandler.pressed
-				item: del
-			}
-
 			width: parent && parent.width > 0 ? parent.width : implicitWidth
 			Layout.fillWidth: true
+
+			Delfenoj.Beacon {
+				id: aboveBeacon
+
+				controller: beaconController
+				beaconID: "above" + del.index
+				dataCallback: () => ["above", del.index]
+
+				anchors.top: parent.top
+				anchors.left: parent.left
+				anchors.right: parent.right
+			}
+
+			Delfenoj.Beacon {
+				id: belowBeacon
+
+				controller: beaconController
+				beaconID: "below" + del.index
+				dataCallback: () => ["below", del.index]
+
+				anchors.bottom: parent.bottom
+				anchors.left: parent.left
+				anchors.right: parent.right
+			}
+
+			Delfenoj.Beacon {
+				id: onBeacon
+
+				controller: beaconController
+				beaconID: "on" + del.index
+				dataCallback: () => ["on", del.index]
+
+				anchors.top: parent.top
+				anchors.topMargin: view.betweenTargetSize
+				anchors.bottom: parent.bottom
+				anchors.bottomMargin: view.betweenTargetSize
+				anchors.left: parent.left
+				anchors.right: parent.right
+			}
+
+			Rectangle {
+				anchors.top: parent.top
+				anchors.topMargin: -height/2
+				height: view.betweenTargetSize/2
+				width: parent.width
+
+				color: Kirigami.Theme.highlightColor
+				visible: beaconController.activeBeaconID == aboveBeacon.beaconID
+
+				z: 500
+			}
+			Rectangle {
+				anchors.bottom: parent.bottom
+				anchors.bottomMargin: -height/2
+				height: view.betweenTargetSize/2
+				width: parent.width
+
+				color: Kirigami.Theme.highlightColor
+				visible: beaconController.activeBeaconID == belowBeacon.beaconID
+
+				z: 500
+			}
 
 			HoverHandler {
 				id: hoverHandler
@@ -72,6 +137,11 @@ QQC2.ScrollView {
 				anchors.fill: parent
 			}
 
+			background: ListItemBackground {
+				hovered: hoverHandler.hovered || beaconController.activeBeaconID == onBeacon.beaconID
+				pressed: tapHandler.pressed
+				item: del
+			}
 			contentItem: RowLayout {
 				Kirigami.Icon {
 					source: del.iconName

@@ -6,27 +6,26 @@
 
 class DragThing : public QQuickItem
 {
-    Q_OBJECT
-    QML_NAMED_ELEMENT(DragThing)
+	Q_OBJECT
+	QML_NAMED_ELEMENT(DragThing)
 
-    Q_PROPERTY(QJSValue mimeData READ mimeData WRITE setMimeData NOTIFY mimeDataChanged REQUIRED)
+	Q_PROPERTY(QJSValue mimeData READ mimeData WRITE setMimeData NOTIFY mimeDataChanged REQUIRED)
 
-    struct Private;
-    QScopedPointer<Private> d;
+	struct Private;
+	QScopedPointer<Private> d;
 
 public:
-    explicit DragThing(QQuickItem* parent = nullptr);
-    ~DragThing();
+	explicit DragThing(QQuickItem* parent = nullptr);
+	~DragThing();
 
 protected:
-    void mousePressEvent(QMouseEvent* event) override;
-    void hoverEnterEvent(QHoverEvent* event) override;
-    void hoverMoveEvent(QHoverEvent* event) override;
-    void hoverLeaveEvent(QHoverEvent* event) override;
-    Q_INVOKABLE void startDrag();
+	void mousePressEvent(QMouseEvent* event) override;
+	void hoverEnterEvent(QHoverEvent* event) override;
+	void hoverMoveEvent(QHoverEvent* event) override;
+	void hoverLeaveEvent(QHoverEvent* event) override;
+	Q_INVOKABLE void startDrag();
 
-    QJSValue mimeData() const;
-    void setMimeData(QJSValue mimeData);
-    Q_SIGNAL void mimeDataChanged();
-
+	QJSValue mimeData() const;
+	void setMimeData(QJSValue mimeData);
+	Q_SIGNAL void mimeDataChanged();
 };
