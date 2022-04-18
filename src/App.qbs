@@ -7,6 +7,8 @@ QtApplication {
 		"*.h",
 		"nglib/*.cpp",
 		"nglib/*.h",
+		"boxbox/*.cpp",
+		"boxbox/*.h",
 	]
 	cpp.cxxLanguageVersion: "c++17"
 	install: true
@@ -35,7 +37,7 @@ QtApplication {
 		}
 	}
 	cpp.driverLinkerFlags: mu.linkerFlags
-	cpp.includePaths: mu.includeDirs.concat([sourceDirectory, sourceDirectory + "/nglib"])
+	cpp.includePaths: mu.includeDirs.concat([sourceDirectory, sourceDirectory + "/nglib", sourceDirectory + "/boxbox"])
 
 	Group {
 		files: ["../data/**"]
