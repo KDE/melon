@@ -2,7 +2,7 @@
 #include "window.h"
 #include "app.h"
 
-SWindowRestorer::SWindowRestorer() : NGRestorer()
+SWindowRestorer::SWindowRestorer() : QObject(), NGRestorer()
 {
 }
 

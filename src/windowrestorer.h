@@ -2,7 +2,7 @@
 
 #include <NGLib.h>
 
-class SWindowRestorer : public NGRestorer
+class SWindowRestorer : public QObject, public NGRestorer
 {
 	Q_OBJECT
 	Q_INTERFACES(NGRestorer)
