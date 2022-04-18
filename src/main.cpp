@@ -4,7 +4,7 @@
 
 #include "app.h"
 #include "foreigns.h"
-#include "nglib/NGAppMain.h"
+#include "NGAppMain.h"
 
 int main(int argc, char *argv[])
 {

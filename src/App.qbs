@@ -5,8 +5,6 @@ QtApplication {
 	files: [
 		"*.cpp",
 		"*.h",
-		"nglib/*.cpp",
-		"nglib/*.h",
 	]
 	cpp.cxxLanguageVersion: "c++17"
 	install: true
@@ -35,7 +33,7 @@ QtApplication {
 		}
 	}
 	cpp.driverLinkerFlags: mu.linkerFlags
-	cpp.includePaths: mu.includeDirs.concat([sourceDirectory, sourceDirectory + "/nglib"])
+	cpp.includePaths: mu.includeDirs.concat([sourceDirectory])
 
 	Group {
 		files: ["../data/**"]
@@ -47,5 +45,6 @@ QtApplication {
 	Qt.qml.importName: "org.kde.melon"
 	Qt.qml.importVersion: "1.0"
 
+	Depends { name: "NGLib" }
 	Depends { name: "Qt"; submodules: ["core", "gui", "gui-private", "widgets", "quick", "quick-private", "quickcontrols2", "qml", "sql", "concurrent"] }
 }
