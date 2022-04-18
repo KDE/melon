@@ -17,3 +17,7 @@ public:
 	virtual QUuid identifier() const = 0;
 	virtual SaveInformation save(KConfigGroup& state) const = 0;
 };
+
+#define NGDefineSavableMethods \
+	QUuid identifier() const override; \
+	SaveInformation save(KConfigGroup& state) const override;

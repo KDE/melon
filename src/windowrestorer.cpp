@@ -25,7 +25,7 @@ void SWindowRestorer::restore(QUuid id, const KConfigGroup& state, CompletionHan
 	sApp->windows << window;
 	QObject::connect(window, &SWindow::closing, sApp, &SApp::windowClosing);
 
-	completionHandler();
+	completionHandler(window);
 }
 
 static NGMetaTypeRegisterer<SWindowRestorer*> registerer;

@@ -34,15 +34,21 @@ This requires a few things:
 
 */
 
+class NGSavable;
+
 class NGRestorer : public QObject
 {
 public:
-	using CompletionHandler = std::function<void()>;
+	using CompletionHandler = std::function<void(NGSavable*)>;
 
+	virtual ~NGRestorer();
 	virtual void restore(QUuid id, const KConfigGroup& state, CompletionHandler completionHandler) = 0;
 };
 
 Q_DECLARE_INTERFACE(NGRestorer, "org.kde.NGRestorer/1.0");
+
+#define NGDefineRestorerMethods \
+	void restore(QUuid id, const KConfigGroup& state, CompletionHandler completionHandler) override;
 
 template <typename T>
 struct NGMetaTypeRegisterer
