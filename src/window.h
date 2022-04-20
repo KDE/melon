@@ -32,6 +32,7 @@ public:
 
 	Q_INVOKABLE void closeDocument(int idx);
 	Q_INVOKABLE void newDocument();
+	Q_INVOKABLE void newDocumentAtUrl(const QUrl& url);
 
 	Q_PROPERTY(QQuickWindow* displayedIn READ displayedIn NOTIFY displayedInChanged)
 	QQuickWindow* displayedIn() const;

@@ -124,6 +124,12 @@ void SWindow::newDocument()
 	Q_EMIT documentsChanged();
 }
 
+void SWindow::newDocumentAtUrl(const QUrl& url)
+{
+	d->containing << new SDocument(url, this);
+	Q_EMIT documentsChanged();
+}
+
 void SWindow::closeDocument(int idx)
 {
 	auto taken = d->containing.takeAt(idx);

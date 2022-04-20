@@ -7,11 +7,14 @@
 #include <KSharedConfig>
 #include <QUuid>
 #include <QGuiApplication>
+#include <QMenu>
+#include <KLocalizedString>
 
 #include "app.h"
 #include "conversioncheck.h"
 #include "dbus.h"
 #include "document.h"
+#include "qguiapplication.h"
 #include "window.h"
 
 struct SApp::Private
@@ -236,4 +239,34 @@ QString SApp::kaomoji(const QString& str)
 	if (d->uuumauma)
 		return "(ﾟ∀ﾟ)";
 	return str;
+}
+
+void SApp::openRightClickMenuForPlace(const QModelIndex &idx)
+{
+	QPointer<QMenu> menu(new QMenu);
+	auto url = filePlacesModel->url(idx);
+
+	menu->addAction(QIcon::fromTheme("tab-new"), i18n("Open In New Tab"), [=] {
+		auto window = QGuiApplication::focusWindow();
+		auto swindow = sApp->swindowForWindow(window);
+
+		swindow->newDocumentAtUrl(url);
+	});
+	menu->addAction(QIcon::fromTheme("window-new"), i18n("Open In New Window"), [=] {
+		newWindowAtUrl(url);
+	});
+	menu->addSeparator();
+
+	auto action = filePlacesModel->ejectActionForIndex(idx);
+	if (action) menu->addAction(action);
+	action = filePlacesModel->teardownActionForIndex(idx);
+	if (action) menu->addAction(action);
+
+	menu->createWinId();
+	menu->windowHandle()->setTransientParent(qGuiApp->focusWindow());
+	menu->exec(QCursor::pos());
+
+	if (menu) {
+		menu->deleteLater();
+	}
 }

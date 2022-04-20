@@ -61,6 +61,8 @@ public:
 	bool showPathBar() const;
 	void setShowPathBar(bool show);
 	Q_SIGNAL void showPathBarChanged();
+
+	Q_INVOKABLE void openRightClickMenuForPlace(const QModelIndex& idx);
 };
 
 #define sApp SApp::instance()

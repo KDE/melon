@@ -124,6 +124,14 @@ QQC2.ScrollView {
 			TapHandler {
 				id: tapHandler
 				onTapped: view.document.navigator.currentLocationUrl = del.url
+				onLongPressed: doMenu()
+			}
+			TapHandler {
+				acceptedButtons: Qt.RightButton
+				onTapped: doMenu()
+			}
+			function doMenu() {
+				melonApp.openRightClickMenuForPlace(melonApp.placesModel.index(del.index, 0))
 			}
 			DragHandler {
 				target: null
