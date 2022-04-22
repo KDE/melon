@@ -77,8 +77,6 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		"new_window", this, &SMenuBar::newWindow);
 	d->ac->add<QAction>(
 		"new_tab", this, &SMenuBar::newTab);
-	d->ac->add<QAction>(
-		"new_folder", this, &SMenuBar::newFolder);
 
 	d->ac->add<QAction>(
 		"open", this, &SMenuBar::open);
@@ -167,7 +165,6 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 
 		Action("new_window", i18n("New Window"), QKeySequence::New)
 		Action("new_tab", i18n("New Tab"), QKeySequence::AddTab)
-		Action("new_folder", i18n("New Folder..."), )
 		Action("new_file", i18n("New File"),)
 		Action("open", i18n("Open"), QKeySequence::Open)
 		Action("close_window", i18n("Close Window"), QKeySequence::Close)
@@ -285,11 +282,6 @@ void SMenuBar::newTab()
 		swindow->newDocument();
 }
 
-void SMenuBar::newFolder()
-{
-	qFatal("Not implemented");
-}
-
 void SMenuBar::open()
 {
 	ActionForWindow
@@ -367,12 +359,12 @@ void SMenuBar::selectAll()
 
 void SMenuBar::viewAsIcons()
 {
-	qFatal("Not implemented");
+	sApp->setIconsView(true);
 }
 
 void SMenuBar::viewAsList()
 {
-	qFatal("Not implemented");
+	sApp->setIconsView(false);
 }
 
 void SMenuBar::togglePathBar()

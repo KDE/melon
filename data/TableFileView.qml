@@ -8,15 +8,10 @@ import QtGraphicalEffects 1.12
 import QtQml.Models 2.15
 import org.kde.qqc2desktopstyle.private 1.0 as QQC2DesktopStyle
 
-QQC2.Page {
+AbstractFileView {
 	id: page
 
-	required property Melon.Document document
-
-	footer: PathBar {
-		visible: melonApp.showPathBar
-		document: page.document
-	}
+	itemCount: tableView.rows
 
 	Melon.ReverseProxyModel {
 		id: guiModel
@@ -24,10 +19,6 @@ QQC2.Page {
 		reverse: Qt.application.layoutDirection == Qt.RightToLeft
 	}
 
-	DropArea {
-		anchors.fill: parent
-		onDropped: (event) => page.document.drop(page, event)
-	}
 	QQC2.ScrollView {
 		id: scrollView
 
@@ -133,12 +124,5 @@ QQC2.Page {
 				text: model.display || ""
 			}
 		}
-	}
-	Kirigami.PlaceholderMessage {
-		text: melonApp.kaomoji(`¯\\_(ツ)_/¯`)
-		explanation: i18n("There are no objects in this directory")
-		visible: tableView.rows === 0 && !page.document.loading
-
-		anchors.centerIn: parent
 	}
 }

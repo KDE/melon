@@ -88,12 +88,10 @@ QQC2.ApplicationWindow {
 
 				Repeater {
 					model: window.window.documents
-					delegate: Page {
-						required property Melon.Document modelData
-
-						document: modelData
-					}
+					delegate: melonApp.iconsView ? iconsFileView : tableFileView
 				}
+				Component { id: iconsFileView; IconsFileView { required property Melon.Document modelData; document: modelData } }
+				Component { id: tableFileView; TableFileView { required property Melon.Document modelData; document: modelData } }
 			}
 		}
 	}

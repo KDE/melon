@@ -23,7 +23,6 @@ public:
 	QList<SWindow*> windows;
 	QScopedPointer<QQmlEngine> engine;
 	QScopedPointer<QQmlComponent> windowComponent;
-	QScopedPointer<QQmlComponent> pageComponent;
 	QScopedPointer<QQmlComponent> aboutComponent;
 	KFilePlacesModel* filePlacesModel;
 	SMenuBar* sMenuBar;
@@ -61,6 +60,11 @@ public:
 	bool showPathBar() const;
 	void setShowPathBar(bool show);
 	Q_SIGNAL void showPathBarChanged();
+
+	Q_PROPERTY(bool iconsView READ iconsView WRITE setIconsView NOTIFY iconsViewChanged)
+	bool iconsView() const;
+	void setIconsView(bool iconsView);
+	Q_SIGNAL void iconsViewChanged();
 
 	Q_INVOKABLE void openRightClickMenuForPlace(const QModelIndex& idx);
 };

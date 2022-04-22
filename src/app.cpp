@@ -24,6 +24,7 @@ struct SApp::Private
 	bool showToolbar = true;
 	bool showPathBar = true;
 	bool uuumauma = false;
+	bool iconsView = false;
 	KSharedConfigPtr config;
 };
 
@@ -51,7 +52,6 @@ SApp::SApp() : QObject(), d(new Private)
 	engine->rootContext()->setContextProperty("melonApp", this);
 	engine->rootContext()->setContextObject(new KLocalizedContext(engine.get()));
 	windowComponent.reset(new QQmlComponent(engine.get()));
-	pageComponent.reset(new QQmlComponent(engine.get()));
 	aboutComponent.reset(new QQmlComponent(engine.get()));
 
 	QUrl windowQml("qrc:/Window.qml");
@@ -59,12 +59,6 @@ SApp::SApp() : QObject(), d(new Private)
 	Q_ASSERT(windowFile.open(QFile::ReadOnly));
 	const auto windowData = windowFile.readAll();
 	windowComponent->setData(windowData, windowQml);
-
-	QUrl pageQml("qrc:/Page.qml");
-	QFile pageFile(":/Page.qml");
-	Q_ASSERT(pageFile.open(QFile::ReadOnly));
-	const auto pageData = pageFile.readAll();
-	pageComponent->setData(pageData, pageQml);
 
 	QUrl aboutQml("qrc:/AboutDialog.qml");
 	QFile aboutFile(":/AboutDialog.qml");
@@ -239,6 +233,20 @@ QString SApp::kaomoji(const QString& str)
 	if (d->uuumauma)
 		return "(ﾟ∀ﾟ)";
 	return str;
+}
+
+bool SApp::iconsView() const
+{
+	return d->iconsView;
+}
+
+void SApp::setIconsView(bool enabled)
+{
+	if (d->iconsView == enabled)
+		return;
+
+	d->iconsView = enabled;
+	Q_EMIT iconsViewChanged();
 }
 
 void SApp::openRightClickMenuForPlace(const QModelIndex &idx)

@@ -20,7 +20,6 @@ public:
 	void emptyTrash();
 	void newWindow();
 	void newTab();
-	void newFolder();
 	void open();
 	void closeWindow();
 	void duplicate();
