@@ -18,11 +18,19 @@ QQC2.Page {
 		document: page.document
 	}
 
+	Melon.ReverseProxyModel {
+		id: guiModel
+		sourceModel: page.document.dirModel
+		reverse: Qt.application.layoutDirection == Qt.RightToLeft
+	}
+
 	DropArea {
 		anchors.fill: parent
 		onDropped: (event) => page.document.drop(page, event)
 	}
 	QQC2.ScrollView {
+		id: scrollView
+
 		anchors.fill: parent
 
 		Kirigami.Theme.colorSet: Kirigami.Theme.View
@@ -38,7 +46,7 @@ QQC2.Page {
 			columnWidthProvider: (column) => columnWidths[column] * Kirigami.Units.gridUnit
 
 			clip: true
-			model: page.document.dirModel
+			model: guiModel
 			topMargin: headerView.height
 			delegate: QQC2.Control {
 				id: del
@@ -113,6 +121,9 @@ QQC2.Page {
 		id: headerView
 		syncView: tableView
 		clip: true
+		x: Qt.application.layoutDirection == Qt.LeftToRight ?
+			0 :
+			scrollView.QQC2.ScrollBar.vertical.width
 		delegate: QQC2.AbstractButton {
 			id: control
 			background: QQC2DesktopStyle.StyleItem {
