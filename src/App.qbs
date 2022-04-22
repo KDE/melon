@@ -5,6 +5,9 @@ QtApplication {
 	files: [
 		"*.cpp",
 		"*.h",
+		"plugins/*.cpp",
+		"plugins/*.h",
+		"plugins/*.mm",
 	]
 	cpp.cxxLanguageVersion: "c++17"
 	install: true
