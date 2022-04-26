@@ -6,6 +6,8 @@
 #include <QMenu>
 #include <QApplication>
 #include <KIO/FileUndoManager>
+#include <KIO/JobUiDelegate>
+#include <KIO/EmptyTrashJob>
 #include <KFileItemActions>
 #include <KFileItemListProperties>
 #include <KNewFileMenu>
@@ -267,7 +269,11 @@ void SMenuBar::preferences()
 
 void SMenuBar::emptyTrash()
 {
-	qFatal("Not implemented");
+	KIO::JobUiDelegate delegate;
+	bool confirmed = delegate.askDeleteConfirmation(QList<QUrl>(), KIO::JobUiDelegate::EmptyTrash, KIO::JobUiDelegate::ForceConfirmation);
+	if (confirmed) {
+		KIO::Job* job = KIO::emptyTrash();
+	}
 }
 
 void SMenuBar::newWindow()
