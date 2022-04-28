@@ -247,6 +247,9 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		evaluate();
 		connect(sApp, &SApp::showToolbarChanged, this, evaluate);
 	}
+
+	d->menuBar->setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
+	d->menuBar->show();
 }
 
 SMenuBar::~SMenuBar()
