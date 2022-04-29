@@ -88,10 +88,24 @@ QQC2.ApplicationWindow {
 
 				Repeater {
 					model: window.window.documents
-					delegate: melonApp.iconsView ? iconsFileView : tableFileView
+					delegate: Loader {
+						id: loader
+						required property Melon.Document modelData
+
+						sourceComponent: {
+							const kind = Melon.FolderClassifier.classifyFolder(loader.modelData.navigator.currentLocationUrl)
+							switch (kind) {
+							case "photos":
+								return photosFileView
+							default:
+								return melonApp.iconsView ? iconsFileView : tableFileView
+							}
+						}
+					}
 				}
-				Component { id: iconsFileView; IconsFileView { required property Melon.Document modelData; document: modelData } }
-				Component { id: tableFileView; TableFileView { required property Melon.Document modelData; document: modelData } }
+				Component { id: iconsFileView; IconsFileView { document: modelData } }
+				Component { id: photosFileView; PhotosFileView { document: modelData } }
+				Component { id: tableFileView; TableFileView { document: modelData } }
 			}
 		}
 	}

@@ -6,6 +6,7 @@
 #include <KIO/KCoreUrlNavigator>
 
 #include "window.h"
+#include "dirmodel.h"
 
 class QQuickDropEvent;
 
@@ -40,8 +41,8 @@ public:
 	Q_PROPERTY(QItemSelectionModel* selectionModel READ selectionModel CONSTANT)
 	QItemSelectionModel* selectionModel() const;
 
-	Q_PROPERTY(KDirModel* dirModel READ dirModel CONSTANT)
-	KDirModel* dirModel() const;
+	Q_PROPERTY(SDirModel* dirModel READ dirModel CONSTANT)
+	SDirModel* dirModel() const;
 
 	Q_PROPERTY(KCoreUrlNavigator* navigator READ navigator CONSTANT)
 	KCoreUrlNavigator* navigator() const;

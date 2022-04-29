@@ -1,0 +1,186 @@
+import QtQuick 2.15
+import QtQuick.Window 2.15
+import QtQuick.Layouts 1.15
+import QtQuick.Controls 2.15 as QQC2
+import org.kde.kirigami 2.15 as Kirigami
+import org.kde.melon 1.0 as Melon
+import QtGraphicalEffects 1.12
+import QtQml.Models 2.15
+import org.kde.qqc2desktopstyle.private 1.0 as QQC2DesktopStyle
+
+AbstractFileView {
+	id: page
+
+	itemCount: gridView.count
+
+	QQC2.ScrollView {
+		id: scrollView
+
+		anchors.fill: parent
+
+		QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
+
+		Kirigami.Theme.colorSet: Kirigami.Theme.View
+		background: Rectangle {
+			Kirigami.Theme.colorSet: Kirigami.Theme.Window
+			color: Kirigami.Theme.backgroundColor
+		}
+
+		contentItem: GridView {
+			id: gridView
+
+			readonly property int computedWidth: page.width - scrollView.QQC2.ScrollBar.vertical.width
+			activeFocusOnTab: true
+			highlight: Rectangle {
+				visible: gridView.activeFocus
+				color: "transparent"
+				border.width: 2
+				border.color: Kirigami.Theme.highlightColor
+				radius: 6
+			}
+			cellWidth: computedWidth / Math.min(Math.floor(computedWidth / (Kirigami.Units.gridUnit * 8)), 6)
+			cellHeight: cellWidth
+
+			Keys.onSpacePressed: (evt) => currentItem.tap(evt.modifiers)
+			Keys.onEnterPressed: currentItem.doubleTap()
+			Keys.onReturnPressed: currentItem.doubleTap()
+			Keys.onMenuPressed: currentItem.doMenu()
+
+			clip: true
+			model: page.document.dirModel
+			delegate: QQC2.Control {
+				id: del
+
+				required property var decoration
+				required property var fileItem
+				required property int index
+				required property bool isImageReadable
+				required property string display
+				readonly property var modelIndex: page.document.dirModel.index(index, 0)
+
+				width: gridView.cellWidth
+				height: gridView.cellHeight
+
+				padding: 2*Kirigami.Units.smallSpacing
+				leftInset: Kirigami.Units.smallSpacing
+				rightInset: Kirigami.Units.smallSpacing
+				bottomInset: Kirigami.Units.smallSpacing
+				topInset: Kirigami.Units.smallSpacing
+
+				DropArea {
+					anchors.fill: parent
+					onDropped: (event) => page.document.drop(del, event)
+				}
+				TapHandler {
+					acceptedButtons: Qt.RightButton
+					onTapped: doMenu()
+				}
+				TapHandler {
+					onTapped: (eventPoint) => del.tap(eventPoint.event.modifiers)
+					onDoubleTapped: del.doubleTap()
+					onLongPressed: doMenu()
+				}
+
+				function tap(modifiers) {
+					const selModel = page.document.selectionModel
+					if (modifiers & Qt.ControlModifier) {
+						selModel.select(del.modelIndex, ItemSelectionModel.Select)
+					} else {
+						selModel.select(del.modelIndex, ItemSelectionModel.ClearAndSelect)
+					}
+				}
+				function doubleTap() {
+					if (del.fileItem.isDir) {
+						page.document.navigator.currentLocationUrl = del.fileItem.url
+					} else {
+						page.document.openItem(del.fileItem)
+					}
+				}
+				function doMenu() {
+					page.document.openRightClickMenuFor(this.fileItem)
+				}
+
+				background: Rectangle {
+					border.width: 1
+					radius: 5
+
+					border.color: {
+						if (page.document.selectionModel.selectedIndexes.includes(del.modelIndex))
+							return Kirigami.Theme.highlightColor
+
+						return Kirigami.ColorUtils.linearInterpolation(Kirigami.Theme.backgroundColor, Kirigami.Theme.textColor, 0.15)
+					}
+					color: {
+						if (page.document.selectionModel.selectedIndexes.includes(del.modelIndex)) {
+							const color = Kirigami.Theme.highlightColor
+							return Qt.rgba(color.r, color.g, color.b, 0.3)
+						}
+
+						return "transparent"
+					}
+				}
+				contentItem: ColumnLayout {
+					spacing: 0
+					Item {
+						Layout.fillWidth: true
+						Layout.fillHeight: true
+
+						Loader {
+							anchors.fill: parent
+							active: del.isImageReadable
+							sourceComponent: Image {
+								source: del.fileItem.url
+								fillMode: Image.PreserveAspectCrop
+								asynchronous: true
+								mipmap: true
+							}
+						}
+						Loader {
+							anchors.centerIn: parent
+							active: !del.isImageReadable
+							sourceComponent: FileIcon {
+								document: page.document
+								enablePreview: true
+								normalIcon: del.decoration
+								fileItem: del.fileItem
+
+								width: Kirigami.Units.iconSizes.enormous
+								height: Kirigami.Units.iconSizes.enormous
+							}
+						}
+					}
+					Kirigami.Separator {
+						Layout.fillWidth: true
+					}
+					QQC2.Control {
+						Layout.fillWidth: true
+
+						leftPadding: Kirigami.Units.smallSpacing*2
+						rightPadding: Kirigami.Units.smallSpacing*2
+						leftInset: Kirigami.Units.smallSpacing
+						rightInset: Kirigami.Units.smallSpacing
+
+						contentItem: RowLayout {
+							FileIcon {
+								document: page.document
+								enablePreview: false
+								normalIcon: del.decoration
+								fileItem: del.fileItem
+
+								Layout.preferredWidth: Kirigami.Units.iconSizes.small
+								Layout.preferredHeight: Kirigami.Units.iconSizes.small
+								Layout.alignment: Qt.AlignVCenter
+							}
+							QQC2.Label {
+								text: del.display
+								elide: Text.ElideRight
+								horizontalAlignment: Text.AlignLeft
+								Layout.fillWidth: true
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -30,7 +30,7 @@
 struct SDocument::Private
 {
 	SWindow* window;
-	KDirModel* dirModel;
+	SDirModel* dirModel;
 	KCoreUrlNavigator* dirNavigator;
 	KFileItemActions* fileItemActions;
 	QItemSelectionModel* selectionModel;
@@ -53,7 +53,7 @@ struct SDocument::Private
 void SDocument::preInit(SWindow* parent, const QUrl& in)
 {
 	d->window = parent;
-	d->dirModel = new KDirModel(this);
+	d->dirModel = new SDirModel(this);
 	d->dirNavigator = new KCoreUrlNavigator(in, this);
 	d->fileItemActions = new KFileItemActions(this);
 	d->selectionModel = new QItemSelectionModel(d->dirModel, this);
@@ -290,7 +290,7 @@ QString SDocument::title() const
 	// return d->dirNavigator->currentLocationUrl().path();
 }
 
-KDirModel* SDocument::dirModel() const
+SDirModel* SDocument::dirModel() const
 {
 	return d->dirModel;
 }
