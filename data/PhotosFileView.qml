@@ -48,15 +48,9 @@ AbstractFileView {
 
 			clip: true
 			model: page.document.dirModel
-			delegate: QQC2.Control {
+			delegate: BaseDelegate {
 				id: del
-
-				required property var decoration
-				required property var fileItem
-				required property int index
-				required property bool isImageReadable
-				required property string display
-				readonly property var modelIndex: page.document.dirModel.index(index, 0)
+				document: page.document
 
 				width: gridView.cellWidth
 				height: gridView.cellHeight
@@ -66,39 +60,6 @@ AbstractFileView {
 				rightInset: Kirigami.Units.smallSpacing
 				bottomInset: Kirigami.Units.smallSpacing
 				topInset: Kirigami.Units.smallSpacing
-
-				DropArea {
-					anchors.fill: parent
-					onDropped: (event) => page.document.drop(del, event)
-				}
-				TapHandler {
-					acceptedButtons: Qt.RightButton
-					onTapped: doMenu()
-				}
-				TapHandler {
-					onTapped: (eventPoint) => del.tap(eventPoint.event.modifiers)
-					onDoubleTapped: del.doubleTap()
-					onLongPressed: doMenu()
-				}
-
-				function tap(modifiers) {
-					const selModel = page.document.selectionModel
-					if (modifiers & Qt.ControlModifier) {
-						selModel.select(del.modelIndex, ItemSelectionModel.Select)
-					} else {
-						selModel.select(del.modelIndex, ItemSelectionModel.ClearAndSelect)
-					}
-				}
-				function doubleTap() {
-					if (del.fileItem.isDir) {
-						page.document.navigator.currentLocationUrl = del.fileItem.url
-					} else {
-						page.document.openItem(del.fileItem)
-					}
-				}
-				function doMenu() {
-					page.document.openRightClickMenuFor(this.fileItem)
-				}
 
 				background: Rectangle {
 					border.width: 1

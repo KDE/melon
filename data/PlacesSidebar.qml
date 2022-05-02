@@ -24,8 +24,20 @@ QQC2.ScrollView {
 	readonly property int betweenTargetSize: 12
 
 	ListView {
+		id: listView
 		model: melonApp.placesModel
+		activeFocusOnTab: true
 		section.property: "group"
+		highlight: Rectangle {
+			visible: listView.activeFocus
+			color: "transparent"
+			border.width: 2
+			border.color: Kirigami.Theme.highlightColor
+			radius: 3
+			z: 100
+		}
+		Keys.onSpacePressed: currentItem.tap()
+
 		Melon.BeaconController {
 			id: beaconController
 			anchors.fill: parent
@@ -123,12 +135,15 @@ QQC2.ScrollView {
 			}
 			TapHandler {
 				id: tapHandler
-				onTapped: view.document.navigator.currentLocationUrl = del.url
+				onTapped: tap()
 				onLongPressed: doMenu()
 			}
 			TapHandler {
 				acceptedButtons: Qt.RightButton
 				onTapped: doMenu()
+			}
+			function tap() {
+				view.document.navigator.currentLocationUrl = del.url
 			}
 			function doMenu() {
 				melonApp.openRightClickMenuForPlace(melonApp.placesModel.index(del.index, 0))

@@ -28,51 +28,50 @@ AbstractFileView {
 
 		contentItem: GridView {
 			id: gridView
+			activeFocusOnTab: true
+			highlight: Rectangle {
+				visible: gridView.activeFocus
+				color: "transparent"
+				border.width: 2
+				border.color: Kirigami.Theme.highlightColor
+				radius: 6
+			}
+
+			Keys.onSpacePressed: (evt) => currentItem.tap(evt.modifiers)
+			Keys.onEnterPressed: currentItem.doubleTap()
+			Keys.onReturnPressed: currentItem.doubleTap()
+			Keys.onMenuPressed: currentItem.doMenu()
 
 			cellWidth: Kirigami.Units.gridUnit * 6
 			cellHeight: Kirigami.Units.gridUnit * 5
 
 			clip: true
 			model: page.document.dirModel
-			delegate: QQC2.Control {
+			delegate: BaseDelegate {
 				id: del
-
-				required property var decoration
-				required property var fileItem
-				required property int index
-				required property string display
-				readonly property var modelIndex: page.document.dirModel.index(index, 0)
+				document: page.document
 
 				width: Kirigami.Units.gridUnit * 6
 				height: Kirigami.Units.gridUnit * 5
 
-				DropArea {
-					anchors.fill: parent
-					onDropped: (event) => page.document.drop(del, event)
-				}
-				TapHandler {
-					acceptedButtons: Qt.RightButton
-					onTapped: doMenu()
-				}
-				TapHandler {
-					onTapped: (eventPoint) => {
-						const selModel = page.document.selectionModel
-						if (eventPoint.event.modifiers & Qt.ControlModifier) {
-							selModel.select(del.modelIndex, ItemSelectionModel.Select)
-						} else {
-							selModel.select(del.modelIndex, ItemSelectionModel.ClearAndSelect)
-						}
-					}
-					onDoubleTapped: if (del.fileItem.isDir) {
-						page.document.navigator.currentLocationUrl = del.fileItem.url
-					} else {
-						page.document.openItem(del.fileItem)
-					}
-					onLongPressed: doMenu()
-				}
+				background: Rectangle {
+					border.width: 1
+					radius: 5
 
-				function doMenu() {
-					page.document.openRightClickMenuFor(this.fileItem)
+					border.color: {
+						if (page.document.selectionModel.selectedIndexes.includes(del.modelIndex))
+							return Kirigami.Theme.highlightColor
+
+						return "transparent"
+					}
+					color: {
+						if (page.document.selectionModel.selectedIndexes.includes(del.modelIndex)) {
+							const color = Kirigami.Theme.highlightColor
+							return Qt.rgba(color.r, color.g, color.b, 0.3)
+						}
+
+						return "transparent"
+					}
 				}
 
 				contentItem: ColumnLayout {

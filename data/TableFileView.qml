@@ -32,6 +32,7 @@ AbstractFileView {
 
 		contentItem: TableView {
 			id: tableView
+			activeFocusOnTab: true
 
 			property var columnWidths: [10, 4, 7, 5, 6, 6, 10]
 			columnWidthProvider: (column) => columnWidths[column] * Kirigami.Units.gridUnit
@@ -39,15 +40,11 @@ AbstractFileView {
 			clip: true
 			model: guiModel
 			topMargin: headerView.height
-			delegate: QQC2.Control {
+			delegate: BaseDelegate {
 				id: del
+				document: page.document
+				index: row
 
-				required property var decoration
-				required property var fileItem
-				required property int row
-				required property int column
-				required property string display
-				readonly property var modelIndex: page.document.dirModel.index(row, 0)
 				property bool pooled: false
 				TableView.onPooled: pooled = true
 				TableView.onReused: pooled = false
