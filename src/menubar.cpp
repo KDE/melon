@@ -250,6 +250,16 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		evaluate();
 		connect(sApp, &SApp::showToolbarChanged, this, evaluate);
 	}
+	{
+		auto evaluate = [act = GA("customise_toolbar")] {
+			if (sApp->editMode())
+				act->setText(i18n("Finish Customising Toolbar"));
+			else
+				act->setText(i18n("Customise Toolbar..."));
+		};
+		evaluate();
+		connect(sApp, &SApp::editModeChanged, this, evaluate);
+	}
 }
 
 SMenuBar::~SMenuBar()
@@ -406,7 +416,7 @@ void SMenuBar::toggleToolbar()
 
 void SMenuBar::customiseToolbar()
 {
-	qFatal("Not implemented");
+	sApp->setEditMode(!sApp->editMode());
 }
 
 void SMenuBar::back()

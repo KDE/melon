@@ -48,38 +48,18 @@ inline qreal hypotenuse(qreal x, qreal y)
 	return qSqrt(qPow(x, 2) + qPow(y, 2));
 }
 
-inline qreal distance(qreal x, qreal y, qreal xMin, qreal yMin, qreal xMax, qreal yMax)
-{
-	if (x < xMin) {
-		if (y < yMin)
-			return hypotenuse(xMin - x, yMin - y);
-		else if (y <= yMax)
-			return xMin - x;
-		else
-			return hypotenuse(xMin - x, yMax - y);
-	} else if (x >= xMax) {
-		if (y < yMin)
-			return yMin - y;
-		else if (y <= yMax)
-			return 0;
-		else
-			return y - yMax;
-	} else {
-		if (y < yMin)
-			return hypotenuse(xMax - x, yMin - y);
-		else if (y <= yMax)
-			return x - xMax;
-		else
-			return hypotenuse(xMax - x, yMax - y);
-	}
-}
-
 inline qreal distance(const QPointF& point, const QRectF& rect)
 {
-	qreal xMin, yMin, xMax, yMax;
+	qreal xMin, yMin, xMax, yMax, pX, pY;
 	rect.getCoords(&xMin, &yMin, &xMax, &yMax);
 
-	return distance(point.x(), point.y(), xMin, yMin, xMax, yMax);
+	pX = point.x();
+	pY = point.y();
+
+	const auto dx = qMax(qMax(xMin - pX, pX - xMax), 0.0);
+	const auto dy = qMax(qMax(yMin - pY, pY - yMax), 0.0);
+
+	return hypotenuse(dx, dy);
 }
 
 void BeaconController::computeActiveBeacon(const QPointF& point)

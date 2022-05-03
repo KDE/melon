@@ -8,6 +8,7 @@
 #include "menubar.h"
 
 class SWindow;
+class SToolBar;
 
 struct SApp : public QObject
 {
@@ -65,6 +66,14 @@ public:
 	bool iconsView() const;
 	void setIconsView(bool iconsView);
 	Q_SIGNAL void iconsViewChanged();
+
+	Q_PROPERTY(bool editMode READ editMode WRITE setEditMode NOTIFY editModeChanged)
+	bool editMode() const;
+	void setEditMode(bool editMode);
+	Q_SIGNAL void editModeChanged();
+
+	Q_PROPERTY(SToolBar* toolbar READ toolbar CONSTANT)
+	SToolBar* toolbar() const;
 
 	Q_INVOKABLE void openRightClickMenuForPlace(const QModelIndex& idx);
 };

@@ -16,6 +16,7 @@
 #include "document.h"
 #include "qguiapplication.h"
 #include "window.h"
+#include "toolbar.h"
 
 struct SApp::Private
 {
@@ -25,7 +26,9 @@ struct SApp::Private
 	bool showPathBar = true;
 	bool uuumauma = false;
 	bool iconsView = false;
+	bool editMode = false;
 	KSharedConfigPtr config;
+	SToolBar* toolbar = nullptr;
 };
 
 
@@ -53,6 +56,7 @@ SApp::SApp() : QObject(), d(new Private)
 	engine->rootContext()->setContextObject(new KLocalizedContext(engine.get()));
 	windowComponent.reset(new QQmlComponent(engine.get()));
 	aboutComponent.reset(new QQmlComponent(engine.get()));
+	d->toolbar = new SToolBar(this);
 
 	QUrl windowQml("qrc:/Window.qml");
 	QFile windowFile(":/Window.qml");
@@ -78,6 +82,11 @@ void SApp::start()
 {
 	if (windows.isEmpty())
 		newWindow();
+}
+
+SToolBar* SApp::toolbar() const
+{
+	return d->toolbar;
 }
 
 // void SApp::load()
@@ -249,7 +258,7 @@ void SApp::setIconsView(bool enabled)
 	Q_EMIT iconsViewChanged();
 }
 
-void SApp::openRightClickMenuForPlace(const QModelIndex &idx)
+void SApp::openRightClickMenuForPlace(const QModelIndex& idx)
 {
 	QPointer<QMenu> menu(new QMenu);
 	auto url = filePlacesModel->url(idx);
@@ -277,4 +286,18 @@ void SApp::openRightClickMenuForPlace(const QModelIndex &idx)
 	if (menu) {
 		menu->deleteLater();
 	}
+}
+
+bool SApp::editMode() const
+{
+	return d->editMode;
+}
+
+void SApp::setEditMode(bool editMode)
+{
+	if (d->editMode == editMode)
+		return;
+
+	d->editMode = editMode;
+	Q_EMIT editModeChanged();
 }
