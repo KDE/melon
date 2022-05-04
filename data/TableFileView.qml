@@ -49,35 +49,6 @@ AbstractFileView {
 				TableView.onPooled: pooled = true
 				TableView.onReused: pooled = false
 
-				DropArea {
-					anchors.fill: parent
-					onDropped: (event) => page.document.drop(del, event)
-				}
-				TapHandler {
-					acceptedButtons: Qt.RightButton
-					onTapped: doMenu()
-				}
-				TapHandler {
-					onTapped: (eventPoint) => {
-						const selModel = page.document.selectionModel
-						if (eventPoint.event.modifiers & Qt.ControlModifier) {
-							selModel.select(del.modelIndex, ItemSelectionModel.Select)
-						} else {
-							selModel.select(del.modelIndex, ItemSelectionModel.ClearAndSelect)
-						}
-					}
-					onDoubleTapped: if (del.fileItem.isDir) {
-						page.document.navigator.currentLocationUrl = del.fileItem.url
-					} else {
-						page.document.openItem(del.fileItem)
-					}
-					onLongPressed: doMenu()
-				}
-
-				function doMenu() {
-					page.document.openRightClickMenuFor(this.fileItem)
-				}
-
 				background: Rectangle {
 					color: {
 						if (page.document.selectionModel.selectedIndexes.includes(del.modelIndex))

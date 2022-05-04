@@ -24,12 +24,19 @@ QQC2.Control {
 		onDropped: (event) => del.document.drop(del, event)
 	}
 	TapHandler {
+		acceptedDevices: PointerDevice.Mouse | PointerDevice.Stylus
 		acceptedButtons: Qt.RightButton
 		onTapped: doMenu()
 	}
 	TapHandler {
+		acceptedDevices: PointerDevice.Mouse | PointerDevice.Stylus
 		onTapped: (eventPoint) => del.tap(eventPoint.event.modifiers)
 		onDoubleTapped: del.doubleTap()
+		onLongPressed: doMenu()
+	}
+	TapHandler {
+		acceptedDevices: PointerDevice.TouchScreen
+		onTapped: (eventPoint) => del.doubleTap()
 		onLongPressed: doMenu()
 	}
 
