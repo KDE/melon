@@ -21,6 +21,7 @@ public:
 	void newWindow();
 	void newTab();
 	void open();
+	void getInfo();
 	void closeWindow();
 	void duplicate();
 	void makeAlias();

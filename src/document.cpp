@@ -19,6 +19,7 @@
 #include <KFormat>
 #include <QQuickItem>
 #include <QMimeData>
+#include <KPropertiesDialog>
 
 #define private public
 #include <QtQuick/private/qquickdroparea_p.h>
@@ -391,6 +392,14 @@ void SDocument::openSelectedFiles()
 	d->fileItemActions->runPreferredApplications(files);
 }
 
+void SDocument::getInfoOnSelectedFiles()
+{
+	auto dialog = new KPropertiesDialog(selectedFiles());
+	dialog->createWinId();
+	dialog->windowHandle()->setTransientParent(qGuiApp->focusWindow());
+	dialog->show();
+}
+
 // this logic yoinked from dolphin,
 // copyright (TODO find who wrote that code)
 // TODO: select duplicated files
@@ -498,6 +507,12 @@ void SDocument::openRightClickMenuFor(KFileItem item)
 		paste = KStandardAction::paste(this, &SDocument::paste, this);
 
 	copy->setEnabled(d->selectionModel->hasSelection());
+	menu->addAction(i18n("Get Info"), this, [item] {
+		auto dialog = new KPropertiesDialog(item);
+		dialog->createWinId();
+		dialog->windowHandle()->setTransientParent(qGuiApp->focusWindow());
+		dialog->show();
+	});
 	menu->addAction(copy);
 	// cut->setEnabled(d->selectionModel->hasSelection());
 	// menu->addAction(cut);

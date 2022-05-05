@@ -86,6 +86,8 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		"close_window", this, &SMenuBar::closeWindow);
 
 	d->ac->add<QAction>(
+		"get_info", this, &SMenuBar::getInfo);
+	d->ac->add<QAction>(
 		"duplicate", this, &SMenuBar::duplicate);
 	d->ac->add<QAction>(
 		"make_alias", this, &SMenuBar::makeAlias);
@@ -171,6 +173,7 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		Action("open", i18n("Open"), QKeySequence::Open)
 		Action("close_window", i18n("Close Window"), QKeySequence::Close)
 		Separator
+		Action("get_info", i18n("Get Info"), "Ctrl+I")
 		Action("duplicate", i18n("Duplicate"), "Ctrl+D")
 		Action("make_alias", i18n("Make Alias"), "Ctrl+L")
 		Separator
@@ -294,6 +297,14 @@ void SMenuBar::open()
 
 		swindow->activeDocument()
 			->openSelectedFiles();
+}
+
+void SMenuBar::getInfo()
+{
+	ActionForWindow
+
+		swindow->activeDocument()
+			->getInfoOnSelectedFiles();
 }
 
 void SMenuBar::closeWindow()

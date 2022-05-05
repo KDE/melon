@@ -91,6 +91,7 @@ public:
 	Q_INVOKABLE void drop(QQuickItem* target, QQuickDropEvent* event);
 	Q_INVOKABLE void openSelectedFiles();
 	Q_INVOKABLE void duplicateSelectedFiles();
+	Q_INVOKABLE void getInfoOnSelectedFiles();
 	Q_INVOKABLE void aliasSelectedFiles();
 	Q_INVOKABLE void trashSelectedFiles();
 
