@@ -373,7 +373,11 @@ void SMenuBar::paste()
 
 void SMenuBar::selectAll()
 {
-	qFatal("not implemented");
+	ActionForWindow
+
+	auto sm = swindow->activeDocument()->selectionModel();
+	auto index = sm->model()->index(0, 0);
+	sm->select(index, QItemSelectionModel::Select | QItemSelectionModel::Columns);
 }
 
 void SMenuBar::viewAsIcons()
