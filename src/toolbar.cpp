@@ -37,6 +37,8 @@ SToolBar::SToolBar(QObject* parent) : QObject(parent), d(new Private)
 		SToolBarItem("space", i18n("Expanding Spacer"), createComponent(sApp->engine.get(), "toolbar/ExpandingSpace.qml"));
 	d->components["new-window"] =
 		SToolBarItem("new-window", i18n("New Window"), createComponent(sApp->engine.get(), "toolbar/NewWindow.qml"));
+	d->components["create-new"] =
+		SToolBarItem("create-new", i18n("Create New"), createComponent(sApp->engine.get(), "toolbar/CreateNew.qml"));
 
 	auto config = KSharedConfig::openConfig();
 	const auto defaults = QStringList{"back", "forward", "up", "space", "new-window"};

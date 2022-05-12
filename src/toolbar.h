@@ -42,10 +42,10 @@ public:
 	QVariantList items() const;
 	Q_SIGNAL void itemsChanged();
 
-	Q_PROPERTY(QVariantList possibleItems READ items CONSTANT)
+	Q_PROPERTY(QVariantList possibleItems READ possibleItems CONSTANT)
 	QVariantList possibleItems() const;
 
-	Q_PROPERTY(QVariantList defaultItems READ items CONSTANT)
+	Q_PROPERTY(QVariantList defaultItems READ defaultItems CONSTANT)
 	QVariantList defaultItems() const;
 
 	Q_INVOKABLE void removeItemAt(int index);

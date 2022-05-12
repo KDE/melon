@@ -1,3 +1,4 @@
+#include "qnamespace.h"
 #include <QMenu>
 #include <QDrag>
 #include <QStandardPaths>
@@ -16,6 +17,8 @@
 #include <KIO/CopyJob>
 #include <KIO/DropJob>
 #include <KIO/FileUndoManager>
+#include <KActionCollection>
+#include <KNewFileMenu>
 #include <KFormat>
 #include <QQuickItem>
 #include <QMimeData>
@@ -36,6 +39,9 @@ struct SDocument::Private
 	KFileItemActions* fileItemActions;
 	QItemSelectionModel* selectionModel;
 	KIO::StatJob* fileCountsJob;
+	KActionCollection* actionCollection;
+	KNewFileMenu* newFileMenu;
+
 
 	int folderCount = 0;
 	int fileCount = 0;
@@ -58,6 +64,8 @@ void SDocument::preInit(SWindow* parent, const QUrl& in)
 	d->dirNavigator = new KCoreUrlNavigator(in, this);
 	d->fileItemActions = new KFileItemActions(this);
 	d->selectionModel = new QItemSelectionModel(d->dirModel, this);
+	d->actionCollection = new KActionCollection(this);
+	d->newFileMenu = new KNewFileMenu(d->actionCollection, "", this);
 	connect(d->dirNavigator, &KCoreUrlNavigator::currentLocationUrlChanged, this, [this]() {
 		d->dirModel->openUrl(d->dirNavigator->currentLocationUrl());
 		Q_EMIT titleChanged();
@@ -496,6 +504,21 @@ void SDocument::trashSelectedFiles()
 	if (job) {
 		KIO::FileUndoManager::self()->recordJob(KIO::FileUndoManager::Trash, files, QUrl("trash:/"), job);
 	}
+}
+
+void SDocument::openNewFileMenuFor(QQuickItem* item)
+{
+	d->newFileMenu->setPopupFiles(QList<QUrl> {navigator()->currentLocationUrl()});
+	d->newFileMenu->checkUpToDate();
+
+	item->setProperty("down", true);
+
+	auto menu = d->newFileMenu->menu();
+	menu->createWinId();
+	menu->windowHandle()->setTransientParent(d->window->displayedIn());
+	menu->exec(QCursor::pos());
+
+	item->setProperty("down", QVariant());
 }
 
 void SDocument::openRightClickMenuFor(KFileItem item)
