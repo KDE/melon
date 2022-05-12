@@ -97,8 +97,6 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 
 	d->ac->add<QAction>(
 		"undo", this, &SMenuBar::undo);
-	d->ac->add<QAction>(
-		"redo", this, &SMenuBar::redo);
 
 	d->ac->add<QAction>(
 		"cut", this, &SMenuBar::cut);
@@ -182,7 +180,6 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 
 	Menu(i18n("Edit"))
 		Action("undo", i18n("Undo"), QKeySequence::Undo)
-		Action("redo", i18n("Redo"), QKeySequence::Redo)
 		Separator
 		Action("cut", i18n("Cut"), QKeySequence::Cut)
 		Action("copy", i18n("Copy"), QKeySequence::Copy)
@@ -351,11 +348,6 @@ void SMenuBar::moveToTrash()
 void SMenuBar::undo()
 {
 	KIO::FileUndoManager::self()->undo();
-}
-
-void SMenuBar::redo()
-{
-	qFatal("Not implemented");
 }
 
 void SMenuBar::cut()

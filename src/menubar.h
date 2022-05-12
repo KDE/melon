@@ -27,7 +27,6 @@ public:
 	void makeAlias();
 	void moveToTrash();
 	void undo();
-	void redo();
 	void cut();
 	void copy();
 	void paste();
