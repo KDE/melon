@@ -14,6 +14,61 @@ QQC2.Page {
 	required property Melon.Document document
 	required property int itemCount
 
+	header: ColumnLayout {
+		QQC2.ToolBar {
+			visible: page.document.searchBarOpen
+
+			contentItem: ColumnLayout {
+				spacing: 2
+
+				Kirigami.SearchField {
+					text: page.document.searchText
+					onTextChanged: page.document.searchText = text
+					Layout.fillWidth: true
+				}
+				RowLayout {
+					spacing: 2
+
+					QQC2.Label {
+						text: i18n("Search through:")
+						font: Kirigami.Theme.smallFont
+					}
+					QQC2.ToolButton {
+						text: i18n("This Computer")
+						down: !page.document.onlySearchingFromCurrentWorkingDirectory || pressed
+						onClicked: page.document.onlySearchingFromCurrentWorkingDirectory = false
+					}
+					QQC2.ToolButton {
+						text: i18n(`"%1"`, page.document.fancyNameFor(page.document.navigator.currentLocationUrl))
+						down: page.document.onlySearchingFromCurrentWorkingDirectory || pressed
+						onClicked: page.document.onlySearchingFromCurrentWorkingDirectory = true
+					}
+					Kirigami.Separator {
+						Layout.fillHeight: true
+					}
+					QQC2.ToolButton {
+						text: i18n("Contents")
+						down: page.document.searchIncludesContents || pressed
+						onClicked: page.document.searchIncludesContents = true
+					}
+					QQC2.ToolButton {
+						text: i18n("File Name")
+						down: !page.document.searchIncludesContents || pressed
+						onClicked: page.document.searchIncludesContents = false
+					}
+					Item {
+						Layout.fillWidth: true
+					}
+					QQC2.ToolButton {
+						text: i18n("Save")
+						onClicked: page.document.saveCurrentSearch()
+					}
+				}
+			}
+
+			Layout.fillWidth: true
+		}
+	}
 	footer: PathBar {
 		visible: melonApp.showPathBar
 		document: page.document

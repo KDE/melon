@@ -1,9 +1,11 @@
 #include "qnamespace.h"
 #include <QMenu>
 #include <QDrag>
+#include <QTimer>
 #include <QStandardPaths>
 #include <KFileItemActions>
 #include <KFileItemListProperties>
+#include <Baloo/Query>
 #include <KStandardAction>
 #include <QItemSelectionModel>
 #include <QGuiApplication>
@@ -23,6 +25,8 @@
 #include <QQuickItem>
 #include <QMimeData>
 #include <KPropertiesDialog>
+#include <QUrlQuery>
+#include <optional>
 
 #define private public
 #include <QtQuick/private/qquickdroparea_p.h>
@@ -41,7 +45,7 @@ struct SDocument::Private
 	KIO::StatJob* fileCountsJob;
 	KActionCollection* actionCollection;
 	KNewFileMenu* newFileMenu;
-
+	QTimer* searchChangedTimer;
 
 	int folderCount = 0;
 	int fileCount = 0;
@@ -53,8 +57,14 @@ struct SDocument::Private
 
 	QStringList pathSegmentStrings;
 	QList<QUrl> pathSegmentURLs;
+	std::optional<QUrl> overlayURL;
 
 	QUuid uuid;
+
+	QString searchText;
+	bool searchBarOpen = false;
+	bool onlySearchingFromCurrentWorkingDirectory = true;
+	bool searchIncludesContents = false;
 };
 
 void SDocument::preInit(SWindow* parent, const QUrl& in)
@@ -66,8 +76,21 @@ void SDocument::preInit(SWindow* parent, const QUrl& in)
 	d->selectionModel = new QItemSelectionModel(d->dirModel, this);
 	d->actionCollection = new KActionCollection(this);
 	d->newFileMenu = new KNewFileMenu(d->actionCollection, "", this);
-	connect(d->dirNavigator, &KCoreUrlNavigator::currentLocationUrlChanged, this, [this]() {
-		d->dirModel->openUrl(d->dirNavigator->currentLocationUrl());
+	d->searchChangedTimer = new QTimer(this);
+	d->searchChangedTimer->setInterval(300);
+	d->searchChangedTimer->setSingleShot(true);
+
+	connect(d->searchChangedTimer, &QTimer::timeout, this, &SDocument::recomputeActualViewingURL);
+	connect(d->dirNavigator, &KCoreUrlNavigator::currentLocationUrlChanged, this, &SDocument::recomputeActualViewingURL);
+	connect(this, &SDocument::searchBarOpenChanged, this, &SDocument::recomputeActualViewingURL);
+	connect(this, &SDocument::onlySearchingFromCurrentWorkingDirectoryChanged, this, &SDocument::recomputeActualViewingURL);
+	connect(this, &SDocument::searchIncludesContentsChanged, this, &SDocument::recomputeActualViewingURL);
+	connect(this, &SDocument::searchTextChanged, [this] {
+		d->searchChangedTimer->start();
+	});
+
+	connect(this, &SDocument::actualViewingURLChanged, this, [this]() {
+		d->dirModel->openUrl(actualViewingURL());
 		Q_EMIT titleChanged();
 		recomputePathSegments();
 		getFileCounts();
@@ -106,6 +129,105 @@ SDocument::SDocument(const QUrl& in, SWindow* parent) : QObject(parent), d(new P
 	postInit();
 }
 
+bool SDocument::searchBarOpen()
+{
+	return d->searchBarOpen;
+}
+
+void SDocument::setSearchBarOpen(bool open)
+{
+	if (open == d->searchBarOpen)
+		return;
+
+	d->searchBarOpen = open;
+	Q_EMIT searchBarOpenChanged();
+}
+
+QUrl SDocument::actualViewingURL()
+{
+	if (d->overlayURL.has_value())
+		return *d->overlayURL;
+
+	return d->dirNavigator->currentLocationUrl();
+}
+
+QUrl SDocument::computeSearchURL()
+{
+	QUrl url;
+
+	if (!d->searchIncludesContents) {
+		url.setScheme("filenamesearch");
+
+		QUrlQuery query;
+		query.addQueryItem("search", d->searchText);
+		if (d->onlySearchingFromCurrentWorkingDirectory) {
+			query.addQueryItem("url", d->dirNavigator->currentLocationUrl().url());
+		}
+
+		url.setQuery(query);
+	} else {
+		Baloo::Query query;
+
+		query.setSearchString(d->searchText);
+		query.setIncludeFolder(d->dirNavigator->currentLocationUrl().url());
+
+		url = query.toSearchUrl();
+	}
+
+	return url;
+}
+
+void SDocument::openUrl(const QUrl& url)
+{
+	if (url.scheme() == "filenamesearch") {
+		auto query = QUrlQuery(url);
+		setSearchText(query.queryItemValue("search"));
+		if (query.hasQueryItem("url")) {
+			d->dirNavigator->setCurrentLocationUrl(query.queryItemValue("url"));
+			setOnlySearchingFromCurrentWorkingDirectory(true);
+		}
+		setSearchBarOpen(true);
+	} else if (url.scheme() == "baloosearch") {
+		auto query = Baloo::Query::fromSearchUrl(url);
+		setSearchText(query.searchString());
+		if (!query.includeFolder().isEmpty()) {
+			d->dirNavigator->setCurrentLocationUrl(query.includeFolder());
+			setOnlySearchingFromCurrentWorkingDirectory(true);
+		}
+		setSearchBarOpen(true);
+	} else {
+		d->dirNavigator->setCurrentLocationUrl(url);
+	}
+}
+
+
+void SDocument::recomputeActualViewingURL()
+{
+	std::optional<QUrl> newUrl;
+
+	if (d->searchBarOpen && !d->searchText.isEmpty()) {
+		newUrl = computeSearchURL();
+	}
+
+	d->overlayURL = newUrl;
+	Q_EMIT actualViewingURLChanged();
+	Q_EMIT titleChanged();
+}
+
+QString SDocument::searchText()
+{
+	return d->searchText;
+}
+
+void SDocument::setSearchText(const QString& text)
+{
+	if (d->searchText == text)
+		return;
+
+	d->searchText = text;
+	Q_EMIT searchTextChanged();
+}
+
 int SDocument::numberOfFiles() const
 {
 	return d->fileCount;
@@ -119,7 +241,7 @@ int SDocument::numberOfFolders() const
 void SDocument::getFileCounts()
 {
 	d->fileCountsJob = KIO::statDetails(
-		d->dirNavigator->currentLocationUrl(),
+		actualViewingURL(),
 		KIO::StatJob::SourceSide, KIO::StatRecursiveSize, KIO::HideProgressInfo);
 	connect(d->fileCountsJob, &KJob::result, this, [job = d->fileCountsJob, this]() {
 		const auto entry = job->statResult();
@@ -147,7 +269,7 @@ void SDocument::getFileCounts()
 			}
 		}
 
-		KFileItem item(entry, d->dirNavigator->currentLocationUrl());
+		KFileItem item(entry, actualViewingURL());
 		item.isWritable();
 		item.isLocalFile();
 
@@ -295,8 +417,10 @@ QString SDocument::fancyPlacesTitle() const
 
 QString SDocument::title() const
 {
+	if (d->searchBarOpen) {
+		return i18n("Search");
+	}
 	return fancyPlacesTitle();
-	// return d->dirNavigator->currentLocationUrl().path();
 }
 
 SDirModel* SDocument::dirModel() const
@@ -354,7 +478,7 @@ void SDocument::startDrag()
 
 void SDocument::paste()
 {
-	KIO::paste(QGuiApplication::clipboard()->mimeData(), d->dirNavigator->currentLocationUrl());
+	KIO::paste(QGuiApplication::clipboard()->mimeData(), actualViewingURL());
 }
 
 QItemSelectionModel* SDocument::selectionModel() const
@@ -508,7 +632,7 @@ void SDocument::trashSelectedFiles()
 
 void SDocument::openNewFileMenuFor(QQuickItem* item)
 {
-	d->newFileMenu->setPopupFiles(QList<QUrl> {navigator()->currentLocationUrl()});
+	d->newFileMenu->setPopupFiles(QList<QUrl> {actualViewingURL()});
 	d->newFileMenu->checkUpToDate();
 
 	item->setProperty("down", true);
@@ -585,7 +709,7 @@ void SDocument::drop(QQuickItem* target, QQuickDropEvent* event)
 	// QDropEvent ev(pos, possibleActions, mimeData, buttons, modifiers);
 	// ev.setDropAction(proposedAction);
 
-	KIO::drop(event->event, item.isDir() ? item.url() : d->dirNavigator->currentLocationUrl());
+	KIO::drop(event->event, item.isDir() ? item.url() : actualViewingURL());
 }
 
 SDocument::SDocument(const KConfigGroup& config, SWindow* parent) : QObject(parent), d(new Private)
@@ -595,6 +719,10 @@ SDocument::SDocument(const KConfigGroup& config, SWindow* parent) : QObject(pare
 	preInit(parent, config.readEntry<QUrl>("currentUrl", homeDir));
 
 	d->uuid = config.readEntry<QUuid>("id", QUuid::createUuid());
+	d->searchText = config.readEntry<QString>("searchText", "");
+	d->searchBarOpen = config.readEntry<bool>("searchBarOpen", false);
+	d->onlySearchingFromCurrentWorkingDirectory = config.readEntry<bool>("onlySearchingFromCurrentWorkingDirectory", true);
+	d->searchIncludesContents = config.readEntry<bool>("searchIncludesContents", false);
 
 	postInit();
 }
@@ -603,9 +731,49 @@ void SDocument::saveTo(KConfigGroup& config) const
 {
 	config.writeEntry("currentUrl", d->dirNavigator->currentLocationUrl());
 	config.writeEntry("id", d->uuid);
+	config.writeEntry("searchText", d->searchText);
+	config.writeEntry("searchBarOpen", d->searchBarOpen);
+	config.writeEntry("onlySearchingFromCurrentWorkingDirectory", d->onlySearchingFromCurrentWorkingDirectory);
+	config.writeEntry("searchIncludesContents", d->searchIncludesContents);
 }
 
 QUuid SDocument::id() const
 {
 	return d->uuid;
+}
+
+bool SDocument::onlySearchingFromCurrentWorkingDirectory()
+{
+	return d->onlySearchingFromCurrentWorkingDirectory;
+}
+
+void SDocument::setOnlySearchingFromCurrentWorkingDirectory(bool open)
+{
+	if (d->onlySearchingFromCurrentWorkingDirectory == open)
+		return;
+
+	d->onlySearchingFromCurrentWorkingDirectory = open;
+	Q_EMIT onlySearchingFromCurrentWorkingDirectoryChanged();
+}
+
+bool SDocument::searchIncludesContents()
+{
+	return d->searchIncludesContents;
+}
+
+void SDocument::setSearchIncludesContents(bool includes)
+{
+	if (d->searchIncludesContents == includes)
+		return;
+
+	d->searchIncludesContents = includes;
+	Q_EMIT searchIncludesContentsChanged();
+}
+
+void SDocument::saveCurrentSearch()
+{
+	const auto label = d->onlySearchingFromCurrentWorkingDirectory ?
+		i18n("Search for %1 in %2", d->searchText, d->dirNavigator->currentLocationUrl().fileName()) :
+		i18n("Search for %1", d->searchText);
+	sApp->placesModel()->addPlace(label, computeSearchURL(), "folder-saved-search-symbolic");
 }

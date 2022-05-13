@@ -143,7 +143,7 @@ QQC2.ScrollView {
 				onTapped: doMenu()
 			}
 			function tap() {
-				view.document.navigator.currentLocationUrl = del.url
+				view.document.openUrl(del.url)
 			}
 			function doMenu() {
 				melonApp.openRightClickMenuForPlace(melonApp.placesModel.index(del.index, 0))

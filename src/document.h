@@ -20,7 +20,6 @@ class SDocument : public QObject
 	QScopedPointer<Private> d;
 
 	QString fancyPlacesTitle() const;
-	QString fancyNameFor(const QUrl& url) const;
 	void recomputePathSegments();
 	void preInit(SWindow* parent, const QUrl& in);
 	void postInit();
@@ -37,6 +36,7 @@ public:
 	Q_PROPERTY(QString title READ title NOTIFY titleChanged)
 	QString title() const;
 	Q_SIGNAL void titleChanged();
+	Q_INVOKABLE QString fancyNameFor(const QUrl& url) const;
 
 	Q_PROPERTY(QItemSelectionModel* selectionModel READ selectionModel CONSTANT)
 	QItemSelectionModel* selectionModel() const;
@@ -46,6 +46,34 @@ public:
 
 	Q_PROPERTY(KCoreUrlNavigator* navigator READ navigator CONSTANT)
 	KCoreUrlNavigator* navigator() const;
+
+	Q_PROPERTY(bool searchBarOpen READ searchBarOpen WRITE setSearchBarOpen NOTIFY searchBarOpenChanged)
+	bool searchBarOpen();
+	void setSearchBarOpen(bool open);
+	Q_SIGNAL void searchBarOpenChanged();
+
+	Q_PROPERTY(bool onlySearchingFromCurrentWorkingDirectory READ onlySearchingFromCurrentWorkingDirectory WRITE setOnlySearchingFromCurrentWorkingDirectory NOTIFY onlySearchingFromCurrentWorkingDirectoryChanged)
+	bool onlySearchingFromCurrentWorkingDirectory();
+	void setOnlySearchingFromCurrentWorkingDirectory(bool open);
+	Q_SIGNAL void onlySearchingFromCurrentWorkingDirectoryChanged();
+
+	Q_PROPERTY(bool searchIncludesContents READ searchIncludesContents WRITE setSearchIncludesContents NOTIFY searchIncludesContentsChanged)
+	bool searchIncludesContents();
+	void setSearchIncludesContents(bool includes);
+	Q_SIGNAL void searchIncludesContentsChanged();
+
+	Q_PROPERTY(QUrl actualViewingURL READ actualViewingURL NOTIFY actualViewingURLChanged)
+	QUrl actualViewingURL();
+	void recomputeActualViewingURL();
+	QUrl computeSearchURL();
+	Q_SIGNAL void actualViewingURLChanged();
+
+	Q_PROPERTY(QString searchText READ searchText WRITE setSearchText NOTIFY searchTextChanged)
+	QString searchText();
+	void setSearchText(const QString& text);
+	Q_SIGNAL void searchTextChanged();
+
+	Q_INVOKABLE void saveCurrentSearch();
 
 	KFileItemList selectedFiles() const;
 	QList<QUrl> selectedURLs() const;
@@ -86,6 +114,7 @@ public:
 	Q_INVOKABLE void paste();
 	Q_INVOKABLE void startDrag();
 	Q_INVOKABLE void moveTo(SWindow* window);
+	Q_INVOKABLE void openUrl(const QUrl& url);
 	Q_INVOKABLE void openItem(KFileItem item);
 	Q_INVOKABLE void openRightClickMenuFor(KFileItem item);
 	Q_INVOKABLE void openNewFileMenuFor(QQuickItem* item);

@@ -93,7 +93,7 @@ QQC2.ApplicationWindow {
 						required property Melon.Document modelData
 
 						sourceComponent: {
-							const kind = Melon.FolderClassifier.classifyFolder(loader.modelData.navigator.currentLocationUrl)
+							const kind = Melon.FolderClassifier.classifyFolder(loader.modelData.actualViewingURL)
 							switch (kind) {
 							case "photos":
 								return photosFileView

@@ -50,7 +50,7 @@ QQC2.Control {
 	}
 	function doubleTap() {
 		if (del.fileItem.isDir) {
-			del.document.navigator.currentLocationUrl = del.fileItem.url
+			del.document.openUrl(del.fileItem.url)
 		} else {
 			del.document.openItem(del.fileItem)
 		}

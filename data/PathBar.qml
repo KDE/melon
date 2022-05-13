@@ -33,7 +33,7 @@ QQC2.ToolBar {
 					Layout.fillHeight: true
 
 					TapHandler {
-						onDoubleTapped: bar.document.navigator.currentLocationUrl = bar.document.pathSegmentURLs[del.index]
+						onDoubleTapped: bar.document.openUrl(bar.document.pathSegmentURLs[del.index])
 					}
 				}
 

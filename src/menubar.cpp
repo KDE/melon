@@ -161,7 +161,7 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		connect(menu, &QMenu::aboutToShow, d->newFileMenu.get(), [this] {
 			ActionForWindow
 
-			d->newFileMenu->setPopupFiles(QList<QUrl> {swindow->activeDocument()->navigator()->currentLocationUrl()});
+			d->newFileMenu->setPopupFiles(QList<QUrl> {swindow->activeDocument()->actualViewingURL()});
 			d->newFileMenu->checkUpToDate();
 		});
 
