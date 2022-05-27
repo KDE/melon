@@ -2,6 +2,7 @@
 
 #include <KDirModel>
 #include <QQmlEngine>
+#include <optional>
 
 class SDirModel : public KDirModel
 {
@@ -11,6 +12,9 @@ class SDirModel : public KDirModel
 
     struct Private;
     QScopedPointer<Private> d;
+
+    std::optional<QPointF> getXAttr(const KFileItem& item) const;
+    void setXAttr(const KFileItem& item, const QPointF& pos) const;
 
 public:
 	explicit SDirModel(QObject* parent = nullptr);
