@@ -2,14 +2,36 @@
 #include <Kirigami/Units>
 #include <KDirLister>
 
+#include <sys/xattr.h>
+#include <optional>
+
 #include "dirmodel.h"
+
+std::optional<QPointF> getXAttr(const KFileItem& item)
+{
+    QByteArray data(32, '\0');
+    auto ret = lgetxattr(qPrintable(item.localPath()), "user.org.kde.melon.pos", data.data(), data.size());
+    if (ret < 0) {
+        return {};
+    }
+    QDataStream stream(data);
+    QPointF pos;
+    stream >> pos;
+    return {pos};
+}
+
+auto setXAttr(const KFileItem& item, const QPointF& pos)
+{
+    QByteArray data(32, '\0');
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << pos;
+    lsetxattr(qPrintable(item.localPath()), "user.org.kde.melon.pos", data.data(), data.size(), 0);
+}
 
 struct SDirModel::Private
 {
 	// TODO(microoptimisation): don't have a copy of this in every SDirModel
 	QList<QByteArray> supportedMimeTypes;
-	// TODO: write to filesystem, use more persistent ID
-	QMap<QUrl, QMap<QString, QPointF>> iconPositions;
 };
 
 SDirModel::SDirModel(QObject* parent) : KDirModel(parent), d(new Private)
@@ -23,14 +45,8 @@ SDirModel::~SDirModel()
 
 QPointF SDirModel::positionFor(const KFileItem& item) const
 {
-	if (!d->iconPositions.contains(dirLister()->url())) {
-        d->iconPositions[dirLister()->url()] = QMap<QString, QPointF>();
-    }
-
-    auto& map = d->iconPositions[dirLister()->url()];
-
-    if (map.contains(item.name())) {
-        return map[item.name()];
+    if (auto pos = getXAttr(item)) {
+        return *pos;
     }
 
 	Kirigami::Units units;
@@ -44,11 +60,12 @@ QPointF SDirModel::positionFor(const KFileItem& item) const
     const auto items = dirLister()->items();
 
 	while (std::any_of(items.cbegin(), items.cend(), [=](const KFileItem& item) {
-        if (!map.contains(item.name()))
-            return false;
+		auto comparingPos = getXAttr(item);
+		if (!comparingPos.has_value())
+			return false;
 
 		const auto tryingRect = QRectF(topLeft, size);
-		const auto comparingRect = QRectF(map[item.name()], size);
+		const auto comparingRect = QRectF(comparingPos.value(), size);
 
 		return tryingRect.intersects(comparingRect);
 	})) {
@@ -59,8 +76,8 @@ QPointF SDirModel::positionFor(const KFileItem& item) const
 		}
 	}
 
-    map[item.name()] = topLeft;
-    return map[item.name()];
+    setXAttr(item, topLeft);
+    return topLeft;
 }
 
 QVariant SDirModel::data(const QModelIndex& index, int role) const
