@@ -93,6 +93,8 @@ QQC2.ApplicationWindow {
 						required property Melon.Document modelData
 
 						sourceComponent: {
+							return spatialIconsFileView
+
 							const kind = Melon.FolderClassifier.classifyFolder(loader.modelData.navigator.currentLocationUrl)
 							switch (kind) {
 							case "photos":
@@ -106,6 +108,7 @@ QQC2.ApplicationWindow {
 				Component { id: iconsFileView; IconsFileView { document: modelData } }
 				Component { id: photosFileView; PhotosFileView { document: modelData } }
 				Component { id: tableFileView; TableFileView { document: modelData } }
+				Component { id: spatialIconsFileView; SpatialIconsFileView { document: modelData } }
 			}
 		}
 	}

@@ -15,6 +15,7 @@ QQC2.Control {
 	required property var decoration
 	required property var fileItem
 	required property int index
+	required property point iconPosition
 	required property bool isImageReadable
 	required property string display
 	readonly property var modelIndex: document.dirModel.index(index, 0)
