@@ -15,55 +15,31 @@ struct SDirModel::Private
 	// TODO(microoptimisation): don't have a copy of this in every SDirModel
 	QList<QByteArray> supportedMimeTypes;
     KSharedConfigPtr spatialState;
-    QCache<QUrl, QPointF> positionsCache;
+    KConfigGroup group;
 };
 
 SDirModel::SDirModel(QObject* parent) : KDirModel(parent), d(new Private)
 {
 	d->supportedMimeTypes = QImageReader::supportedMimeTypes();
-    d->spatialState = KSharedConfig::openStateConfig("melon-spatial");
-    d->positionsCache.setMaxCost(2000);
+    d->spatialState = KSharedConfig::openStateConfig("org.kde.melon.spatialdata");
+    d->group = d->spatialState->group("Positions");
 }
 
 SDirModel::~SDirModel()
 {
 }
 
-std::optional<QPointF> SDirModel::getXAttr(const KFileItem& item) const
+std::optional<QPoint> SDirModel::getXAttr(const KFileItem& item) const
 {
-    qWarning() << "reading" << item << "!";
-    if (d->positionsCache.contains(item.url()))
-        return *d->positionsCache[item.url()];
+    if (d->group.hasKey(item.url().toString()))
+        return d->group.readEntry(item.url().toString(), QPoint());
 
-    QByteArray data(32, '\0');
-    auto ret = lgetxattr(qPrintable(item.localPath()), "user.org.kde.melon.pos", data.data(), data.size());
-    if (ret < 0) {
-        if (d->spatialState->group("Spaces").hasKey(item.url().toString())) {
-            auto pos = d->spatialState->group("Spaces").readEntry(item.url().toString(), QPointF());
-            d->positionsCache.insert(item.url(), new QPointF(pos));
-            return pos;
-        }
-        return {};
-    }
-
-    QDataStream stream(data);
-    QPointF pos;
-    stream >> pos;
-    d->positionsCache.insert(item.url(), new QPointF(pos));
-    return {pos};
+    return {};
 }
 
-void SDirModel::setXAttr(const KFileItem& item, const QPointF& pos) const
+void SDirModel::setXAttr(const KFileItem& item, const QPoint& pos) const
 {
-    qWarning() << "writing" << item << "!";
-    QByteArray data(32, '\0');
-    QDataStream stream(&data, QIODevice::WriteOnly);
-    stream << pos;
-    auto ret = lsetxattr(qPrintable(item.localPath()), "user.org.kde.melon.pos", data.data(), data.size(), 0);
-    if (ret == -1) {
-        d->spatialState->group("Spaces").writeEntry(item.url().toString(), pos);
-    }
-    d->positionsCache.insert(item.url(), new QPointF(pos));
+    d->group.writeEntry(item.url().toString(), pos);
 }
 
 QPointF SDirModel::positionFor(const KFileItem& item) const
@@ -77,21 +53,22 @@ QPointF SDirModel::positionFor(const KFileItem& item) const
 	const auto width = units.gridUnit() * 6;
 	const auto height = units.gridUnit() * 5;
 	const auto overallWidth = units.gridUnit() * (40-7);
-	const auto size = QSizeF(width, height);
-	QPointF topLeft(0, 0);
+	const auto size = QSize(width, height);
+	QPoint topLeft(0, 0);
 
+    QRegion existingIcons;
     const auto items = dirLister()->items();
-
-	while (std::any_of(items.cbegin(), items.cend(), [=](const KFileItem& item) {
+    for (const auto& item : items) {
 		auto comparingPos = getXAttr(item);
 		if (!comparingPos.has_value())
-			return false;
+			continue;
 
-		const auto tryingRect = QRectF(topLeft, size);
-		const auto comparingRect = QRectF(comparingPos.value(), size);
+        qWarning() << "intersecting...";
+        existingIcons += QRect(*comparingPos, size);
+    }
+    qWarning() << existingIcons;
 
-		return tryingRect.intersects(comparingRect);
-	})) {
+	while (existingIcons.intersects(QRect(topLeft, size))) {
 		topLeft.rx() += width;
 		if (topLeft.x() + width >= overallWidth) {
 			topLeft.rx() = 0;
