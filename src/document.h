@@ -87,6 +87,7 @@ public:
 	Q_INVOKABLE void startDrag();
 	Q_INVOKABLE void moveTo(SWindow* window);
 	Q_INVOKABLE void openItem(KFileItem item);
+	Q_INVOKABLE void openFolderItem(KFileItem item);
 	Q_INVOKABLE void openRightClickMenuFor(KFileItem item);
 	Q_INVOKABLE void openNewFileMenuFor(QQuickItem* item);
 	Q_INVOKABLE void drop(QQuickItem* target, QQuickDropEvent* event);

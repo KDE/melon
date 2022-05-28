@@ -320,6 +320,16 @@ void SDocument::openItem(KFileItem item)
 	d->fileItemActions->runPreferredApplications(KFileItemList{item});
 }
 
+void SDocument::openFolderItem(KFileItem item)
+{
+	if (sApp->appMode() == SApp::Spatial) {
+		qWarning() << "ensuring shown" << item.url();
+		sApp->ensureShown(item.url());
+	} else {
+		navigator()->setCurrentLocationUrl(item.url());
+	}
+}
+
 void SDocument::copy()
 {
 	auto cboard = QGuiApplication::clipboard();

@@ -257,6 +257,19 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		evaluate();
 		connect(sApp, &SApp::editModeChanged, this, evaluate);
 	}
+	{
+		auto evaluate = [act1 = GA("new_tab"), act2 = GA("new_window")] {
+			if (sApp->appMode() == SApp::Spatial) {
+				act1->setVisible(false);
+				act2->setVisible(false);
+			} else {
+				act1->setVisible(true);
+				act2->setVisible(true);
+			}
+		};
+		evaluate();
+		connect(sApp, &SApp::appModeChanged, this, evaluate);
+	}
 }
 
 SMenuBar::~SMenuBar()

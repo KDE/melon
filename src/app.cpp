@@ -27,6 +27,7 @@ struct SApp::Private
 	bool uuumauma = false;
 	bool iconsView = false;
 	bool editMode = false;
+	AppMode appMode = AppMode::Spatial;
 	KSharedConfigPtr config;
 	SToolBar* toolbar = nullptr;
 };
@@ -132,7 +133,7 @@ void SApp::newWindowAtUrl(const QUrl& url)
 	auto win = qobject_cast<QQuickWindow*>(windowComponent->beginCreate(engine->rootContext()));
 	qWarning().noquote() << windowComponent->errorString();
 
-	auto window = new SWindow(url.adjusted(QUrl::RemoveFilename), win, engine.get());
+	auto window = new SWindow(url.adjusted(QUrl::StripTrailingSlash), win, engine.get());
 
 	windowComponent->setInitialProperties(win, {{"window", QVariant::fromValue(window)}});
 	windowComponent->completeCreate();
@@ -154,14 +155,29 @@ void SApp::ensureShown(const QUrl& url)
 		auto docs = window->documents();
 		for (auto* doc : docs) {
 			if (doc->navigator()->currentLocationUrl() == url ||
-				doc->navigator()->currentLocationUrl().adjusted(QUrl::RemoveFilename) == url.adjusted(QUrl::RemoveFilename)) {
+				doc->navigator()->currentLocationUrl().adjusted(QUrl::StripTrailingSlash) == url.adjusted(QUrl::StripTrailingSlash)) {
 
 				KWindowSystem::activateWindow(window->displayedIn());
 				return;
 			}
 		}
 	}
+	qWarning() << "making new window at url" << url;
 	newWindowAtUrl(url);
+}
+
+SApp::AppMode SApp::appMode() const
+{
+	return d->appMode;
+}
+
+void SApp::setAppMode(AppMode mode)
+{
+	if (d->appMode == mode)
+		return;
+
+	d->appMode = mode;
+	Q_EMIT appModeChanged();
 }
 
 KFilePlacesModel*

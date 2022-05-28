@@ -63,10 +63,8 @@ QPointF SDirModel::positionFor(const KFileItem& item) const
 		if (!comparingPos.has_value())
 			continue;
 
-        qWarning() << "intersecting...";
         existingIcons += QRect(*comparingPos, size);
     }
-    qWarning() << existingIcons;
 
 	while (existingIcons.intersects(QRect(topLeft, size))) {
 		topLeft.rx() += width;

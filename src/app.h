@@ -17,8 +17,17 @@ struct SApp : public QObject
 	struct Private;
 	QScopedPointer<Private> d;
 
-
 public:
+	QML_NAMED_ELEMENT(App)
+	QML_UNCREATABLE("use the singleton")
+
+	enum AppMode
+	{
+		Navigational,
+		Spatial,
+	};
+	Q_ENUM(AppMode)
+
 	static SApp* instance();
 
 	QList<SWindow*> windows;
@@ -41,6 +50,11 @@ public:
 	void windowClosing(SWindow* window);
 
 	Q_INVOKABLE QString kaomoji(const QString& str);
+
+	Q_PROPERTY(AppMode appMode READ appMode WRITE setAppMode NOTIFY appModeChanged)
+	AppMode appMode() const;
+	void setAppMode(AppMode mode);
+	Q_SIGNAL void appModeChanged();
 
 	Q_PROPERTY(bool showSidebar READ showSidebar WRITE setShowSidebar NOTIFY showSidebarChanged)
 	bool showSidebar() const;
