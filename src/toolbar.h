@@ -17,7 +17,7 @@ public:
 	Q_PROPERTY(QString guiName MEMBER guiName)
 	QString guiName;
 
-	SToolBarItem() { }
+	SToolBarItem() : kind(), component(nullptr), guiName() { }
 	SToolBarItem(const QString& item, const QString& guiName, QQmlComponent* component) : kind(item), component(component), guiName(guiName)
 	{
 	}
