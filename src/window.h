@@ -15,6 +15,7 @@ class SWindow : public QObject, public NGSavable
 	Q_OBJECT
 	QML_NAMED_ELEMENT(Window)
 	QML_UNCREATABLE("only c++ is allowed to make new windows")
+	Q_INTERFACES(NGSavable)
 
 	struct Private;
 	QScopedPointer<Private> d;
