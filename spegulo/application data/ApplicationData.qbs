@@ -1,0 +1,3 @@
+Product {
+	name: "spegulo-data"
+}

@@ -1,0 +1,11 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+
+<node>
+    <interface name="org.kde.Spegulo">
+        <method name="ShowFile">
+            <arg type="s" name="uri" direction="in" />
+            <arg type="s" name="parentWindowHandle" direction="in" />
+        </method>
+    </interface>
+</node>
