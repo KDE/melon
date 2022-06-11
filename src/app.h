@@ -13,6 +13,8 @@ class SToolBar;
 struct SApp : public QObject
 {
 	Q_OBJECT
+	QML_NAMED_ELEMENT(App)
+	QML_UNCREATABLE("use the singleton melonApp")
 
 	struct Private;
 	QScopedPointer<Private> d;
@@ -20,6 +22,13 @@ struct SApp : public QObject
 
 public:
 	static SApp* instance();
+
+	enum ViewMode {
+		Icons,
+		List,
+		Columns,
+	};
+	Q_ENUM(ViewMode)
 
 	QList<SWindow*> windows;
 	QScopedPointer<QQmlEngine> engine;
@@ -62,10 +71,10 @@ public:
 	void setShowPathBar(bool show);
 	Q_SIGNAL void showPathBarChanged();
 
-	Q_PROPERTY(bool iconsView READ iconsView WRITE setIconsView NOTIFY iconsViewChanged)
-	bool iconsView() const;
-	void setIconsView(bool iconsView);
-	Q_SIGNAL void iconsViewChanged();
+	Q_PROPERTY(ViewMode viewMode READ viewMode WRITE setViewMode NOTIFY viewModeChanged)
+	ViewMode viewMode() const;
+	void setViewMode(ViewMode mode);
+	Q_SIGNAL void viewModeChanged();
 
 	Q_PROPERTY(bool editMode READ editMode WRITE setEditMode NOTIFY editModeChanged)
 	bool editMode() const;

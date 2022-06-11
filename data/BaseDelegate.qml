@@ -12,14 +12,18 @@ QQC2.Control {
 	id: del
 
 	required property Melon.Document document
+	required property Melon.DirModel dirModel
 	required property var decoration
 	required property var fileItem
 	required property int index
 	required property bool isImageReadable
 	required property string display
-	readonly property var modelIndex: document.dirModel.index(index, 0)
+	readonly property var modelIndex: del.dirModel.index(index, 0)
+	readonly property bool containsDrag: dropArea.containsDrag
 
 	DropArea {
+		id: dropArea
+		enabled: del.fileItem.isDir
 		anchors.fill: parent
 		onDropped: (event) => del.document.drop(del, event)
 	}
@@ -41,7 +45,7 @@ QQC2.Control {
 	}
 
 	function tap(modifiers) {
-		const selModel = del.document.selectionModel
+		const selModel = del.document.selectionModelFor(del.dirModel)
 		if (modifiers & Qt.ControlModifier) {
 			selModel.select(del.modelIndex, ItemSelectionModel.Select)
 		} else {
@@ -56,6 +60,6 @@ QQC2.Control {
 		}
 	}
 	function doMenu() {
-		del.document.openRightClickMenuFor(this.fileItem)
+		del.document.openRightClickMenuFor(this.fileItem, del.dirModel)
 	}
 }

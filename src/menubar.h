@@ -33,6 +33,7 @@ public:
 	void selectAll();
 	void viewAsIcons();
 	void viewAsList();
+	void viewAsColumns();
 	void togglePathBar();
 	void toggleStatusBar();
 	void toggleSidebar();

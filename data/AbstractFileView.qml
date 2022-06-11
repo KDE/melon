@@ -13,6 +13,7 @@ QQC2.Page {
 
 	required property Melon.Document document
 	required property int itemCount
+	readonly property bool containsDrag: dropArea.containsDrag
 
 	header: ColumnLayout {
 		QQC2.ToolBar {
@@ -75,6 +76,7 @@ QQC2.Page {
 	}
 
 	DropArea {
+		id: dropArea
 		anchors.fill: parent
 		onDropped: (event) => page.document.drop(page, event)
 	}

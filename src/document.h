@@ -9,6 +9,7 @@
 #include "dirmodel.h"
 
 class QQuickDropEvent;
+class SColumnsModel;
 
 class SDocument : public QObject
 {
@@ -37,9 +38,6 @@ public:
 	QString title() const;
 	Q_SIGNAL void titleChanged();
 	Q_INVOKABLE QString fancyNameFor(const QUrl& url) const;
-
-	Q_PROPERTY(QItemSelectionModel* selectionModel READ selectionModel CONSTANT)
-	QItemSelectionModel* selectionModel() const;
 
 	Q_PROPERTY(SDirModel* dirModel READ dirModel CONSTANT)
 	SDirModel* dirModel() const;
@@ -103,12 +101,27 @@ public:
 	bool loading() const;
 	Q_SIGNAL void loadingChanged();
 
+	Q_PROPERTY(SColumnsModel* columnsModel READ columnsModel CONSTANT)
+	SColumnsModel* columnsModel() const;
+	Q_INVOKABLE void openColumnUrl(int containingIndex, const QUrl& url);
+
 	Q_SIGNAL void pathSegmentChanged();
 
 	Q_SIGNAL void statted();
 
 	void getFileCounts();
 
+	Q_PROPERTY(QItemSelectionModel* rawSelectionModel READ rawSelectionModel CONSTANT)
+	QItemSelectionModel* rawSelectionModel() const;
+
+	Q_PROPERTY(KFileItem viewingFileItem READ viewingFileItem WRITE setViewingFileItem RESET resetViewingFileItem NOTIFY viewingFileItemChanged)
+	KFileItem viewingFileItem() const;
+	void setViewingFileItem(KFileItem item);
+	void resetViewingFileItem();
+	Q_SIGNAL void viewingFileItemChanged();
+
+	SDirModel* currentDirModel() const;
+	Q_INVOKABLE QItemSelectionModel* selectionModelFor(SDirModel* model) const;
 	Q_INVOKABLE void copy();
 	Q_INVOKABLE void cut();
 	Q_INVOKABLE void paste();
@@ -116,12 +129,13 @@ public:
 	Q_INVOKABLE void moveTo(SWindow* window);
 	Q_INVOKABLE void openUrl(const QUrl& url);
 	Q_INVOKABLE void openItem(KFileItem item);
-	Q_INVOKABLE void openRightClickMenuFor(KFileItem item);
+	Q_INVOKABLE void openRightClickMenuFor(KFileItem item, SDirModel* model);
 	Q_INVOKABLE void openNewFileMenuFor(QQuickItem* item);
-	Q_INVOKABLE void drop(QQuickItem* target, QQuickDropEvent* event);
+	Q_INVOKABLE void drop(QQuickItem* target, QQuickDropEvent* event, const QUrl& url = {});
 	Q_INVOKABLE void openSelectedFiles();
 	Q_INVOKABLE void duplicateSelectedFiles();
 	Q_INVOKABLE void getInfoOnSelectedFiles();
+	Q_INVOKABLE void getInfoOnFile(KFileItem item);
 	Q_INVOKABLE void aliasSelectedFiles();
 	Q_INVOKABLE void trashSelectedFiles();
 

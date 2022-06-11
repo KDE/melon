@@ -25,7 +25,7 @@ struct SApp::Private
 	bool showToolbar = true;
 	bool showPathBar = true;
 	bool uuumauma = false;
-	bool iconsView = false;
+	SApp::ViewMode viewMode = SApp::List;
 	bool editMode = false;
 	KSharedConfigPtr config;
 	SToolBar* toolbar = nullptr;
@@ -46,6 +46,7 @@ SApp::SApp() : QObject(), d(new Private)
 {
 	d->config = KSharedConfig::openConfig();
 	d->uuumauma = QFile::exists(QDir::homePath() + QDir::separator() + ".ｳｯｰｳｯｰｳﾏｳﾏ");
+	d->viewMode = (SApp::ViewMode)d->config->group("Settings").readEntry("ViewMode", (int)ViewMode::List);
 
 	qRegisterMetaType<QList<SDocument*>>();
 
@@ -244,18 +245,19 @@ QString SApp::kaomoji(const QString& str)
 	return str;
 }
 
-bool SApp::iconsView() const
+SApp::ViewMode SApp::viewMode() const
 {
-	return d->iconsView;
+	return d->viewMode;
 }
 
-void SApp::setIconsView(bool enabled)
+void SApp::setViewMode(ViewMode mode)
 {
-	if (d->iconsView == enabled)
+	if (d->viewMode == mode)
 		return;
 
-	d->iconsView = enabled;
-	Q_EMIT iconsViewChanged();
+	d->config->group("Settings").writeEntry("ViewMode", (int)mode);
+	d->viewMode = mode;
+	Q_EMIT viewModeChanged();
 }
 
 void SApp::openRightClickMenuForPlace(const QModelIndex& idx)

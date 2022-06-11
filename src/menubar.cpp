@@ -111,6 +111,8 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		"view_as_icons", this, &SMenuBar::viewAsIcons);
 	d->ac->add<QAction>(
 		"view_as_list", this, &SMenuBar::viewAsList);
+	d->ac->add<QAction>(
+		"view_as_columns", this, &SMenuBar::viewAsColumns);
 
 	d->ac->add<QAction>(
 		"toggle_pathbar", this, &SMenuBar::togglePathBar);
@@ -190,6 +192,7 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 	Menu(i18n("View"))
 		Action("view_as_icons", i18n("as Icons"), )
 		Action("view_as_list", i18n("as List"), )
+		Action("view_as_columns", i18n("as Columns"), )
 		Separator
 		Action("toggle_pathbar", i18n("Show Path Bar"), )
 		Action("toggle_statusbar", i18n("Show Status Bar"), )
@@ -375,19 +378,25 @@ void SMenuBar::selectAll()
 {
 	ActionForWindow
 
-	auto sm = swindow->activeDocument()->selectionModel();
+	// TODO: column view
+	auto sm = swindow->activeDocument()->selectionModelFor(swindow->activeDocument()->currentDirModel());
 	auto index = sm->model()->index(0, 0);
 	sm->select(index, QItemSelectionModel::Select | QItemSelectionModel::Columns);
 }
 
 void SMenuBar::viewAsIcons()
 {
-	sApp->setIconsView(true);
+	sApp->setViewMode(SApp::Icons);
 }
 
 void SMenuBar::viewAsList()
 {
-	sApp->setIconsView(false);
+	sApp->setViewMode(SApp::List);
+}
+
+void SMenuBar::viewAsColumns()
+{
+	sApp->setViewMode(SApp::Columns);
 }
 
 void SMenuBar::togglePathBar()

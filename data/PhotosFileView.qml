@@ -24,6 +24,10 @@ AbstractFileView {
 		background: Rectangle {
 			Kirigami.Theme.colorSet: Kirigami.Theme.Window
 			color: Kirigami.Theme.backgroundColor
+			DropIndicator {
+				target: scrollView
+				visible: page.containsDrag
+			}
 		}
 
 		contentItem: GridView {
@@ -51,6 +55,7 @@ AbstractFileView {
 			delegate: BaseDelegate {
 				id: del
 				document: page.document
+				dirModel: page.document.dirModel
 
 				width: gridView.cellWidth
 				height: gridView.cellHeight
@@ -61,18 +66,23 @@ AbstractFileView {
 				bottomInset: Kirigami.Units.smallSpacing
 				topInset: Kirigami.Units.smallSpacing
 
+				DropIndicator {
+					target: del
+					visible: del.containsDrag
+				}
+
 				background: Rectangle {
 					border.width: 1
 					radius: 5
 
 					border.color: {
-						if (page.document.selectionModel.selectedIndexes.includes(del.modelIndex))
+						if (page.document.rawSelectionModel.selectedIndexes.includes(del.modelIndex))
 							return Kirigami.Theme.highlightColor
 
 						return Kirigami.ColorUtils.linearInterpolation(Kirigami.Theme.backgroundColor, Kirigami.Theme.textColor, 0.15)
 					}
 					color: {
-						if (page.document.selectionModel.selectedIndexes.includes(del.modelIndex)) {
+						if (page.document.rawSelectionModel.selectedIndexes.includes(del.modelIndex)) {
 							const color = Kirigami.Theme.highlightColor
 							return Qt.rgba(color.r, color.g, color.b, 0.3)
 						}

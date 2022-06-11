@@ -93,12 +93,23 @@ QQC2.ApplicationWindow {
 						required property Melon.Document modelData
 
 						sourceComponent: {
+							if (melonApp.viewMode === Melon.App.Columns) {
+								switch (loader.modelData.searchBarOpen) {
+								case true: return tableFileView
+								case false: return columnsFileView
+								default: return columnsFileView
+								}
+							}
 							const kind = Melon.FolderClassifier.classifyFolder(loader.modelData.actualViewingURL)
 							switch (kind) {
 							case "photos":
 								return photosFileView
 							default:
-								return melonApp.iconsView ? iconsFileView : tableFileView
+								switch (melonApp.viewMode) {
+								case Melon.App.Icons: return iconsFileView
+								case Melon.App.List: return tableFileView
+								default: return tableFileView
+								}
 							}
 						}
 					}
@@ -106,6 +117,7 @@ QQC2.ApplicationWindow {
 				Component { id: iconsFileView; IconsFileView { document: modelData } }
 				Component { id: photosFileView; PhotosFileView { document: modelData } }
 				Component { id: tableFileView; TableFileView { document: modelData } }
+				Component { id: columnsFileView; ColumnsFileView { document: modelData } }
 			}
 		}
 	}

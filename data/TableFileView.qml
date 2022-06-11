@@ -28,6 +28,10 @@ AbstractFileView {
 		background: Rectangle {
 			Kirigami.Theme.colorSet: Kirigami.Theme.Window
 			color: Kirigami.Theme.backgroundColor
+			DropIndicator {
+				target: scrollView
+				visible: page.containsDrag
+			}
 		}
 
 		contentItem: TableView {
@@ -43,7 +47,13 @@ AbstractFileView {
 			delegate: BaseDelegate {
 				id: del
 				document: page.document
+				dirModel: page.document.dirModel
 				index: row
+
+				DropIndicator {
+					target: del
+					visible: del.containsDrag
+				}
 
 				property bool pooled: false
 				TableView.onPooled: pooled = true
@@ -51,7 +61,7 @@ AbstractFileView {
 
 				background: Rectangle {
 					color: {
-						if (page.document.selectionModel.selectedIndexes.includes(del.modelIndex))
+						if (page.document.rawSelectionModel.selectedIndexes.includes(del.modelIndex))
 							return Kirigami.Theme.highlightColor
 
 						return (row % 2 == 0) ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor

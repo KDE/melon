@@ -12,6 +12,7 @@
 #include <QClipboard>
 #include <QMimeDatabase>
 #include <KLocalizedString>
+#include <QScopeGuard>
 #include <KCoreDirLister>
 #include <KDirLister>
 #include <KIO/PasteJob>
@@ -34,18 +35,21 @@
 
 #include "app.h"
 #include "document.h"
+#include "columnsmodel_p.h"
 
 struct SDocument::Private
 {
 	SWindow* window;
 	SDirModel* dirModel;
+	SColumnsModel* columnsModel;
 	KCoreUrlNavigator* dirNavigator;
 	KFileItemActions* fileItemActions;
-	QItemSelectionModel* selectionModel;
 	KIO::StatJob* fileCountsJob;
 	KActionCollection* actionCollection;
 	KNewFileMenu* newFileMenu;
 	QTimer* searchChangedTimer;
+	QItemSelectionModel* selectionModel;
+	KFileItem viewingFileItem;
 
 	int folderCount = 0;
 	int fileCount = 0;
@@ -71,9 +75,34 @@ void SDocument::preInit(SWindow* parent, const QUrl& in)
 {
 	d->window = parent;
 	d->dirModel = new SDirModel(this);
+	d->selectionModel = new QItemSelectionModel(d->dirModel, this);
+	d->columnsModel = new SColumnsModel(this);
+	connect(d->columnsModel, &SColumnsModel::columnsChanged, this, &SDocument::titleChanged);
+	connect(d->selectionModel, &QItemSelectionModel::selectionChanged, this, [=] {
+		if (d->selectionModel->selectedIndexes().length() < 2) {
+			if (d->selectionModel->selectedIndexes().length() == 1) {
+				setViewingFileItem(d->selectionModel->selectedIndexes().first().data(KDirModel::FileItemRole).value<KFileItem>());
+			}
+			return;
+		}
+
+		int idx = -1;
+		int i = -1;
+		for (const auto& model : d->columnsModel->d->dirModels) {
+			i++;
+			if (model.data() == d->selectionModel->model()) {
+				idx = i;
+				break;
+			}
+		}
+		if (idx != -1) {
+			d->columnsModel->beginRemoveRows(QModelIndex(), idx+1, d->columnsModel->d->dirModels.length());
+			d->columnsModel->d->dirModels = d->columnsModel->d->dirModels.mid(0, idx+1);
+			Q_EMIT d->columnsModel->columnsChanged();
+		}
+	});
 	d->dirNavigator = new KCoreUrlNavigator(in, this);
 	d->fileItemActions = new KFileItemActions(this);
-	d->selectionModel = new QItemSelectionModel(d->dirModel, this);
 	d->actionCollection = new KActionCollection(this);
 	d->newFileMenu = new KNewFileMenu(d->actionCollection, "", this);
 	d->searchChangedTimer = new QTimer(this);
@@ -115,6 +144,7 @@ void SDocument::postInit()
 		d->uuid = QUuid::createUuid();
 
 	d->dirModel->openUrl(d->dirNavigator->currentLocationUrl());
+	d->columnsModel->d->dirModels = {d->dirModel->duplicate()};
 	recomputePathSegments();
 	getFileCounts();
 }
@@ -197,9 +227,55 @@ void SDocument::openUrl(const QUrl& url)
 		setSearchBarOpen(true);
 	} else {
 		d->dirNavigator->setCurrentLocationUrl(url);
+		d->columnsModel->beginResetModel();
+		d->columnsModel->d->dirModels = {d->dirModel->duplicate()};
+		d->columnsModel->endResetModel();
+		Q_EMIT d->columnsModel->columnsChanged();
 	}
 }
 
+void SDocument::openColumnUrl(int containingIndex, const QUrl& url)
+{
+	auto scope = qScopeGuard([=] { d->dirNavigator->setCurrentLocationUrl(url); });
+
+	// if it's at the end of the columns, then we always do a new one
+	if (containingIndex == d->columnsModel->d->dirModels.length() - 1) {
+		auto newModel = QSharedPointer<SDirModel>::create();
+		newModel->openUrl(url);
+		d->columnsModel->beginInsertRows(QModelIndex(), d->columnsModel->d->dirModels.length(), d->columnsModel->d->dirModels.length());
+		d->columnsModel->d->dirModels << newModel;
+		Q_EMIT d->columnsModel->columnsChanged();
+		d->columnsModel->endInsertRows();
+		return;
+	}
+
+	if (d->columnsModel->d->dirModels[containingIndex+1]->currentURL() == url) {
+		return;
+	}
+
+	// otherwise we replace the one after this one if the url isn't the same
+	auto newModel = QSharedPointer<SDirModel>::create();
+	newModel->openUrl(url);
+
+	// if we don't yoink the existing model, it'll get deleted before qml updates to the new one.
+	// this is problematic, because qml engine will overwrite properties referring to it with null,
+	// breaking the binding.
+	// you'll see something like this in the console:
+	//		qrc:/ColumnsFileView.qml: Writing to "modelData" broke the binding to the underlying model
+	//
+	// so we make sure it lives until after qml has been notified of the new stuff.
+	auto yoinkedModel = d->columnsModel->d->dirModels[containingIndex+1];
+
+	d->columnsModel->d->dirModels[containingIndex+1] = newModel;
+	Q_EMIT d->columnsModel->dataChanged(d->columnsModel->index(containingIndex+1), d->columnsModel->index(containingIndex+1));
+
+	// then we chop off the ones after the replaced column
+	// we do this by making the list span only the columns to this one + one more
+	d->columnsModel->beginRemoveRows(QModelIndex(), containingIndex+2, d->columnsModel->d->dirModels.length());
+	d->columnsModel->d->dirModels = d->columnsModel->d->dirModels.mid(0, containingIndex+2);
+	d->columnsModel->endRemoveRows();
+	Q_EMIT d->columnsModel->columnsChanged();
+}
 
 void SDocument::recomputeActualViewingURL()
 {
@@ -212,6 +288,17 @@ void SDocument::recomputeActualViewingURL()
 	d->overlayURL = newUrl;
 	Q_EMIT actualViewingURLChanged();
 	Q_EMIT titleChanged();
+
+	const auto clurl = d->dirNavigator->currentLocationUrl();
+	for (const auto& column : d->columnsModel->d->dirModels) {
+		if (column->currentURL().matches(clurl, QUrl::StripTrailingSlash)) {
+			return;
+		}
+	}
+
+	d->columnsModel->beginResetModel();
+	d->columnsModel->d->dirModels = {d->dirModel->duplicate()};
+	d->columnsModel->endResetModel();
 }
 
 QString SDocument::searchText()
@@ -412,7 +499,7 @@ QString SDocument::fancyNameFor(const QUrl& url) const
 
 QString SDocument::fancyPlacesTitle() const
 {
-	return fancyNameFor(d->dirNavigator->currentLocationUrl());
+	return fancyNameFor(currentDirModel()->currentURL());
 }
 
 QString SDocument::title() const
@@ -447,7 +534,7 @@ void SDocument::openItem(KFileItem item)
 void SDocument::copy()
 {
 	auto cboard = QGuiApplication::clipboard();
-	cboard->setMimeData(d->dirModel->mimeData(d->selectionModel->selectedIndexes()));
+	cboard->setMimeData(d->dirModel->mimeData(selectionModelFor(currentDirModel())->selectedIndexes()));
 }
 
 void SDocument::cut()
@@ -455,18 +542,27 @@ void SDocument::cut()
 	// TODO: cut handling
 }
 
+SDirModel* SDocument::currentDirModel() const
+{
+	if (sApp->viewMode() == SApp::Columns) {
+		return d->columnsModel->d->dirModels.last().data();
+	} else {
+		return d->dirModel;
+	}
+}
+
 void SDocument::startDrag()
 {
-	if (d->selectionModel->selectedIndexes().empty()) {
+	if (selectionModelFor(currentDirModel())->selectedIndexes().empty()) {
 		return;
 	}
-	auto mdata = d->dirModel->mimeData(d->selectionModel->selectedIndexes());
+	auto mdata = d->dirModel->mimeData(selectionModelFor(currentDirModel())->selectedIndexes());
 	if (!mdata) {
 		return;
 	}
 
 	// TODO: better pixmap
-	auto pixmap = d->dirModel->data(d->selectionModel->selectedIndexes().first(), Qt::DecorationRole).value<QIcon>().pixmap(48);
+	auto pixmap = d->dirModel->data(selectionModelFor(currentDirModel())->selectedIndexes().first(), Qt::DecorationRole).value<QIcon>().pixmap(48);
 
 	QDrag* drag = new QDrag(d->window);
 	drag->setPixmap(pixmap);
@@ -481,14 +577,9 @@ void SDocument::paste()
 	KIO::paste(QGuiApplication::clipboard()->mimeData(), actualViewingURL());
 }
 
-QItemSelectionModel* SDocument::selectionModel() const
-{
-	return d->selectionModel;
-}
-
 KFileItemList SDocument::selectedFiles() const
 {
-	auto indexes = d->selectionModel->selectedIndexes();
+	auto indexes = selectionModelFor(currentDirModel())->selectedIndexes();
 	if (indexes.isEmpty())
 		return {};
 
@@ -503,7 +594,7 @@ KFileItemList SDocument::selectedFiles() const
 
 QList<QUrl> SDocument::selectedURLs() const
 {
-	auto indexes = d->selectionModel->selectedIndexes();
+	auto indexes = selectionModelFor(currentDirModel())->selectedIndexes();
 	if (indexes.isEmpty())
 		return {};
 
@@ -527,6 +618,14 @@ void SDocument::openSelectedFiles()
 void SDocument::getInfoOnSelectedFiles()
 {
 	auto dialog = new KPropertiesDialog(selectedFiles());
+	dialog->createWinId();
+	dialog->windowHandle()->setTransientParent(qGuiApp->focusWindow());
+	dialog->show();
+}
+
+void SDocument::getInfoOnFile(KFileItem item)
+{
+	auto dialog = new KPropertiesDialog({item});
 	dialog->createWinId();
 	dialog->windowHandle()->setTransientParent(qGuiApp->focusWindow());
 	dialog->show();
@@ -645,7 +744,7 @@ void SDocument::openNewFileMenuFor(QQuickItem* item)
 	item->setProperty("down", QVariant());
 }
 
-void SDocument::openRightClickMenuFor(KFileItem item)
+void SDocument::openRightClickMenuFor(KFileItem item, SDirModel* model)
 {
 	QPointer<QMenu> menu(new QMenu);
 
@@ -653,7 +752,7 @@ void SDocument::openRightClickMenuFor(KFileItem item)
 		 // cut = KStandardAction::cut(this, &SDocument::cut, this),
 		paste = KStandardAction::paste(this, &SDocument::paste, this);
 
-	copy->setEnabled(d->selectionModel->hasSelection());
+	copy->setEnabled(selectionModelFor(model)->hasSelection());
 	menu->addAction(i18n("Get Info"), this, [item] {
 		auto dialog = new KPropertiesDialog(item);
 		dialog->createWinId();
@@ -661,7 +760,7 @@ void SDocument::openRightClickMenuFor(KFileItem item)
 		dialog->show();
 	});
 	menu->addAction(copy);
-	// cut->setEnabled(d->selectionModel->hasSelection());
+	// cut->setEnabled(d->dirModel->selectionModel()->hasSelection());
 	// menu->addAction(cut);
 	menu->addAction(paste);
 
@@ -684,7 +783,43 @@ bool SDocument::loading() const
 	return d->loading;
 }
 
-void SDocument::drop(QQuickItem* target, QQuickDropEvent* event)
+SColumnsModel* SDocument::columnsModel() const
+{
+	return d->columnsModel;
+}
+
+QItemSelectionModel* SDocument::rawSelectionModel() const
+{
+	return d->selectionModel;
+}
+
+QItemSelectionModel* SDocument::selectionModelFor(SDirModel* model) const
+{
+	if (d->selectionModel->model() != model) {
+		d->selectionModel->setModel(model);
+		d->selectionModel->clearSelection();
+
+		int idx = -1;
+		int i = -1;
+		for (const auto& iteratingModel : d->columnsModel->d->dirModels) {
+			i++;
+			if (iteratingModel.data() == model) {
+				idx = i;
+				break;
+			}
+		}
+		if (idx != -1) {
+			d->columnsModel->beginRemoveRows(QModelIndex(), idx+2, d->columnsModel->d->dirModels.length());
+			d->columnsModel->d->dirModels = d->columnsModel->d->dirModels.mid(0, idx+2);
+			d->columnsModel->endRemoveRows();
+			Q_EMIT d->columnsModel->columnsChanged();
+		}
+	}
+
+    return d->selectionModel;
+}
+
+void SDocument::drop(QQuickItem* target, QQuickDropEvent* event, const QUrl& url)
 {
 	qWarning() << "drop!" << event;
 
@@ -709,7 +844,7 @@ void SDocument::drop(QQuickItem* target, QQuickDropEvent* event)
 	// QDropEvent ev(pos, possibleActions, mimeData, buttons, modifiers);
 	// ev.setDropAction(proposedAction);
 
-	KIO::drop(event->event, item.isDir() ? item.url() : actualViewingURL());
+	KIO::drop(event->event, item.isDir() ? item.url() : (url.isEmpty() ? actualViewingURL() : url));
 }
 
 SDocument::SDocument(const KConfigGroup& config, SWindow* parent) : QObject(parent), d(new Private)
@@ -776,4 +911,23 @@ void SDocument::saveCurrentSearch()
 		i18n("Search for %1 in %2", d->searchText, d->dirNavigator->currentLocationUrl().fileName()) :
 		i18n("Search for %1", d->searchText);
 	sApp->placesModel()->addPlace(label, computeSearchURL(), "folder-saved-search-symbolic");
+}
+
+KFileItem SDocument::viewingFileItem() const
+{
+	return d->viewingFileItem;
+}
+
+void SDocument::setViewingFileItem(KFileItem item)
+{
+	if (item == d->viewingFileItem)
+		return;
+
+	d->viewingFileItem = item;
+	Q_EMIT viewingFileItemChanged();
+}
+
+void SDocument::resetViewingFileItem()
+{
+	setViewingFileItem(KFileItem());
 }

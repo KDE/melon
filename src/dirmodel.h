@@ -2,6 +2,7 @@
 
 #include <KDirModel>
 #include <QQmlEngine>
+#include <QItemSelectionModel>
 
 class SDirModel : public KDirModel
 {
@@ -16,6 +17,8 @@ public:
 	explicit SDirModel(QObject* parent = nullptr);
 	~SDirModel();
 
+    Q_INVOKABLE QUrl currentURL() const;
+
     enum AdditionalRoles {
         // Note: use   printf "0x%08X\n" $(($RANDOM*$RANDOM))
         // to define additional roles.
@@ -24,4 +27,5 @@ public:
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const override;
+    QSharedPointer<SDirModel> duplicate();
 };

@@ -1,4 +1,5 @@
 #include <QImageReader>
+#include <KDirLister>
 
 #include "dirmodel.h"
 
@@ -18,6 +19,11 @@ SDirModel::~SDirModel()
 
 }
 
+QUrl SDirModel::currentURL() const
+{
+    return dirLister()->url();
+}
+
 QVariant SDirModel::data(const QModelIndex &index, int role) const
 {
     auto item = itemForIndex(index);
@@ -35,4 +41,9 @@ QHash<int, QByteArray> SDirModel::roleNames() const
     return names;
 }
 
-
+QSharedPointer<SDirModel> SDirModel::duplicate()
+{
+    auto model = QSharedPointer<SDirModel>::create(nullptr);
+    model->openUrl(dirLister()->url());
+    return model;
+}
