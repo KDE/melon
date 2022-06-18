@@ -9,7 +9,8 @@ import QtQml.Models 2.15
 import org.kde.qqc2desktopstyle.private 1.0 as QQC2DesktopStyle
 
 QQC2.ToolButton {
+	id: control
 	icon.name: "go-previous"
-	property Melon.Document document
-	onClicked: control.document.navigator.goBack()
+	property Melon.Document outlet
+	onClicked: control.outlet.navigator.goBack()
 }

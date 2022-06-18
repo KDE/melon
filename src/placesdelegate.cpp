@@ -1,11 +1,11 @@
 #include <KIO/DropJob>
 #include <QMimeData>
 
-#include "beacons.h"
+#include "NGLibQuick.h"
 #include "placesdelegate.h"
 #include "app.h"
 
-PlacesDelegate::PlacesDelegate(QObject* parent) : BeaconControllerDelegate(parent)
+PlacesDelegate::PlacesDelegate(QObject* parent) : NGBeaconControllerDelegate(parent)
 {
 }
 
@@ -25,7 +25,7 @@ void PlacesDelegate::dragLeaveEvent(QDragLeaveEvent*)
 {
 }
 
-void PlacesDelegate::dropEvent(Beacon* beacon, QDropEvent* event)
+void PlacesDelegate::dropEvent(NGBeacon* beacon, QDropEvent* event)
 {
 	if (beacon == nullptr)
 		return;

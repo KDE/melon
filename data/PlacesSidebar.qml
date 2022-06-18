@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15 as QQC2
 import org.kde.kirigami 2.15 as Kirigami
 import org.kde.melon 1.0 as Melon
+import Nongurigaeru 1.0 as NGLib
 
 QQC2.ScrollView {
 	id: view
@@ -38,7 +39,7 @@ QQC2.ScrollView {
 		}
 		Keys.onSpacePressed: currentItem.tap()
 
-		Melon.BeaconController {
+		NGLib.BeaconController {
 			id: beaconController
 			anchors.fill: parent
 			delegate: Melon.PlacesDelegate {
@@ -68,7 +69,7 @@ QQC2.ScrollView {
 			width: parent && parent.width > 0 ? parent.width : implicitWidth
 			Layout.fillWidth: true
 
-			Melon.Beacon {
+			NGLib.Beacon {
 				id: aboveBeacon
 
 				controller: beaconController
@@ -80,7 +81,7 @@ QQC2.ScrollView {
 				anchors.right: parent.right
 			}
 
-			Melon.Beacon {
+			NGLib.Beacon {
 				id: belowBeacon
 
 				controller: beaconController
@@ -92,7 +93,7 @@ QQC2.ScrollView {
 				anchors.right: parent.right
 			}
 
-			Melon.Beacon {
+			NGLib.Beacon {
 				id: onBeacon
 
 				controller: beaconController

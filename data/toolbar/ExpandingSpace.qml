@@ -71,7 +71,7 @@ Rectangle {
 		}
 	}
 
-	property Melon.Document document
+	property Melon.Document outlet
 	Layout.fillWidth: true
 	Layout.fillHeight: true
 	implicitWidth: 20

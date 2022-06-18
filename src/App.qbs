@@ -46,5 +46,6 @@ QtApplication {
 	Qt.qml.importVersion: "1.0"
 
 	Depends { name: "NGLib" }
+	Depends { name: "NGLibQuick" }
 	Depends { name: "Qt"; submodules: ["core", "gui", "gui-private", "widgets", "quick", "quick-private", "quickcontrols2", "qml", "sql", "concurrent"] }
 }

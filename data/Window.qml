@@ -31,7 +31,7 @@ QQC2.ApplicationWindow {
 
 		PageToolBar {
 			visible: melonApp.showToolbar
-			document: window.window.documents[tabBar.currentIndex]
+			outlet: window.window.documents[tabBar.currentIndex]
 
 			Layout.fillWidth: true
 		}

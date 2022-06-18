@@ -1,8 +1,8 @@
 #pragma once
 
-#include "beacons.h"
+#include "NGBeaconControllerDelegate.h"
 
-class PlacesDelegate : public BeaconControllerDelegate
+class PlacesDelegate : public NGBeaconControllerDelegate
 {
 	Q_OBJECT
 	QML_NAMED_ELEMENT(PlacesDelegate)
@@ -14,5 +14,5 @@ public:
 	void dragEnterEvent(QDragEnterEvent*) override;
 	void dragMoveEvent(QDragMoveEvent*) override;
 	void dragLeaveEvent(QDragLeaveEvent*) override;
-	void dropEvent(Beacon*, QDropEvent*) override;
+	void dropEvent(NGBeacon*, QDropEvent*) override;
 };

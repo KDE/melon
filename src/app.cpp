@@ -15,8 +15,9 @@
 #include "dbus.h"
 #include "document.h"
 #include "qguiapplication.h"
+#include "toolbardelegate.h"
 #include "window.h"
-#include "toolbar.h"
+#include "NGLibQuick.h"
 
 struct SApp::Private
 {
@@ -28,7 +29,8 @@ struct SApp::Private
 	SApp::ViewMode viewMode = SApp::List;
 	bool editMode = false;
 	KSharedConfigPtr config;
-	SToolBar* toolbar = nullptr;
+	NGToolBarController* toolbarController = nullptr;
+	SToolBarDelegate* toolbarDelegate = nullptr;
 };
 
 
@@ -57,7 +59,8 @@ SApp::SApp() : QObject(), d(new Private)
 	engine->rootContext()->setContextObject(new KLocalizedContext(engine.get()));
 	windowComponent.reset(new QQmlComponent(engine.get()));
 	aboutComponent.reset(new QQmlComponent(engine.get()));
-	d->toolbar = new SToolBar(this);
+	d->toolbarDelegate = new SToolBarDelegate(engine.get());
+	d->toolbarController = new NGToolBarController("main-toolbar", d->toolbarDelegate, nullptr, this);
 
 	QUrl windowQml("qrc:/Window.qml");
 	QFile windowFile(":/Window.qml");
@@ -85,9 +88,9 @@ void SApp::start()
 		newWindow();
 }
 
-SToolBar* SApp::toolbar() const
+NGToolBarController* SApp::toolbarController() const
 {
-	return d->toolbar;
+	return d->toolbarController;
 }
 
 // void SApp::load()

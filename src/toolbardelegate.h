@@ -1,18 +1,20 @@
 #pragma once
 
-#include "beacons.h"
+#include "NGLibQuick.h"
 
-class ToolBarDelegate : public BeaconControllerDelegate
+class SToolBarDelegate : public NGToolBarDelegate
 {
-	Q_OBJECT
-	QML_NAMED_ELEMENT(ToolBarDelegate)
+
+	struct Private;
+	QScopedPointer<Private> d;
 
 public:
-	explicit ToolBarDelegate(QObject* parent = nullptr);
-	~ToolBarDelegate();
+	explicit SToolBarDelegate(QQmlEngine* engine);
+	~SToolBarDelegate();
 
-	void dragEnterEvent(QDragEnterEvent*) override;
-	void dragMoveEvent(QDragMoveEvent*) override;
-	void dragLeaveEvent(QDragLeaveEvent*) override;
-	void dropEvent(Beacon*, QDropEvent*) override;
+	QQmlEngine* engine() override;
+	std::optional<NGToolBarItem> itemForIdentifier(NGToolBarController* toolbar, const QString& identifier, bool willBeInsertedIntoToolbar) override;
+	QList<QString> possibleItems() override;
+	QList<QString> defaultitems() override;
+
 };

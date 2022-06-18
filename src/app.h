@@ -9,6 +9,7 @@
 
 class SWindow;
 class SToolBar;
+class NGToolBarController;
 
 struct SApp : public QObject
 {
@@ -81,8 +82,8 @@ public:
 	void setEditMode(bool editMode);
 	Q_SIGNAL void editModeChanged();
 
-	Q_PROPERTY(SToolBar* toolbar READ toolbar CONSTANT)
-	SToolBar* toolbar() const;
+	Q_PROPERTY(NGToolBarController* toolbarController READ toolbarController CONSTANT)
+	NGToolBarController* toolbarController() const;
 
 	Q_INVOKABLE void openRightClickMenuForPlace(const QModelIndex& idx);
 };

@@ -11,7 +11,7 @@ import org.kde.qqc2desktopstyle.private 1.0 as QQC2DesktopStyle
 QQC2.ToolButton {
     id: control
 	icon.name: "search"
-	property Melon.Document document
-    checked: control.document.searchBarOpen
-	onClicked: with (control.document) searchBarOpen = !searchBarOpen
+	property Melon.Document outlet
+    checked: control.outlet.searchBarOpen
+	onClicked: with (control.outlet) searchBarOpen = !searchBarOpen
 }

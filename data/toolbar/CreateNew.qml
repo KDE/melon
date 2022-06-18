@@ -11,6 +11,6 @@ import org.kde.qqc2desktopstyle.private 1.0 as QQC2DesktopStyle
 QQC2.ToolButton {
     id: control
 	icon.name: "list-add"
-	property Melon.Document document
-	onClicked: control.document.openNewFileMenuFor(control)
+	property Melon.Document outlet
+	onClicked: control.outlet.openNewFileMenuFor(control)
 }
