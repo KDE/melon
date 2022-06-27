@@ -18,7 +18,6 @@ class SColumnsModel : public QAbstractListModel
 	friend class SDocument;
 
 public:
-
 	explicit SColumnsModel(SDocument* parent);
 	~SColumnsModel();
 
@@ -26,5 +25,4 @@ public:
 	QVariant data(const QModelIndex& index, int role) const override;
 	QHash<int, QByteArray> roleNames() const override;
 	Q_SIGNAL void columnsChanged();
-
 };

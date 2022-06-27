@@ -5,9 +5,10 @@
 
 struct SColumnsModel::Private
 {
-    QList<QSharedPointer<SDirModel>> dirModels;
+	QList<QSharedPointer<SDirModel>> dirModels;
 };
 
-enum SColumnsModelRoles {
-    DirModel,
+enum SColumnsModelRoles
+{
+	DirModel,
 };

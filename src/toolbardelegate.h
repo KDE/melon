@@ -16,5 +16,4 @@ public:
 	std::optional<NGToolBarItem> itemForIdentifier(NGToolBarController* toolbar, const QString& identifier, bool willBeInsertedIntoToolbar) override;
 	QList<QString> possibleItems() override;
 	QList<QString> defaultitems() override;
-
 };

@@ -11,7 +11,7 @@ class ReverseProxyModel : public KRearrangeColumnsProxyModel
 	QML_NAMED_ELEMENT(ReverseProxyModel)
 
 public:
-	explicit ReverseProxyModel(QObject *parent = nullptr);
+	explicit ReverseProxyModel(QObject* parent = nullptr);
 	~ReverseProxyModel();
 
 	bool m_reverse;
