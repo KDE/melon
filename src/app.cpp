@@ -9,6 +9,7 @@
 #include <QGuiApplication>
 #include <QMenu>
 #include <KLocalizedString>
+#include <KBookmarkManager>
 
 #include "app.h"
 #include "conversioncheck.h"
@@ -31,6 +32,7 @@ struct SApp::Private
 	KSharedConfigPtr config;
 	NGToolBarController* toolbarController = nullptr;
 	SToolBarDelegate* toolbarDelegate = nullptr;
+	KBookmarkManager* bookmarkManager = nullptr;
 };
 
 
@@ -51,6 +53,53 @@ SApp::SApp() : QObject(), d(new Private)
 	d->viewMode = (SApp::ViewMode)d->config->group("Settings").readEntry("ViewMode", (int)ViewMode::List);
 
 	qRegisterMetaType<QList<SDocument*>>();
+
+	// try to find the kfile bookmarks...
+	auto bookmarksPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kfile/bookmarks.xml");
+	auto blankBookmarks = false;
+	// or the dolphin bookmarks...
+	if (bookmarksPath.isEmpty()) {
+		bookmarksPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "dolphin/bookmarks.xml");
+	}
+	// or our bookmarks
+	if (bookmarksPath.isEmpty()) {
+		bookmarksPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "melon/bookmarks.xml");
+	}
+	// or if none of those are available, let's make our own
+	if (bookmarksPath.isEmpty()) {
+		const auto location = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+		const auto separator = QDir::separator();
+		bookmarksPath = location + separator + "melon";
+		QDir().mkpath(bookmarksPath);
+		bookmarksPath += separator + QString("bookmarks.xml");
+		blankBookmarks = true;
+	}
+	d->bookmarkManager = KBookmarkManager::managerForFile(bookmarksPath, "Melon");
+	d->bookmarkManager->setUpdate(true);
+
+	// if we're going from scratch, let's make some initial bookmarks...
+	if (blankBookmarks) {
+		d->bookmarkManager->root().addBookmark(
+			i18nc("user's downloads folder", "Downloads"),
+			QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)),
+			"folder-documents");
+		d->bookmarkManager->root().addBookmark(
+			i18nc("user's documents folder", "Documents"),
+			QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)),
+			"folder-documents");
+		d->bookmarkManager->root().addBookmark(
+			i18nc("user's desktop folder", "Desktop"),
+			QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DesktopLocation)),
+			"desktop");
+		d->bookmarkManager->root().addBookmark(
+			i18nc("user's home folder", "Home"),
+			QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)),
+			"user-home");
+		d->bookmarkManager->root().addBookmark(
+			i18nc("root folder", "Computer"),
+			QUrl::fromLocalFile(QDir::rootPath()),
+			"folder-root");
+	}
 
 	filePlacesModel = new KFilePlacesModel(this);
 	sMenuBar = new SMenuBar(this);
@@ -91,6 +140,11 @@ void SApp::start()
 NGToolBarController* SApp::toolbarController() const
 {
 	return d->toolbarController;
+}
+
+KBookmarkManager* SApp::bookmarkManager() const
+{
+	return d->bookmarkManager;
 }
 
 // void SApp::load()

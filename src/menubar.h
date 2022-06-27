@@ -2,8 +2,9 @@
 
 #include <QAction>
 #include <QObject>
+#include <KBookmarkOwner>
 
-class SMenuBar : public QObject
+class SMenuBar : public QObject, public KBookmarkOwner
 {
 
 	Q_OBJECT
@@ -42,4 +43,9 @@ public:
 	void back();
 	void forward();
 	void up();
+
+	QString currentTitle() const override;
+	QUrl currentUrl() const override;
+	bool enableOption(BookmarkOption option) const override;
+	void openBookmark(const KBookmark& bookmark, Qt::MouseButtons, Qt::KeyboardModifiers) override;
 };

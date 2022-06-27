@@ -11,6 +11,10 @@
 #include <KFileItemActions>
 #include <KFileItemListProperties>
 #include <KNewFileMenu>
+#include <KBookmarkMenu>
+#include <KBookmarkManager>
+#include <KBookmarkAction>
+#include <KBookmarkActionMenu>
 
 #include "app.h"
 #include "menubar.h"
@@ -54,6 +58,12 @@ struct SMenuBar::Private
 	QScopedPointer<KActionCollection> ac;
 	QScopedPointer<KFileItemActions> fileItemActions;
 	QScopedPointer<KNewFileMenu> newFileMenu;
+	QScopedPointer<QMenu> dummyMenu;
+	QScopedPointer<KBookmarkMenu> bookmarksMenuManager;
+
+	QMenu* goMenu = nullptr;
+	QAction* goAfterSeparator = nullptr;
+	QList<QAction*> goActions;
 };
 
 SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
@@ -62,6 +72,59 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 	d->ac.reset(new KActionCollection(d->menuBar.get()));
 	d->fileItemActions.reset(new KFileItemActions);
 	d->newFileMenu.reset(new KNewFileMenu(d->ac.get(), "new_file", this));
+	d->dummyMenu.reset(new QMenu());
+	d->bookmarksMenuManager.reset(new KBookmarkMenu(sApp->bookmarkManager(), this, d->dummyMenu.get()));
+
+	const auto bookmarksAddAction = d->bookmarksMenuManager->addBookmarkAction();
+	d->ac->addAction(bookmarksAddAction->objectName(), bookmarksAddAction);
+
+	const auto bookmarksEditAction = d->bookmarksMenuManager->editBookmarksAction();
+	d->ac->addAction(bookmarksEditAction->objectName(), bookmarksEditAction);
+
+	auto bookmarksThunk = [this] {
+		auto actionForBookmark = [=](const KBookmark& bm) -> QAction* {
+			if (bm.isGroup()) {
+				KActionMenu* actionMenu = new KBookmarkActionMenu(bm, this);
+				d->goActions << actionMenu;
+				new KBookmarkMenu(sApp->bookmarkManager(), this, actionMenu->menu(), bm.address());
+				return actionMenu;
+			} else if (bm.isSeparator()) {
+				QAction* sa = new QAction(this);
+				sa->setSeparator(true);
+				d->goActions << sa;
+				return sa;
+			} else {
+				QAction* action = new KBookmarkAction(bm, this, this);
+				d->goActions << action;
+				return action;
+			}
+		};
+
+		for (auto* act : d->goActions) {
+			d->goMenu->removeAction(act);
+			act->deleteLater();
+		}
+		d->goActions.clear();
+
+		int i = 0;
+		const auto bookmark = sApp->bookmarkManager()->root();
+		for (auto bm = bookmark.first(); !bm.isNull(); bm = bookmark.next(bm)) {
+			i++;
+
+			auto act = actionForBookmark(bm);
+			if (i == 10) {
+				act->setShortcut(QString("Ctrl+Shift+0"));
+			} else if (i < 10) {
+				act->setShortcut(QString("Ctrl+Shift+%1").arg(i));
+			}
+			if (!act->shortcut().isEmpty()) {
+				act->setShortcutContext(Qt::ApplicationShortcut);
+				registerShortcut(act);
+			}
+			d->goMenu->insertAction(d->goAfterSeparator, act);
+		}
+	};
+	connect(sApp->bookmarkManager(), &KBookmarkManager::bookmarksChanged, this, bookmarksThunk);
 
 	d->ac->add<QAction>(
 		"about", this, &SMenuBar::about);
@@ -203,11 +266,24 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 	EndMenu
 
 	Menu(i18n("Go"))
+		d->goMenu = menu;
+
 		Action("back", i18n("Back"), QKeySequence::Back)
 		Action("forward", i18n("Forward"), QKeySequence::Forward)
 		Action("up", i18n("Containing Folder"), "Alt+Up")
+		Separator
+
+		d->bookmarksMenuManager->ensureUpToDate();
+
+		d->goAfterSeparator = Separator;
+
+		Action(bookmarksAddAction->objectName(), i18n("Bookmark Current Folder"), "Ctrl+B")
+		Action(bookmarksEditAction->objectName(), i18n("Edit Bookmarks..."),)
+
 	EndMenu
-	// clang-format on
+		// clang-format on
+
+		bookmarksThunk();
 
 #define GA(name) d->ac->action(name)
 	{
@@ -264,6 +340,44 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 
 SMenuBar::~SMenuBar()
 {
+}
+
+QString SMenuBar::currentTitle() const
+{
+    auto window = QGuiApplication::focusWindow();
+    auto swindow = sApp->swindowForWindow(window);
+    if (!swindow)
+		return {};
+
+	return swindow->activeDocument()->fancyNameFor(swindow->activeDocument()->navigator()->currentLocationUrl());
+}
+
+QUrl SMenuBar::currentUrl() const
+{
+    auto window = QGuiApplication::focusWindow();
+    auto swindow = sApp->swindowForWindow(window);
+    if (!swindow)
+		return {};
+
+	return swindow->activeDocument()->navigator()->currentLocationUrl();
+}
+
+bool SMenuBar::enableOption(BookmarkOption option) const
+{
+	switch (option) {
+	case BookmarkOption::ShowAddBookmark:
+	case BookmarkOption::ShowEditBookmark:
+		return true;
+	default:
+		return false;
+	}
+}
+
+void SMenuBar::openBookmark(const KBookmark& bookmark, Qt::MouseButtons, Qt::KeyboardModifiers)
+{
+	ActionForWindow
+
+	swindow->activeDocument()->openUrl(bookmark.url());
 }
 
 void SMenuBar::about()
@@ -378,8 +492,8 @@ void SMenuBar::selectAll()
 {
 	ActionForWindow
 
-	// TODO: column view
-	auto sm = swindow->activeDocument()->selectionModelFor(swindow->activeDocument()->currentDirModel());
+		// TODO: column view
+		auto sm = swindow->activeDocument()->selectionModelFor(swindow->activeDocument()->currentDirModel());
 	auto index = sm->model()->index(0, 0);
 	sm->select(index, QItemSelectionModel::Select | QItemSelectionModel::Columns);
 }

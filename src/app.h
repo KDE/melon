@@ -24,7 +24,8 @@ struct SApp : public QObject
 public:
 	static SApp* instance();
 
-	enum ViewMode {
+	enum ViewMode
+	{
 		Icons,
 		List,
 		Columns,
@@ -84,6 +85,8 @@ public:
 
 	Q_PROPERTY(NGToolBarController* toolbarController READ toolbarController CONSTANT)
 	NGToolBarController* toolbarController() const;
+
+	KBookmarkManager* bookmarkManager() const;
 
 	Q_INVOKABLE void openRightClickMenuForPlace(const QModelIndex& idx);
 };
