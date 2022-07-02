@@ -1,4 +1,24 @@
-int main(int argc, const char* argv[])
+#include <QApplication>
+#include <QDBusConnection>
+
+#include "app.h"
+#include "spegulo_adaptor.h"
+
+int main(int argc, char* argv[])
 {
-    return 0;
+    QApplication app(argc, argv);
+
+    SPApp sapp;
+    SpeguloAdaptor adaptor(&sapp);
+    if (!QDBusConnection::sessionBus().registerObject("/org/kde/Spegulo", &sapp)) {
+        qWarning() << "Failed to register adaptor:" << QDBusConnection::sessionBus().lastError().message();
+        app.exit(-1);
+    }
+
+    if (!QDBusConnection::sessionBus().registerService("org.kde.Spegulo")) {
+        qWarning() << "Failed to register service:" << QDBusConnection::sessionBus().lastError().message();
+        app.exit(-1);
+    }
+
+    return app.exec();
 }
