@@ -3,12 +3,15 @@
 #include <QQuickWindow>
 #include <KDirModel>
 #include <QItemSelectionModel>
-#include <KIO/KCoreUrlNavigator>
+#include <KCoreUrlNavigator>
+#include <QDropEvent>
+#include <QQuickItem>
 
+#include "columnsmodel.h"
 #include "window.h"
 #include "dirmodel.h"
 
-class QQuickDropEvent;
+class QQuickDropEventEx;
 class SColumnsModel;
 
 class SDocument : public QObject
@@ -131,7 +134,7 @@ public:
 	Q_INVOKABLE void openItem(KFileItem item);
 	Q_INVOKABLE void openRightClickMenuFor(KFileItem item, SDirModel* model);
 	Q_INVOKABLE void openNewFileMenuFor(QQuickItem* item);
-	Q_INVOKABLE void drop(QQuickItem* target, QQuickDropEvent* event, const QUrl& url = {});
+	Q_INVOKABLE void drop(QQuickItem* target, QDropEvent* event, const QUrl& url = {});
 	Q_INVOKABLE void openSelectedFiles();
 	Q_INVOKABLE void duplicateSelectedFiles();
 	Q_INVOKABLE void getInfoOnSelectedFiles();

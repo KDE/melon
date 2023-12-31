@@ -10,15 +10,17 @@
 #include <QMenu>
 #include <KLocalizedString>
 #include <KBookmarkManager>
+#include <QMainWindow>
 
 #include "app.h"
-#include "conversioncheck.h"
 #include "dbus.h"
 #include "document.h"
 #include "qguiapplication.h"
 #include "toolbardelegate.h"
 #include "window.h"
 #include "NGLibQuick.h"
+
+using namespace Qt::Literals::StringLiterals;
 
 struct SApp::Private
 {
@@ -49,77 +51,76 @@ SApp* SApp::instance()
 SApp::SApp() : QObject(), d(new Private)
 {
 	d->config = KSharedConfig::openConfig();
-	d->uuumauma = QFile::exists(QDir::homePath() + QDir::separator() + ".ｳｯｰｳｯｰｳﾏｳﾏ");
-	d->viewMode = (SApp::ViewMode)d->config->group("Settings").readEntry("ViewMode", (int)ViewMode::List);
+	d->uuumauma = QFile::exists(QDir::homePath() + QDir::separator() + u".ｳｯｰｳｯｰｳﾏｳﾏ"_s);
+	d->viewMode = (SApp::ViewMode)d->config->group(u"Settings"_s).readEntry("ViewMode", (int)ViewMode::List);
 
 	qRegisterMetaType<QList<SDocument*>>();
 
 	// try to find the kfile bookmarks...
-	auto bookmarksPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kfile/bookmarks.xml");
+	auto bookmarksPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, u"kfile/bookmarks.xml"_s);
 	auto blankBookmarks = false;
 	// or the dolphin bookmarks...
 	if (bookmarksPath.isEmpty()) {
-		bookmarksPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "dolphin/bookmarks.xml");
+		bookmarksPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, u"dolphin/bookmarks.xml"_s);
 	}
 	// or our bookmarks
 	if (bookmarksPath.isEmpty()) {
-		bookmarksPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "melon/bookmarks.xml");
+		bookmarksPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, u"melon/bookmarks.xml"_s);
 	}
 	// or if none of those are available, let's make our own
 	if (bookmarksPath.isEmpty()) {
 		const auto location = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
 		const auto separator = QDir::separator();
-		bookmarksPath = location + separator + "melon";
+		bookmarksPath = location + separator + u"melon"_s;
 		QDir().mkpath(bookmarksPath);
-		bookmarksPath += separator + QString("bookmarks.xml");
+		bookmarksPath += separator + QStringLiteral("bookmarks.xml");
 		blankBookmarks = true;
 	}
-	d->bookmarkManager = KBookmarkManager::managerForFile(bookmarksPath, "Melon");
-	d->bookmarkManager->setUpdate(true);
+	d->bookmarkManager = new KBookmarkManager(u"Melon"_s, this);
 
 	// if we're going from scratch, let's make some initial bookmarks...
 	if (blankBookmarks) {
 		d->bookmarkManager->root().addBookmark(
 			i18nc("user's downloads folder", "Downloads"),
 			QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)),
-			"folder-documents");
+			u"folder-documents"_s);
 		d->bookmarkManager->root().addBookmark(
 			i18nc("user's documents folder", "Documents"),
 			QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)),
-			"folder-documents");
+			u"folder-documents"_s);
 		d->bookmarkManager->root().addBookmark(
 			i18nc("user's desktop folder", "Desktop"),
 			QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DesktopLocation)),
-			"desktop");
+			u"desktop"_s);
 		d->bookmarkManager->root().addBookmark(
 			i18nc("user's home folder", "Home"),
 			QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)),
-			"user-home");
+			u"user-home"_s);
 		d->bookmarkManager->root().addBookmark(
 			i18nc("root folder", "Computer"),
 			QUrl::fromLocalFile(QDir::rootPath()),
-			"folder-root");
+			u"folder-root"_s);
 	}
 
 	filePlacesModel = new KFilePlacesModel(this);
 	sMenuBar = new SMenuBar(this);
 	engine.reset(new QQmlEngine);
-	engine->rootContext()->setContextProperty("melonApp", this);
+	engine->rootContext()->setContextProperty(u"melonApp"_s, this);
 	engine->rootContext()->setContextObject(new KLocalizedContext(engine.get()));
 	windowComponent.reset(new QQmlComponent(engine.get()));
 	aboutComponent.reset(new QQmlComponent(engine.get()));
 	d->toolbarDelegate = new SToolBarDelegate(engine.get());
-	d->toolbarController = new NGToolBarController("main-toolbar", d->toolbarDelegate, nullptr, this);
+	d->toolbarController = new NGToolBarController(u"main-toolbar"_s, d->toolbarDelegate, nullptr, this);
 
-	QUrl windowQml("qrc:/Window.qml");
-	QFile windowFile(":/Window.qml");
-	Q_ASSERT(windowFile.open(QFile::ReadOnly));
+	QUrl windowQml(u"qrc:/Window.qml"_s);
+	QFile windowFile(u":/Window.qml"_s);
+	windowFile.open(QFile::ReadOnly);
 	const auto windowData = windowFile.readAll();
 	windowComponent->setData(windowData, windowQml);
 
-	QUrl aboutQml("qrc:/AboutDialog.qml");
-	QFile aboutFile(":/AboutDialog.qml");
-	Q_ASSERT(aboutFile.open(QFile::ReadOnly));
+	QUrl aboutQml(u"qrc:/AboutDialog.qml"_s);
+	QFile aboutFile(u":/AboutDialog.qml"_s);
+	aboutFile.open(QFile::ReadOnly);
 	const auto aboutData = aboutFile.readAll();
 	aboutComponent->setData(aboutData, aboutQml);
 
@@ -177,7 +178,7 @@ void SApp::newWindow()
 
 	auto window = new SWindow(win, engine.get());
 
-	windowComponent->setInitialProperties(win, {{"window", QVariant::fromValue(window)}});
+	windowComponent->setInitialProperties(win, {{u"window"_s, QVariant::fromValue(window)}});
 	windowComponent->completeCreate();
 
 	windows << window;
@@ -192,7 +193,7 @@ void SApp::newWindowAtUrl(const QUrl& url)
 
 	auto window = new SWindow(url.adjusted(QUrl::RemoveFilename), win, engine.get());
 
-	windowComponent->setInitialProperties(win, {{"window", QVariant::fromValue(window)}});
+	windowComponent->setInitialProperties(win, {{u"window"_s, QVariant::fromValue(window)}});
 	windowComponent->completeCreate();
 
 	windows << window;
@@ -298,7 +299,7 @@ void SApp::setShowPathBar(bool show)
 QString SApp::kaomoji(const QString& str)
 {
 	if (d->uuumauma)
-		return "(ﾟ∀ﾟ)";
+		return u"(ﾟ∀ﾟ)"_s;
 	return str;
 }
 
@@ -312,7 +313,7 @@ void SApp::setViewMode(ViewMode mode)
 	if (d->viewMode == mode)
 		return;
 
-	d->config->group("Settings").writeEntry("ViewMode", (int)mode);
+	d->config->group(u"Settings"_s).writeEntry("ViewMode", (int)mode);
 	d->viewMode = mode;
 	Q_EMIT viewModeChanged();
 }
@@ -322,13 +323,13 @@ void SApp::openRightClickMenuForPlace(const QModelIndex& idx)
 	QPointer<QMenu> menu(new QMenu);
 	auto url = filePlacesModel->url(idx);
 
-	menu->addAction(QIcon::fromTheme("tab-new"), i18n("Open In New Tab"), [=] {
+	menu->addAction(QIcon::fromTheme(u"tab-new"_s), i18n("Open In New Tab"), [=] {
 		auto window = QGuiApplication::focusWindow();
 		auto swindow = sApp->swindowForWindow(window);
 
 		swindow->newDocumentAtUrl(url);
 	});
-	menu->addAction(QIcon::fromTheme("window-new"), i18n("Open In New Window"), [=] {
+	menu->addAction(QIcon::fromTheme(u"window-new"_s), i18n("Open In New Window"), [=] {
 		newWindowAtUrl(url);
 	});
 	menu->addSeparator();

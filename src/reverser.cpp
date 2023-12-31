@@ -3,6 +3,7 @@
 ReverseProxyModel::ReverseProxyModel(QObject* parent) : KRearrangeColumnsProxyModel(parent)
 {
 	connect(this, &ReverseProxyModel::reverseChanged, this, [this] {
+		if (sourceModel() == nullptr) { return; }
 		auto columns = QVector<int>(sourceModel()->columnCount());
 		std::iota(columns.begin(), columns.end(), 0);
 		if (m_reverse) {
@@ -19,6 +20,7 @@ ReverseProxyModel::~ReverseProxyModel()
 void ReverseProxyModel::setSourceModel(QAbstractItemModel* model)
 {
 	KRearrangeColumnsProxyModel::setSourceModel(model);
+	if (sourceModel() == nullptr) { return; }
 
 	auto columns = QVector<int>(sourceModel()->columnCount());
 	std::iota(columns.begin(), columns.end(), 0);

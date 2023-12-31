@@ -1,12 +1,11 @@
-import QtQuick 2.15
-import QtQuick.Window 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Controls 2.15 as QQC2
-import org.kde.kirigami 2.15 as Kirigami
-import org.kde.melon 1.0 as Melon
-import QtGraphicalEffects 1.12
-import QtQml.Models 2.15
-import org.kde.qqc2desktopstyle.private 1.0 as QQC2DesktopStyle
+import QtQuick
+import QtQuick.Window
+import QtQuick.Layouts
+import QtQuick.Controls as QQC2
+import org.kde.kirigami as Kirigami
+import org.kde.melon as Melon
+import Qt5Compat.GraphicalEffects
+import QtQml.Models
 
 QQC2.Control {
 	id: del
@@ -18,7 +17,7 @@ QQC2.Control {
 	required property int index
 	required property bool isImageReadable
 	required property string display
-	readonly property var modelIndex: del.dirModel.index(index, 0)
+	readonly property var modelIndex: del.dirModel?.index(index, 0)
 	readonly property bool containsDrag: dropArea.containsDrag
 
 	DropArea {
@@ -28,13 +27,21 @@ QQC2.Control {
 		onDropped: (event) => del.document.drop(del, event)
 	}
 	TapHandler {
-		acceptedDevices: PointerDevice.Mouse | PointerDevice.Stylus
+		acceptedDevices: ~PointerDevice.TouchScreen
 		acceptedButtons: Qt.RightButton
 		onTapped: doMenu()
 	}
 	TapHandler {
-		acceptedDevices: PointerDevice.Mouse | PointerDevice.Stylus
-		onTapped: (eventPoint) => del.tap(eventPoint.event.modifiers)
+		acceptedModifiers: Qt.ControlModifier
+		acceptedDevices: ~PointerDevice.TouchScreen
+		onTapped: (eventPoint) => del.tap(Qt.ControlModifier)
+		onDoubleTapped: del.doubleTap()
+		onLongPressed: doMenu()
+	}
+	TapHandler {
+		acceptedModifiers: Qt.NoModifier
+		acceptedDevices: ~PointerDevice.TouchScreen
+		onTapped: (eventPoint) => del.tap(Qt.NoModifier)
 		onDoubleTapped: del.doubleTap()
 		onLongPressed: doMenu()
 	}

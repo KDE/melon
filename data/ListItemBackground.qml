@@ -1,5 +1,5 @@
-import QtQuick 2.1
-import org.kde.kirigami 2.15 as Kirigami
+import QtQuick
+import org.kde.kirigami as Kirigami
 
 Rectangle {
 	id: background

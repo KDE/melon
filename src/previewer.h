@@ -4,6 +4,7 @@
 #include <QQmlEngine>
 #include <KFileItem>
 #include <QPixmap>
+#include <QQuickItem>
 
 class QQuickItem;
 

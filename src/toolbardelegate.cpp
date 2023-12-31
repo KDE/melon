@@ -1,8 +1,11 @@
 #include <QMimeData>
 #include <KLocalizedString>
+#include <QFile>
 
 #include "app.h"
 #include "toolbardelegate.h"
+
+using namespace Qt::StringLiterals;
 
 struct SToolBarDelegate::Private
 {
@@ -19,9 +22,9 @@ struct SToolBarDelegate::Private
 
 QQmlComponent* createComponent(QQmlEngine* engine, const QString& file)
 {
-	QUrl qmlURL("qrc:/" + file);
-	QFile qmlFile(":/" + file);
-	Q_ASSERT(qmlFile.open(QFile::ReadOnly));
+	QUrl qmlURL(u"qrc:/"_s + file);
+	QFile qmlFile(u":/"_s + file);
+	qmlFile.open(QFile::ReadOnly);
 	const auto data = qmlFile.readAll();
 	auto component = new QQmlComponent(engine);
 	component->setData(data, qmlURL);
@@ -33,13 +36,13 @@ SToolBarDelegate::SToolBarDelegate(QQmlEngine* engine) : d(new Private)
 {
 	d->engine = engine;
 
-	d->add(NGToolBarItem("back", i18n("Back"), createComponent(sApp->engine.get(), "toolbar/GoBack.qml")));
-	d->add(NGToolBarItem("forward", i18n("Forward"), createComponent(sApp->engine.get(), "toolbar/GoForward.qml")));
-	d->add(NGToolBarItem("up", i18n("Up"), createComponent(sApp->engine.get(), "toolbar/GoUp.qml")));
-	d->add(NGToolBarItem("space", i18n("Expanding Spacer"), createComponent(sApp->engine.get(), "toolbar/ExpandingSpace.qml")));
-	d->add(NGToolBarItem("new-window", i18n("New Window"), createComponent(sApp->engine.get(), "toolbar/NewWindow.qml")));
-	d->add(NGToolBarItem("create-new", i18n("Create New"), createComponent(sApp->engine.get(), "toolbar/CreateNew.qml")));
-	d->add(NGToolBarItem("search", i18n("Search"), createComponent(sApp->engine.get(), "toolbar/Search.qml")));
+	d->add(NGToolBarItem(u"back"_s, i18n("Back"), createComponent(sApp->engine.get(), u"toolbar/GoBack.qml"_s)));
+	d->add(NGToolBarItem(u"forward"_s, i18n("Forward"), createComponent(sApp->engine.get(), u"toolbar/GoForward.qml"_s)));
+	d->add(NGToolBarItem(u"up"_s, i18n("Up"), createComponent(sApp->engine.get(), u"toolbar/GoUp.qml"_s)));
+	d->add(NGToolBarItem(u"space"_s, i18n("Expanding Spacer"), createComponent(sApp->engine.get(), u"toolbar/ExpandingSpace.qml"_s)));
+	d->add(NGToolBarItem(u"new-window"_s, i18n("New Window"), createComponent(sApp->engine.get(), u"toolbar/NewWindow.qml"_s)));
+	d->add(NGToolBarItem(u"create-new"_s, i18n("Create New"), createComponent(sApp->engine.get(), u"toolbar/CreateNew.qml"_s)));
+	d->add(NGToolBarItem(u"search"_s, i18n("Search"), createComponent(sApp->engine.get(), u"toolbar/Search.qml"_s)));
 
 }
 
@@ -73,5 +76,5 @@ QList<QString> SToolBarDelegate::possibleItems()
 
 QList<QString> SToolBarDelegate::defaultitems()
 {
-	return {"back", "forward", "up", "space", "new-window"};
+	return {u"back"_s, u"forward"_s, u"up"_s, u"space"_s, u"new-window"_s};
 }

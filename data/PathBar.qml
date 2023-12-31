@@ -1,12 +1,11 @@
-import QtQuick 2.15
-import QtQuick.Window 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Controls 2.15 as QQC2
-import org.kde.kirigami 2.15 as Kirigami
-import org.kde.melon 1.0 as Melon
-import QtGraphicalEffects 1.12
-import QtQml.Models 2.15
-import org.kde.qqc2desktopstyle.private 1.0 as QQC2DesktopStyle
+import QtQuick
+import QtQuick.Window
+import QtQuick.Layouts
+import QtQuick.Controls as QQC2
+import org.kde.kirigami as Kirigami
+import org.kde.melon as Melon
+import Qt5Compat.GraphicalEffects
+import QtQml.Models
 
 QQC2.ToolBar {
 	id: bar
@@ -22,6 +21,7 @@ QQC2.ToolBar {
 			delegate: RowLayout {
 				id: del
 
+				layoutDirection: Qt.application.layoutDirection
 				required property string modelData
 				required property int index
 
@@ -39,7 +39,7 @@ QQC2.ToolBar {
 
 				Kirigami.Icon {
 					visible: del.index+1 != bar.document.pathSegmentStrings.length
-					source: "arrow-right"
+					source: LayoutMirroring.enabled ? "arrow-left" : "arrow-right"
 
 					Layout.alignment: Qt.AlignVCenter
 					Layout.preferredWidth: Kirigami.Units.iconSizes.small

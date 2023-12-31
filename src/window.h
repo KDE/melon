@@ -3,8 +3,9 @@
 #include "NGAppMain.h"
 #include <QQuickWindow>
 #include <KDirModel>
-#include <KIO/KCoreUrlNavigator>
+#include <KCoreUrlNavigator>
 #include <KConfigGroup>
+Q_MOC_INCLUDE("document.h")
 
 #include <NGLib.h>
 

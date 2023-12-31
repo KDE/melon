@@ -2,6 +2,8 @@
 #include "window.h"
 #include "app.h"
 
+using namespace Qt::StringLiterals;
+
 SWindowRestorer::SWindowRestorer() : QObject(), NGRestorer()
 {
 }
@@ -17,7 +19,7 @@ void SWindowRestorer::restore(QUuid id, const KConfigGroup& state, CompletionHan
 
 	auto window = new SWindow(id, state, win, sApp->engine.get());
 
-	sApp->windowComponent->setInitialProperties(win, {{"window", QVariant::fromValue(window)}});
+	sApp->windowComponent->setInitialProperties(win, {{u"window"_s, QVariant::fromValue(window)}});
 	sApp->windowComponent->completeCreate();
 
 	window->afterComponentComplete(state);

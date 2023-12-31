@@ -3,6 +3,7 @@
 #include <QAction>
 #include <QObject>
 #include <KBookmarkOwner>
+#include <QMenuBar>
 
 class SMenuBar : public QObject, public KBookmarkOwner
 {

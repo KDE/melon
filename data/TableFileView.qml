@@ -1,12 +1,10 @@
-import QtQuick 2.15
-import QtQuick.Window 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Controls 2.15 as QQC2
-import org.kde.kirigami 2.15 as Kirigami
-import org.kde.melon 1.0 as Melon
-import QtGraphicalEffects 1.12
-import QtQml.Models 2.15
-import org.kde.qqc2desktopstyle.private 1.0 as QQC2DesktopStyle
+import QtQuick
+import QtQuick.Window
+import QtQuick.Layouts
+import QtQuick.Controls as QQC2
+import org.kde.kirigami as Kirigami
+import org.kde.melon as Melon
+import QtQml.Models
 
 AbstractFileView {
 	id: page
@@ -40,6 +38,8 @@ AbstractFileView {
 
 			property var columnWidths: [10, 4, 7, 5, 6, 6, 10]
 			columnWidthProvider: (column) => columnWidths[column] * Kirigami.Units.gridUnit
+			selectionBehavior: TableView.SelectionDisabled
+			pointerNavigationEnabled: false
 
 			clip: true
 			model: guiModel
@@ -93,14 +93,14 @@ AbstractFileView {
 		x: Qt.application.layoutDirection == Qt.LeftToRight ?
 			0 :
 			scrollView.QQC2.ScrollBar.vertical.width
-		delegate: QQC2.AbstractButton {
-			id: control
-			background: QQC2DesktopStyle.StyleItem {
-				elementType: "header"
-				sunken: control.down
-				hover: control.hovered
-				text: model.display || ""
-			}
-		}
+		// delegate: QQC2.AbstractButton {
+		// 	id: control
+		// 	background: QQC2DesktopStyle.StyleItem {
+		// 		elementType: "header"
+		// 		sunken: control.down
+		// 		hover: control.hovered
+		// 		text: model.display || ""
+		// 	}
+		// }
 	}
 }

@@ -1,13 +1,10 @@
-#pragma once
-
-#include <KFileItem>
+#include <kfileitem.h>
 #include <QQmlEngine>
 
-struct ForeignKFileItem
+class KFileItemForeign : public QObject
 {
-	Q_GADGET
-
-	QML_FOREIGN(KFileItem)
+	Q_OBJECT
 	QML_NAMED_ELEMENT(FileItem)
-	QML_UNCREATABLE("enums only")
+	QML_FOREIGN(KFileItem)
+	QML_UNCREATABLE("Enums only")
 };

@@ -5,6 +5,8 @@
 #include "placesdelegate.h"
 #include "app.h"
 
+using namespace Qt::StringLiterals;
+
 PlacesDelegate::PlacesDelegate(QObject* parent) : NGBeaconControllerDelegate(parent)
 {
 }
@@ -38,13 +40,13 @@ void PlacesDelegate::dropEvent(NGBeacon* beacon, QDropEvent* event)
 
 	auto idx = model->index(row, 0);
 
-	if (relativeLocation == "on") {
+	if (relativeLocation == u"on"_s) {
 		auto url = model->data(idx, KFilePlacesModel::UrlRole).value<QUrl>();
 		KIO::drop(event, url);
 		return;
 	}
 
-	if (relativeLocation == "before")
+	if (relativeLocation == u"before"_s)
 		idx = model->index(row - 1, 0);
 
 	model->dropMimeData(event->mimeData(), event->proposedAction(), idx.row(), 0, QModelIndex());

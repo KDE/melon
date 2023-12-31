@@ -8,10 +8,12 @@
 #include "app.h"
 #include "dbus.h"
 
+using namespace Qt::StringLiterals;
+
 SOrgFreedesktopFilemanager1::SOrgFreedesktopFilemanager1(QObject* parent) : QObject(parent)
 {
 	QDBusConnection::sessionBus().registerObject(
-		"/org/freedesktop/FileManager1", this,
+		u"/org/freedesktop/FileManager1"_s, this,
 		QDBusConnection::ExportScriptableContents | QDBusConnection::ExportAdaptors);
 
 	auto sessionInterface = QDBusConnection::sessionBus().interface();

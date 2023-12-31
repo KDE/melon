@@ -4,6 +4,7 @@
 #include <QQmlEngine>
 #include <QQmlComponent>
 #include <KFilePlacesModel>
+#include <NGToolBarController.h>
 
 #include "menubar.h"
 

@@ -74,8 +74,10 @@ void SPreviewer::Private::makePixmap()
 		pixmap = QPixmap();
 		Q_EMIT p->pixmapChanged();
 
-		job->deleteLater();
-		job = nullptr;
+		if (job) {
+			job->deleteLater();
+			job = nullptr;
+		}
 	});
 	QObject::connect(job, &KIO::PreviewJob::gotPreview, p, [this](const KFileItem& item, const QPixmap& preview) {
 		Q_UNUSED(item)
@@ -83,8 +85,10 @@ void SPreviewer::Private::makePixmap()
 		pixmap = preview;
 		Q_EMIT p->pixmapChanged();
 
-		job->deleteLater();
-		job = nullptr;
+		if (job) {
+			job->deleteLater();
+			job = nullptr;
+		}
 	});
 }
 

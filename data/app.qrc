@@ -1,0 +1,34 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/">
+        <file alias="AboutDialog.qml">AboutDialog.qml</file>
+        <file alias="AbstractFileView.qml">AbstractFileView.qml</file>
+        <file alias="BaseDelegate.qml">BaseDelegate.qml</file>
+        <file alias="ColumnsFileView.qml">ColumnsFileView.qml</file>
+        <file alias="DropIndicator.qml">DropIndicator.qml</file>
+        <file alias="FileIcon.qml">FileIcon.qml</file>
+        <file alias="FileItemColumn.qml">FileItemColumn.qml</file>
+        <file alias="IconsFileView.qml">IconsFileView.qml</file>
+        <file alias="ListItemBackground.qml">ListItemBackground.qml</file>
+        <file alias="PageToolBar.qml">PageToolBar.qml</file>
+        <file alias="PathBar.qml">PathBar.qml</file>
+        <file alias="PhotosFileView.qml">PhotosFileView.qml</file>
+        <file alias="PlacesSidebar.qml">PlacesSidebar.qml</file>
+        <file alias="SelectableLabel.qml">SelectableLabel.qml</file>
+        <file alias="SingleColumn.qml">SingleColumn.qml</file>
+        <file alias="SmallIconButton.qml">SmallIconButton.qml</file>
+        <file alias="TableFileView.qml">TableFileView.qml</file>
+        <file alias="ToolBarEditorBackground.qml">ToolBarEditorBackground.qml</file>
+        <file alias="Window.qml">Window.qml</file>
+        <file alias="WindowTabBar.qml">WindowTabBar.qml</file>
+        <file alias="WindowTabButton.qml">WindowTabButton.qml</file>
+        <file alias="WindowToolBar.qml">WindowToolBar.qml</file>
+        <file alias="toolbar/CreateNew.qml">toolbar/CreateNew.qml</file>
+        <file alias="toolbar/ExpandingSpace.qml">toolbar/ExpandingSpace.qml</file>
+        <file alias="toolbar/GoBack.qml">toolbar/GoBack.qml</file>
+        <file alias="toolbar/GoForward.qml">toolbar/GoForward.qml</file>
+        <file alias="toolbar/GoUp.qml">toolbar/GoUp.qml</file>
+        <file alias="toolbar/NewWindow.qml">toolbar/NewWindow.qml</file>
+        <file alias="toolbar/Search.qml">toolbar/Search.qml</file>
+    </qresource>
+</RCC>

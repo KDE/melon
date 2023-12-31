@@ -7,6 +7,7 @@
 #include <QApplication>
 #include <KIO/FileUndoManager>
 #include <KIO/JobUiDelegate>
+#include <KIO/JobUiDelegateFactory>
 #include <KIO/EmptyTrashJob>
 #include <KFileItemActions>
 #include <KFileItemListProperties>
@@ -15,12 +16,17 @@
 #include <KBookmarkManager>
 #include <KBookmarkAction>
 #include <KBookmarkActionMenu>
+#include <QMainWindow>
 
 #include "app.h"
 #include "menubar.h"
+#include "kio/jobuidelegateextension.h"
+#include "kio/jobuidelegatefactory.h"
+#include "kjobuidelegate.h"
 #include "window.h"
 #include "document.h"
 
+using namespace Qt::StringLiterals;
 
 // SHORTCUT CODE
 #include <QtGui/private/qguiapplication_p.h>
@@ -54,6 +60,7 @@ static void registerShortcut(QAction* action)
 
 struct SMenuBar::Private
 {
+	QScopedPointer<QMainWindow> menuBarWindow;
 	QScopedPointer<QMenuBar> menuBar;
 	QScopedPointer<KActionCollection> ac;
 	QScopedPointer<KFileItemActions> fileItemActions;
@@ -61,6 +68,10 @@ struct SMenuBar::Private
 	QScopedPointer<QMenu> dummyMenu;
 	QScopedPointer<KBookmarkMenu> bookmarksMenuManager;
 
+	QMenu* melonMenu = nullptr;
+	QMenu* fileMenu = nullptr;
+	QMenu* editMenu = nullptr;
+	QMenu* viewMenu = nullptr;
 	QMenu* goMenu = nullptr;
 	QAction* goAfterSeparator = nullptr;
 	QList<QAction*> goActions;
@@ -68,10 +79,16 @@ struct SMenuBar::Private
 
 SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 {
-	d->menuBar.reset(new QMenuBar(nullptr));
+	d->menuBarWindow.reset(new QMainWindow());
+	d->menuBar.reset(new QMenuBar(d->menuBarWindow.get()));
+	d->menuBar->setNativeMenuBar(false);
+	d->menuBarWindow->setMenuBar(d->menuBar.get());
+	d->menuBarWindow->show();
+	d->menuBar->showNormal();
 	d->ac.reset(new KActionCollection(d->menuBar.get()));
 	d->fileItemActions.reset(new KFileItemActions);
-	d->newFileMenu.reset(new KNewFileMenu(d->ac.get(), "new_file", this));
+	d->newFileMenu.reset(new KNewFileMenu(this));
+	d->ac->addAction(u"new_file"_s, d->newFileMenu.get());
 	d->dummyMenu.reset(new QMenu());
 	d->bookmarksMenuManager.reset(new KBookmarkMenu(sApp->bookmarkManager(), this, d->dummyMenu.get()));
 
@@ -113,9 +130,9 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 
 			auto act = actionForBookmark(bm);
 			if (i == 10) {
-				act->setShortcut(QString("Ctrl+Shift+0"));
+				act->setShortcut(QStringLiteral("Ctrl+Shift+0"));
 			} else if (i < 10) {
-				act->setShortcut(QString("Ctrl+Shift+%1").arg(i));
+				act->setShortcut(QStringLiteral("Ctrl+Shift+%1").arg(i));
 			}
 			if (!act->shortcut().isEmpty()) {
 				act->setShortcutContext(Qt::ApplicationShortcut);
@@ -124,77 +141,77 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 			d->goMenu->insertAction(d->goAfterSeparator, act);
 		}
 	};
-	connect(sApp->bookmarkManager(), &KBookmarkManager::bookmarksChanged, this, bookmarksThunk);
+	connect(sApp->bookmarkManager(), &KBookmarkManager::changed, this, bookmarksThunk);
 
 	d->ac->add<QAction>(
-		"about", this, &SMenuBar::about);
+		u"about"_s, this, &SMenuBar::about);
 
 	d->ac->add<QAction>(
-		"preferences", this, &SMenuBar::preferences);
+		u"preferences"_s, this, &SMenuBar::preferences);
 
 	d->ac->add<QAction>(
-		"empty_trash", this, &SMenuBar::emptyTrash);
+		u"empty_trash"_s, this, &SMenuBar::emptyTrash);
 
 	d->ac->add<QAction>(
-		"quit", qApp, &QGuiApplication::quit);
+		u"quit"_s, qApp, &QGuiApplication::quit);
 
 	d->ac->add<QAction>(
-		"new_window", this, &SMenuBar::newWindow);
+		u"new_window"_s, this, &SMenuBar::newWindow);
 	d->ac->add<QAction>(
-		"new_tab", this, &SMenuBar::newTab);
+		u"new_tab"_s, this, &SMenuBar::newTab);
 
 	d->ac->add<QAction>(
-		"open", this, &SMenuBar::open);
+		u"open"_s, this, &SMenuBar::open);
 	d->ac->add<QAction>(
-		"close_window", this, &SMenuBar::closeWindow);
+		u"close_window"_s, this, &SMenuBar::closeWindow);
 
 	d->ac->add<QAction>(
-		"get_info", this, &SMenuBar::getInfo);
+		u"get_info"_s, this, &SMenuBar::getInfo);
 	d->ac->add<QAction>(
-		"duplicate", this, &SMenuBar::duplicate);
+		u"duplicate"_s, this, &SMenuBar::duplicate);
 	d->ac->add<QAction>(
-		"make_alias", this, &SMenuBar::makeAlias);
+		u"make_alias"_s, this, &SMenuBar::makeAlias);
 
 	d->ac->add<QAction>(
-		"move_to_trash", this, &SMenuBar::moveToTrash);
+		u"move_to_trash"_s, this, &SMenuBar::moveToTrash);
 
 	d->ac->add<QAction>(
-		"undo", this, &SMenuBar::undo);
+		u"undo"_s, this, &SMenuBar::undo);
 
 	d->ac->add<QAction>(
-		"cut", this, &SMenuBar::cut);
+		u"cut"_s, this, &SMenuBar::cut);
 	d->ac->add<QAction>(
-		"copy", this, &SMenuBar::copy);
+		u"copy"_s, this, &SMenuBar::copy);
 	d->ac->add<QAction>(
-		"paste", this, &SMenuBar::paste);
+		u"paste"_s, this, &SMenuBar::paste);
 	d->ac->add<QAction>(
-		"select_all", this, &SMenuBar::selectAll);
+		u"select_all"_s, this, &SMenuBar::selectAll);
 
 	d->ac->add<QAction>(
-		"view_as_icons", this, &SMenuBar::viewAsIcons);
+		u"view_as_icons"_s, this, &SMenuBar::viewAsIcons);
 	d->ac->add<QAction>(
-		"view_as_list", this, &SMenuBar::viewAsList);
+		u"view_as_list"_s, this, &SMenuBar::viewAsList);
 	d->ac->add<QAction>(
-		"view_as_columns", this, &SMenuBar::viewAsColumns);
+		u"view_as_columns"_s, this, &SMenuBar::viewAsColumns);
 
 	d->ac->add<QAction>(
-		"toggle_pathbar", this, &SMenuBar::togglePathBar);
+		u"toggle_pathbar"_s, this, &SMenuBar::togglePathBar);
 	d->ac->add<QAction>(
-		"toggle_statusbar", this, &SMenuBar::toggleStatusBar);
+		u"toggle_statusbar"_s, this, &SMenuBar::toggleStatusBar);
 	d->ac->add<QAction>(
-		"toggle_sidebar", this, &SMenuBar::toggleSidebar);
+		u"toggle_sidebar"_s, this, &SMenuBar::toggleSidebar);
 
 	d->ac->add<QAction>(
-		"toggle_toolbar", this, &SMenuBar::toggleToolbar);
+		u"toggle_toolbar"_s, this, &SMenuBar::toggleToolbar);
 	d->ac->add<QAction>(
-		"customise_toolbar", this, &SMenuBar::customiseToolbar);
+		u"customise_toolbar"_s, this, &SMenuBar::customiseToolbar);
 
 	d->ac->add<QAction>(
-		"back", this, &SMenuBar::back);
+		u"back"_s, this, &SMenuBar::back);
 	d->ac->add<QAction>(
-		"forward", this, &SMenuBar::forward);
+		u"forward"_s, this, &SMenuBar::forward);
 	d->ac->add<QAction>(
-		"up", this, &SMenuBar::up);
+		u"up"_s, this, &SMenuBar::up);
 
 #define Menu(name) \
 	{ \
@@ -213,71 +230,79 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 
 	// clang-format off
 	Menu(i18n("Melon"))
-		Action("about", i18n("About Melon"), )
+		d->melonMenu = menu;
+
+		Action(u"about"_s, i18n("About Melon"), )
 		Separator
-		Action("preferences", i18n("Preferences"), QKeySequence::Preferences)
+		Action(u"preferences"_s, i18n("Preferences"), QKeySequence::Preferences)
 		Separator
-		Action("empty_trash", i18n("Empty Trash"), "Ctrl+Shift+Del")
+		Action(u"empty_trash"_s, i18n("Empty Trash"), u"Ctrl+Shift+Del"_s)
 		Separator
-		Action("quit", i18n("Quit Melon"), QKeySequence::Quit)
+		Action(u"quit"_s, i18n("Quit Melon"), QKeySequence::Quit)
 	EndMenu
 
 	Menu(i18n("File"))
+		d->fileMenu = menu;
+
 		connect(menu, &QMenu::aboutToShow, d->newFileMenu.get(), [this] {
 			ActionForWindow
 
-			d->newFileMenu->setPopupFiles(QList<QUrl> {swindow->activeDocument()->actualViewingURL()});
+			d->newFileMenu->setWorkingDirectory(swindow->activeDocument()->actualViewingURL());
 			d->newFileMenu->checkUpToDate();
 		});
 
-		Action("new_window", i18n("New Window"), QKeySequence::New)
-		Action("new_tab", i18n("New Tab"), QKeySequence::AddTab)
-		Action("new_file", i18n("New File"),)
-		Action("open", i18n("Open"), QKeySequence::Open)
-		Action("close_window", i18n("Close Window"), QKeySequence::Close)
+		Action(u"new_window"_s, i18n("New Window"), QKeySequence::New)
+		Action(u"new_tab"_s, i18n("New Tab"), QKeySequence::AddTab)
+		Action(u"new_file"_s, i18n("New File"),)
+		Action(u"open"_s, i18n("Open"), QKeySequence::Open)
+		Action(u"close_window"_s, i18n("Close Window"), QKeySequence::Close)
 		Separator
-		Action("get_info", i18n("Get Info"), "Ctrl+I")
-		Action("duplicate", i18n("Duplicate"), "Ctrl+D")
-		Action("make_alias", i18n("Make Alias"), "Ctrl+L")
+		Action(u"get_info"_s, i18n("Get Info"), u"Ctrl+I"_s)
+		Action(u"duplicate"_s, i18n("Duplicate"), u"Ctrl+D"_s)
+		Action(u"make_alias"_s, i18n("Make Alias"), u"Ctrl+L"_s)
 		Separator
-		Action("move_to_trash", i18n("Move To Trash"), "Ctrl+Del")
+		Action(u"move_to_trash"_s, i18n("Move To Trash"), u"Ctrl+Del"_s)
 	EndMenu
 
 	Menu(i18n("Edit"))
-		Action("undo", i18n("Undo"), QKeySequence::Undo)
+		d->editMenu = menu;
+
+		Action(u"undo"_s, i18n("Undo"), QKeySequence::Undo)
 		Separator
-		Action("cut", i18n("Cut"), QKeySequence::Cut)
-		Action("copy", i18n("Copy"), QKeySequence::Copy)
-		Action("paste", i18n("Paste"), QKeySequence::Paste)
-		Action("select_all", i18n("Select All"), QKeySequence::SelectAll)
+		Action(u"cut"_s, i18n("Cut"), QKeySequence::Cut)
+		Action(u"copy"_s, i18n("Copy"), QKeySequence::Copy)
+		Action(u"paste"_s, i18n("Paste"), QKeySequence::Paste)
+		Action(u"select_all"_s, i18n("Select All"), QKeySequence::SelectAll)
 	EndMenu
 
 	Menu(i18n("View"))
-		Action("view_as_icons", i18n("as Icons"), )
-		Action("view_as_list", i18n("as List"), )
-		Action("view_as_columns", i18n("as Columns"), )
+		d->viewMenu = menu;
+
+		Action(u"view_as_icons"_s, i18n("as Icons"), )
+		Action(u"view_as_list"_s, i18n("as List"), )
+		Action(u"view_as_columns"_s, i18n("as Columns"), )
 		Separator
-		Action("toggle_pathbar", i18n("Show Path Bar"), )
-		Action("toggle_statusbar", i18n("Show Status Bar"), )
-		Action("toggle_sidebar", i18n("Show Sidebar"), )
+		Action(u"toggle_pathbar"_s, i18n("Show Path Bar"), )
+		Action(u"toggle_statusbar"_s, i18n("Show Status Bar"), )
+		Action(u"toggle_sidebar"_s, i18n("Show Sidebar"), )
 		Separator
-		Action("toggle_toolbar", i18n("Show Toolbar"), )
-		Action("customise_toolbar", i18n("Customise Toolbar..."), )
+		Action(u"toggle_toolbar"_s, i18n("Show Toolbar"), )
+		Action(u"customise_toolbar"_s, i18n("Customise Toolbar..."), )
 	EndMenu
 
 	Menu(i18n("Go"))
 		d->goMenu = menu;
 
-		Action("back", i18n("Back"), QKeySequence::Back)
-		Action("forward", i18n("Forward"), QKeySequence::Forward)
-		Action("up", i18n("Containing Folder"), "Alt+Up")
+		Action(u"back"_s, i18n("Back"), QKeySequence::Back)
+		Action(u"forward"_s, i18n("Forward"), QKeySequence::Forward)
+		Action(u"up"_s, i18n("Containing Folder"), u"Alt+Up"_s)
 		Separator
 
 		d->bookmarksMenuManager->ensureUpToDate();
 
 		d->goAfterSeparator = Separator;
 
-		Action(bookmarksAddAction->objectName(), i18n("Bookmark Current Folder"), "Ctrl+B")
+		Action(bookmarksAddAction->objectName(), i18n("Bookmark Current Folder"), u"Ctrl+B"_s)
 		Action(bookmarksEditAction->objectName(), i18n("Edit Bookmarks..."),)
 
 	EndMenu
@@ -287,47 +312,47 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 
 #define GA(name) d->ac->action(name)
 	{
-		auto evaluate = [act = GA("toggle_sidebar")] {
+		auto evaluate = [act = GA(u"toggle_sidebar"_s)] {
 			if (sApp->showSidebar())
-				act->setText("Hide Sidebar");
+				act->setText(i18n("Hide Sidebar"));
 			else
-				act->setText("Show Sidebar");
+				act->setText(i18n("Show Sidebar"));
 		};
 		evaluate();
 		connect(sApp, &SApp::showSidebarChanged, this, evaluate);
 	}
 	{
-		auto evaluate = [act = GA("toggle_pathbar")] {
+		auto evaluate = [act = GA(u"toggle_pathbar"_s)] {
 			if (sApp->showPathBar())
-				act->setText("Hide Path Bar");
+				act->setText(i18n("Hide Path Bar"));
 			else
-				act->setText("Show Path Bar");
+				act->setText(i18n("Show Path Bar"));
 		};
 		evaluate();
 		connect(sApp, &SApp::showPathBarChanged, this, evaluate);
 	}
 	{
-		auto evaluate = [act = GA("toggle_statusbar")] {
+		auto evaluate = [act = GA(u"toggle_statusbar"_s)] {
 			if (sApp->showStatusBar())
-				act->setText("Hide Status Bar");
+				act->setText(i18n("Hide Status Bar"));
 			else
-				act->setText("Show Status Bar");
+				act->setText(i18n("Show Status Bar"));
 		};
 		evaluate();
 		connect(sApp, &SApp::showStatusBarChanged, this, evaluate);
 	}
 	{
-		auto evaluate = [act = GA("toggle_toolbar")] {
+		auto evaluate = [act = GA(u"toggle_toolbar"_s)] {
 			if (sApp->showToolbar())
-				act->setText("Hide Toolbar");
+				act->setText(i18n("Hide Toolbar"));
 			else
-				act->setText("Show Toolbar");
+				act->setText(i18n("Show Toolbar"));
 		};
 		evaluate();
 		connect(sApp, &SApp::showToolbarChanged, this, evaluate);
 	}
 	{
-		auto evaluate = [act = GA("customise_toolbar")] {
+		auto evaluate = [act = GA(u"customise_toolbar"_s)] {
 			if (sApp->editMode())
 				act->setText(i18n("Finish Customising Toolbar"));
 			else
@@ -396,11 +421,16 @@ void SMenuBar::preferences()
 
 void SMenuBar::emptyTrash()
 {
-	KIO::JobUiDelegate delegate;
-	bool confirmed = delegate.askDeleteConfirmation(QList<QUrl>(), KIO::JobUiDelegate::EmptyTrash, KIO::JobUiDelegate::ForceConfirmation);
-	if (confirmed) {
-		KIO::Job* job = KIO::emptyTrash();
+	auto delegate = KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr);
+	auto extension = dynamic_cast<KIO::JobUiDelegateExtension*>(delegate);
+	if (extension == nullptr) {
+		qFatal("KIO didn't give us a job delegate that can ask for deletion!");
 	}
+	bool confirmed = extension->askDeleteConfirmation(QList<QUrl>(), KIO::JobUiDelegate::EmptyTrash, KIO::JobUiDelegate::ForceConfirmation);
+	if (confirmed) {
+		KIO::emptyTrash();
+	}
+	delegate->deleteLater();
 }
 
 void SMenuBar::newWindow()

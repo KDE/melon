@@ -2,6 +2,7 @@
 
 #include <QAbstractItemModel>
 #include <QQmlEngine>
+#include <QMimeData>
 
 class ModelWrapper : public QObject
 {
@@ -14,7 +15,7 @@ public:
 	QAbstractItemModel* model;
 
 	ModelWrapper(QObject* parent = nullptr) : QObject(parent) { }
-	~ModelWrapper() { }
+	~ModelWrapper();
 
 	Q_INVOKABLE QMimeData* mimeData(const QModelIndexList& indexes) const
 	{

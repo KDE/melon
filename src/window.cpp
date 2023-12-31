@@ -1,11 +1,12 @@
 #include <KWindowConfig>
 #include <QUuid>
-#include <ConversionCheck>
 #include <QtQuick/private/qquickevents_p_p.h>
 
 #include "window.h"
 #include "document.h"
 #include "app.h"
+
+using namespace Qt::StringLiterals;
 
 struct SWindow::Private
 {
@@ -39,7 +40,7 @@ SWindow::SWindow(QUuid id, const KConfigGroup& config, QQuickWindow* displayedIn
 	KWindowConfig::restoreWindowSize(d->displayedIn, config);
 
 	for (const auto& groupName : config.groupList()) {
-		if (!groupName.startsWith("document")) {
+		if (!groupName.startsWith(u"document"_s)) {
 			continue;
 		}
 		const auto group = config.group(groupName);
@@ -63,11 +64,11 @@ NGSavable::SaveInformation SWindow::save(KConfigGroup& config) const
 	KWindowConfig::saveWindowSize(d->displayedIn, config);
 
 	for (const auto* document : d->containing) {
-		auto subgroup = config.group("document-" + document->id().toString(QUuid::WithoutBraces));
+		auto subgroup = config.group(u"document-"_s + document->id().toString(QUuid::WithoutBraces));
 		document->saveTo(subgroup);
 	}
 
-	return SaveInformation{"SWindowRestorer*", true};
+	return SaveInformation{u"SWindowRestorer*"_s, true};
 }
 
 QUuid SWindow::identifier() const
