@@ -24,12 +24,11 @@ include(ECMQtDeclareLoggingCategory)
 
 find_package(KF6 ${KF_MIN_VERSION} COMPONENTS XmlGui I18n ItemModels Config KIO WindowSystem Baloo Bookmarks)
 find_package(Qt6 ${QT_MIN_VERSION} COMPONENTS Core Gui Widgets Quick QuickControls2 Qml Sql Concurrent)
-
-pkg_check_modules(NGLib IMPORTED_TARGET NGLib)
-pkg_check_modules(NGLibQuick IMPORTED_TARGET NGLibQuick)
+find_package(Nongurigaeru)
 
 set_package_properties(KF6 PROPERTIES TYPE REQUIRED PURPOSE "KF6")
 set_package_properties(Qt6 PROPERTIES TYPE REQUIRED PURPOSE "Qt6")
+set_package_properties(Nongurigaeru PROPERTIES TYPE REQUIRED PURPOSE "Nongurigaeru")
 
 add_subdirectory(src)
 add_subdirectory("application data")
