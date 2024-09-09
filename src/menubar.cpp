@@ -17,6 +17,7 @@
 #include <KBookmarkAction>
 #include <KBookmarkActionMenu>
 #include <QMainWindow>
+#include <QMessageBox>
 
 #include "app.h"
 #include "menubar.h"
@@ -77,6 +78,21 @@ struct SMenuBar::Private
 	QList<QAction*> goActions;
 };
 
+QAction *getActionOrElse(QAction *action, const char *name, const QString &fallbackName, const QString &fallbackText)
+{
+	if (action != nullptr) {
+		return action;
+	}
+	const auto act = new QAction(fallbackName);
+	act->setObjectName(name);
+	QObject::connect(act, &QAction::triggered, act, [fallbackText] {
+		QMessageBox box;
+		box.setText(fallbackText);
+		box.exec();
+	});
+	return act;
+}
+
 SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 {
 	d->menuBarWindow.reset(new QMainWindow());
@@ -92,10 +108,10 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 	d->dummyMenu.reset(new QMenu());
 	d->bookmarksMenuManager.reset(new KBookmarkMenu(sApp->bookmarkManager(), this, d->dummyMenu.get()));
 
-	const auto bookmarksAddAction = d->bookmarksMenuManager->addBookmarkAction();
+	const auto bookmarksAddAction = getActionOrElse(d->bookmarksMenuManager->addBookmarkAction(), "add_bookmark", u"(ERROR) Add Bookmark"_s, u"KBookmarkMenu didn't return the add bookmark action. Sorry."_s);
 	d->ac->addAction(bookmarksAddAction->objectName(), bookmarksAddAction);
 
-	const auto bookmarksEditAction = d->bookmarksMenuManager->editBookmarksAction();
+	const auto bookmarksEditAction = getActionOrElse(d->bookmarksMenuManager->editBookmarksAction(), "edit_bookmark", u"(ERROR) Edit Bookmarks"_s, u"KBookmarkMenu didn't return the edit bookmark action. Sorry."_s);
 	d->ac->addAction(bookmarksEditAction->objectName(), bookmarksEditAction);
 
 	auto bookmarksThunk = [this] {
