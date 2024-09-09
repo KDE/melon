@@ -2,18 +2,21 @@
    "command": "org.kde.Melon",
    "desktop-file-name-suffix": " (Nightly)",
    "tags": ["nightly"],
-   "finish-args": [
-     "--share=ipc",
-     "--socket=fallback-x11",
-     "--socket=wayland",
-     "--device=dri",
-     "--talk-name=org.freedesktop.Flatpak",
-     "--talk-name=org.kde.kded6",
-     "--talk-name=org.kde.kiod6",
-     "--talk-name=org.kde.JobViewServer",
-     "--talk-name=org.kde.kpasswdserver",
-     "--system-talk-name=org.freedesktop.UDisks2"
-   ],
+    "finish-args": [
+      "--device=dri",
+      "--share=ipc",
+      "--share=network",
+      "--socket=fallback-x11",
+      "--socket=wayland",
+      "--socket=pulseaudio",
+      "--filesystem=host",
+      "--talk-name=org.freedesktop.Flatpak",
+      "--talk-name=org.kde.kded6",
+      "--talk-name=org.kde.kiod6",
+      "--talk-name=org.kde.JobViewServer",
+      "--talk-name=org.kde.kpasswdserver",
+      "--system-talk-name=org.freedesktop.UDisks2"
+    ],
    "id": "org.kde.Melon",
    "modules": [
       {
