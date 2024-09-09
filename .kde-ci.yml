@@ -1,0 +1,12 @@
+Dependencies:
+- 'on': ['Linux/Qt6']
+  'require':
+    'frameworks/kxmlgui': '@latest-kf6'
+    'frameworks/ki18n': '@latest-kf6'
+    'frameworks/kitemmodels': '@latest-kf6'
+    'frameworks/kconfig': '@latest-kf6'
+    'frameworks/kio': '@latest-kf6'
+    'frameworks/kwindowsystem': '@latest-kf6'
+    'frameworks/baloo': '@latest-kf6'
+    'frameworks/kbookmarks': '@latest-kf6'
+    'libraries/nongurigaeru': '@same'
