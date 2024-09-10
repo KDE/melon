@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Janet Blackquill <uhhadd@gmail.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #pragma once
 
 #include <QMainWindow>

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Janet Blackquill <uhhadd@gmail.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #include "columnsmodel.h"
 #include "columnsmodel_p.h"
 #include "document.h"

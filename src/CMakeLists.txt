@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Janet Blackquill <uhhadd@gmail.com>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 add_executable(org.kde.Melon
 	app.cpp
 	columnsmodel.cpp

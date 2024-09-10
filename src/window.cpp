@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Janet Blackquill <uhhadd@gmail.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #include <KWindowConfig>
 #include <QUuid>
 #include <QtQuick/private/qquickevents_p_p.h>

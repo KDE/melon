@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Janet Blackquill <uhhadd@gmail.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 import QtQuick
 import QtQuick.Controls as QQC2
 

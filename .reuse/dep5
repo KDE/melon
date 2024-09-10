@@ -1,0 +1,11 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Melon
+Upstream-Contact: Janet Blackquill <uhhadd@gmail.com>
+
+Files: .flatpak-manifest.json .gitlab-ci.yml .kde-ci.yml Messages.sh data/app.qrc application?data/org.kde.Melon.desktop
+Copyright: None
+License: CC0-1.0
+
+Files: application?data/org.kde.Melon.svg
+Copyright: 2022 Janet Blackquill <uhhadd@gmail.com>
+License: GPL-3.0-or-later
