@@ -5,10 +5,9 @@ import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.melon as Melon
 
-QQC2.ApplicationWindow {
+QQC2.Page {
 	id: window
 
-	visible: true
 	title: i18n("%1 - Melon", window.window.documents[tabBar.currentIndex].title)
 
 	required property Melon.Window window

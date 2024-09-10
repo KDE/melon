@@ -23,7 +23,7 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 include(ECMQtDeclareLoggingCategory)
 
 find_package(KF6 ${KF_MIN_VERSION} COMPONENTS XmlGui I18n ItemModels Config KIO WindowSystem Baloo Bookmarks)
-find_package(Qt6 ${QT_MIN_VERSION} COMPONENTS Core Gui Widgets Quick QuickControls2 Qml Sql Concurrent)
+find_package(Qt6 ${QT_MIN_VERSION} COMPONENTS Core Gui Widgets Quick QuickWidgets QuickControls2 Qml Sql Concurrent)
 find_package(Nongurigaeru)
 
 set_package_properties(KF6 PROPERTIES TYPE REQUIRED PURPOSE "KF6")

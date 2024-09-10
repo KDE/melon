@@ -1,10 +1,12 @@
 #pragma once
 
 #include "NGAppMain.h"
-#include <QQuickWindow>
+#include "closesignalwindow.h"
+#include <QWindow>
 #include <KDirModel>
 #include <KCoreUrlNavigator>
 #include <KConfigGroup>
+#include <QQmlEngine>
 Q_MOC_INCLUDE("document.h")
 
 #include <NGLib.h>
@@ -24,8 +26,8 @@ class SWindow : public QObject, public NGSavable
 	void init();
 
 public:
-	explicit SWindow(QQuickWindow* window, QObject* parent = nullptr);
-	explicit SWindow(const QUrl& in, QQuickWindow* window, QObject* parent = nullptr);
+	explicit SWindow(SCloseSignalWindow* window, QObject* parent = nullptr);
+	explicit SWindow(const QUrl& in, SCloseSignalWindow* window, QObject* parent = nullptr);
 	~SWindow();
 
 	Q_PROPERTY(QList<SDocument*> documents READ documents NOTIFY documentsChanged)
@@ -36,8 +38,8 @@ public:
 	Q_INVOKABLE void newDocument();
 	Q_INVOKABLE void newDocumentAtUrl(const QUrl& url);
 
-	Q_PROPERTY(QQuickWindow* displayedIn READ displayedIn NOTIFY displayedInChanged)
-	QQuickWindow* displayedIn() const;
+	Q_PROPERTY(SCloseSignalWindow* displayedIn READ displayedIn NOTIFY displayedInChanged)
+	SCloseSignalWindow* displayedIn() const;
 	Q_SIGNAL void displayedInChanged();
 
 	Q_PROPERTY(SDocument* activeDocument READ activeDocument WRITE setActiveDocument NOTIFY activeDocumentChanged)
@@ -50,7 +52,7 @@ public:
 	Q_INVOKABLE void transferDocumentTo(SDocument* document, SWindow* window);
 
 	// persistence functionality
-	explicit SWindow(QUuid id, const KConfigGroup& config, QQuickWindow* window, QObject* parent = nullptr);
+	explicit SWindow(QUuid id, const KConfigGroup& config, SCloseSignalWindow* window, QObject* parent = nullptr);
 	void afterComponentComplete(const KConfigGroup& config);
 
 	NGSavable::SaveInformation save(KConfigGroup& configGroup) const override;

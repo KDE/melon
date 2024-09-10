@@ -14,6 +14,7 @@
         <file alias="PathBar.qml">PathBar.qml</file>
         <file alias="PhotosFileView.qml">PhotosFileView.qml</file>
         <file alias="PlacesSidebar.qml">PlacesSidebar.qml</file>
+        <file alias="QuickWidgetWrapper.qml">QuickWidgetWrapper.qml</file>
         <file alias="SelectableLabel.qml">SelectableLabel.qml</file>
         <file alias="SingleColumn.qml">SingleColumn.qml</file>
         <file alias="SmallIconButton.qml">SmallIconButton.qml</file>

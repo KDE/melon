@@ -17,6 +17,8 @@ public:
 	explicit SMenuBar(QObject* parent = nullptr);
 	~SMenuBar();
 
+	QMenuBar *createMenuBarFor(QWidget *parent);
+
 	void about();
 	void preferences();
 	void emptyTrash();

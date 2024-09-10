@@ -61,7 +61,6 @@ static void registerShortcut(QAction* action)
 
 struct SMenuBar::Private
 {
-	QScopedPointer<QMainWindow> menuBarWindow;
 	QScopedPointer<QMenuBar> menuBar;
 	QScopedPointer<KActionCollection> ac;
 	QScopedPointer<KFileItemActions> fileItemActions;
@@ -95,12 +94,7 @@ QAction *getActionOrElse(QAction *action, const char *name, const QString &fallb
 
 SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 {
-	d->menuBarWindow.reset(new QMainWindow());
-	d->menuBar.reset(new QMenuBar(d->menuBarWindow.get()));
-	d->menuBar->setNativeMenuBar(false);
-	d->menuBarWindow->setMenuBar(d->menuBar.get());
-	d->menuBarWindow->show();
-	d->menuBar->showNormal();
+	d->menuBar.reset(new QMenuBar(nullptr));
 	d->ac.reset(new KActionCollection(d->menuBar.get()));
 	d->fileItemActions.reset(new KFileItemActions);
 	d->newFileMenu.reset(new KNewFileMenu(this));
@@ -381,6 +375,17 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 
 SMenuBar::~SMenuBar()
 {
+}
+
+QMenuBar *SMenuBar::createMenuBarFor(QWidget *parent)
+{
+	auto mbar = new QMenuBar(parent);
+	mbar->addMenu(d->melonMenu);
+	mbar->addMenu(d->fileMenu);
+	mbar->addMenu(d->editMenu);
+	mbar->addMenu(d->viewMenu);
+	mbar->addMenu(d->goMenu);
+	return mbar;
 }
 
 QString SMenuBar::currentTitle() const

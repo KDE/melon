@@ -735,7 +735,7 @@ void SDocument::openNewFileMenuFor(QQuickItem* item)
 
 	auto menu = d->newFileMenu->menu();
 	menu->createWinId();
-	menu->windowHandle()->setTransientParent(d->window->displayedIn());
+	menu->windowHandle()->setTransientParent(d->window->displayedIn()->windowHandle());
 	menu->exec(QCursor::pos());
 
 	item->setProperty("down", QVariant());
@@ -767,7 +767,7 @@ void SDocument::openRightClickMenuFor(KFileItem item, SDirModel* model)
 	d->fileItemActions->insertOpenWithActionsTo(nullptr, menu, QStringList{});
 	d->fileItemActions->addActionsTo(menu);
 	menu->createWinId();
-	menu->windowHandle()->setTransientParent(d->window->displayedIn());
+	menu->windowHandle()->setTransientParent(d->window->displayedIn()->windowHandle());
 	menu->exec(QCursor::pos());
 
 	if (menu) {

@@ -11,8 +11,10 @@
 #include <KLocalizedString>
 #include <KBookmarkManager>
 #include <QMainWindow>
+#include <QQuickWidget>
 
 #include "app.h"
+#include "closesignalwindow.h"
 #include "dbus.h"
 #include "document.h"
 #include "qguiapplication.h"
@@ -173,32 +175,56 @@ KBookmarkManager* SApp::bookmarkManager() const
 
 void SApp::newWindow()
 {
-	auto win = qobject_cast<QQuickWindow*>(windowComponent->beginCreate(engine->rootContext()));
+	auto win = qobject_cast<QQuickItem*>(windowComponent->beginCreate(engine->rootContext()));
 	qWarning().noquote() << windowComponent->errorString();
 
-	auto window = new SWindow(win, engine.get());
+	auto closeWindow = new SCloseSignalWindow();
+	closeWindow->setMenuBar(sMenuBar->createMenuBarFor(closeWindow));
+
+	auto view = new QQuickWidget(sApp->engine.get(), closeWindow);
+	view->setResizeMode(QQuickWidget::ResizeMode::SizeRootObjectToView);
+	view->setSource(QUrl(u"qrc:/QuickWidgetWrapper.qml"_s));
+	win->setParentItem(view->rootObject());
+	view->rootObject()->setProperty("child", QVariant::fromValue(win));
+	closeWindow->setCentralWidget(view);
+
+	auto window = new SWindow(closeWindow, engine.get());
 
 	windowComponent->setInitialProperties(win, {{u"window"_s, QVariant::fromValue(window)}});
 	windowComponent->completeCreate();
 
+	closeWindow->show();
+
 	windows << window;
 	connect(window, &SWindow::closing, this, &SApp::windowClosing);
-	KWindowSystem::activateWindow(window->displayedIn());
+	KWindowSystem::activateWindow(window->displayedIn()->windowHandle());
 }
 
 void SApp::newWindowAtUrl(const QUrl& url)
 {
-	auto win = qobject_cast<QQuickWindow*>(windowComponent->beginCreate(engine->rootContext()));
+	auto win = qobject_cast<QQuickItem*>(windowComponent->beginCreate(engine->rootContext()));
 	qWarning().noquote() << windowComponent->errorString();
 
-	auto window = new SWindow(url.adjusted(QUrl::RemoveFilename), win, engine.get());
+	auto closeWindow = new SCloseSignalWindow();
+	closeWindow->setMenuBar(sApp->sMenuBar->createMenuBarFor(closeWindow));
+
+	auto view = new QQuickWidget(sApp->engine.get(), closeWindow);
+	view->setResizeMode(QQuickWidget::ResizeMode::SizeRootObjectToView);
+	view->setSource(QUrl(u"qrc:/QuickWidgetWrapper.qml"_s));
+	win->setParentItem(view->rootObject());
+	view->rootObject()->setProperty("child", QVariant::fromValue(win));
+	closeWindow->setCentralWidget(view);
+
+	auto window = new SWindow(url.adjusted(QUrl::RemoveFilename), closeWindow, engine.get());
+
+	closeWindow->show();
 
 	windowComponent->setInitialProperties(win, {{u"window"_s, QVariant::fromValue(window)}});
 	windowComponent->completeCreate();
 
 	windows << window;
 	connect(window, &SWindow::closing, this, &SApp::windowClosing);
-	KWindowSystem::activateWindow(window->displayedIn());
+	KWindowSystem::activateWindow(window->displayedIn()->windowHandle());
 }
 
 void SApp::windowClosing(SWindow* window)
@@ -215,7 +241,7 @@ void SApp::ensureShown(const QUrl& url)
 			if (doc->navigator()->currentLocationUrl() == url ||
 				doc->navigator()->currentLocationUrl().adjusted(QUrl::RemoveFilename) == url.adjusted(QUrl::RemoveFilename)) {
 
-				KWindowSystem::activateWindow(window->displayedIn());
+				KWindowSystem::activateWindow(window->displayedIn()->windowHandle());
 				return;
 			}
 		}
@@ -233,7 +259,7 @@ SWindow*
 SApp::swindowForWindow(QWindow* window)
 {
 	for (auto w : windows) {
-		if (w->displayedIn() == window) {
+		if (w->displayedIn()->windowHandle() == window) {
 			return w;
 		}
 	}

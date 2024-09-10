@@ -10,20 +10,20 @@ using namespace Qt::StringLiterals;
 
 struct SWindow::Private
 {
-	QQuickWindow* displayedIn;
+	SCloseSignalWindow* displayedIn;
 	QList<SDocument*> containing;
 	SDocument* activeDocument = nullptr;
 	QUuid uuid;
 };
 
-SWindow::SWindow(QQuickWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
+SWindow::SWindow(SCloseSignalWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
 {
 	d->displayedIn = displayedIn;
 	newDocument();
 	init();
 }
 
-SWindow::SWindow(const QUrl& in, QQuickWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
+SWindow::SWindow(const QUrl& in, SCloseSignalWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
 {
 	d->displayedIn = displayedIn;
 	d->containing << new SDocument(in, this);
@@ -31,13 +31,13 @@ SWindow::SWindow(const QUrl& in, QQuickWindow* displayedIn, QObject* parent) : Q
 	init();
 }
 
-SWindow::SWindow(QUuid id, const KConfigGroup& config, QQuickWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
+SWindow::SWindow(QUuid id, const KConfigGroup& config, SCloseSignalWindow* displayedIn, QObject* parent) : QObject(parent), d(new Private)
 {
 	d->displayedIn = displayedIn;
 	d->uuid = id;
 
-	KWindowConfig::restoreWindowPosition(d->displayedIn, config);
-	KWindowConfig::restoreWindowSize(d->displayedIn, config);
+	KWindowConfig::restoreWindowPosition(d->displayedIn->windowHandle(), config);
+	KWindowConfig::restoreWindowSize(d->displayedIn->windowHandle(), config);
 
 	for (const auto& groupName : config.groupList()) {
 		if (!groupName.startsWith(u"document"_s)) {
@@ -54,14 +54,14 @@ SWindow::SWindow(QUuid id, const KConfigGroup& config, QQuickWindow* displayedIn
 
 void SWindow::afterComponentComplete(const KConfigGroup& config)
 {
-	KWindowConfig::restoreWindowPosition(d->displayedIn, config);
-	KWindowConfig::restoreWindowSize(d->displayedIn, config);
+	KWindowConfig::restoreWindowPosition(d->displayedIn->windowHandle(), config);
+	KWindowConfig::restoreWindowSize(d->displayedIn->windowHandle(), config);
 }
 
 NGSavable::SaveInformation SWindow::save(KConfigGroup& config) const
 {
-	KWindowConfig::saveWindowPosition(d->displayedIn, config);
-	KWindowConfig::saveWindowSize(d->displayedIn, config);
+	KWindowConfig::saveWindowPosition(d->displayedIn->windowHandle(), config);
+	KWindowConfig::saveWindowSize(d->displayedIn->windowHandle(), config);
 
 	for (const auto* document : d->containing) {
 		auto subgroup = config.group(u"document-"_s + document->id().toString(QUuid::WithoutBraces));
@@ -84,7 +84,7 @@ void SWindow::init()
 	qApp->registerSavable(this);
 
 	auto win = d->displayedIn;
-	connect(win, &QQuickWindow::closing, this, [this, win]() {
+	connect(win, &SCloseSignalWindow::closing, this, [this, win]() {
 		win->deleteLater();
 		Q_EMIT closing(this);
 	});
@@ -100,7 +100,7 @@ QList<SDocument*> SWindow::documents() const
 	return d->containing;
 }
 
-QQuickWindow* SWindow::displayedIn() const
+SCloseSignalWindow* SWindow::displayedIn() const
 {
 	return d->displayedIn;
 }
