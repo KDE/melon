@@ -21,14 +21,7 @@ void SWindowRestorer::restore(QUuid id, const KConfigGroup& state, CompletionHan
 	qWarning().noquote() << sApp->windowComponent->errorString();
 
 	auto closeWindow = new SCloseSignalWindow();
-	closeWindow->setMenuBar(sApp->sMenuBar->createMenuBarFor(closeWindow));
-
-	auto view = new QQuickWidget(sApp->engine.get(), closeWindow);
-	view->setResizeMode(QQuickWidget::ResizeMode::SizeRootObjectToView);
-	view->setSource(QUrl(u"qrc:/QuickWidgetWrapper.qml"_s));
-	win->setParentItem(view->rootObject());
-	view->rootObject()->setProperty("child", QVariant::fromValue(win));
-	closeWindow->setCentralWidget(view);
+	closeWindow->init(win);
 
 	auto window = new SWindow(id, state, closeWindow, sApp->engine.get());
 

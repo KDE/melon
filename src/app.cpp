@@ -179,14 +179,7 @@ void SApp::newWindow()
 	qWarning().noquote() << windowComponent->errorString();
 
 	auto closeWindow = new SCloseSignalWindow();
-	closeWindow->setMenuBar(sMenuBar->createMenuBarFor(closeWindow));
-
-	auto view = new QQuickWidget(sApp->engine.get(), closeWindow);
-	view->setResizeMode(QQuickWidget::ResizeMode::SizeRootObjectToView);
-	view->setSource(QUrl(u"qrc:/QuickWidgetWrapper.qml"_s));
-	win->setParentItem(view->rootObject());
-	view->rootObject()->setProperty("child", QVariant::fromValue(win));
-	closeWindow->setCentralWidget(view);
+	closeWindow->init(win);
 
 	auto window = new SWindow(closeWindow, engine.get());
 
@@ -206,14 +199,7 @@ void SApp::newWindowAtUrl(const QUrl& url)
 	qWarning().noquote() << windowComponent->errorString();
 
 	auto closeWindow = new SCloseSignalWindow();
-	closeWindow->setMenuBar(sApp->sMenuBar->createMenuBarFor(closeWindow));
-
-	auto view = new QQuickWidget(sApp->engine.get(), closeWindow);
-	view->setResizeMode(QQuickWidget::ResizeMode::SizeRootObjectToView);
-	view->setSource(QUrl(u"qrc:/QuickWidgetWrapper.qml"_s));
-	win->setParentItem(view->rootObject());
-	view->rootObject()->setProperty("child", QVariant::fromValue(win));
-	closeWindow->setCentralWidget(view);
+	closeWindow->init(win);
 
 	auto window = new SWindow(url.adjusted(QUrl::RemoveFilename), closeWindow, engine.get());
 
