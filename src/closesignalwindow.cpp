@@ -17,6 +17,8 @@ struct SCloseSignalWindow::Private
 SCloseSignalWindow::SCloseSignalWindow(QWidget *parent) : QMainWindow(parent)
 {
 	d.reset(new Private);
+
+	resize(18 * 40, 18 * 20);
 }
 
 SCloseSignalWindow::~SCloseSignalWindow()
