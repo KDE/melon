@@ -441,7 +441,9 @@ void SMenuBar::about()
 
 void SMenuBar::preferences()
 {
-	qFatal("Not implemented");
+	QMessageBox box;
+	box.setText(u"Not implemented"_s);
+	box.exec();
 }
 
 void SMenuBar::emptyTrash()
@@ -524,7 +526,9 @@ void SMenuBar::undo()
 
 void SMenuBar::cut()
 {
-	qFatal("Not implemented");
+	QMessageBox box;
+	box.setText(u"Not implemented"_s);
+	box.exec();
 }
 
 void SMenuBar::copy()
