@@ -1,0 +1,410 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the melon package.
+#
+# SPDX-FileCopyrightText: 2024 Emir SARI <emir_sari@icloud.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: melon\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-09-11 01:46+0000\n"
+"PO-Revision-Date: 2024-09-10 17:50+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 24.11.70\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Emir SARI"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "emir_sari@icloud.com"
+
+#: data/AboutDialog.qml:14 src/menubar.cpp:249
+#, kde-format
+msgid "About Melon"
+msgstr "Melon Hakkında"
+
+#: data/AboutDialog.qml:51 src/menubar.cpp:246
+#, kde-format
+msgid "Melon"
+msgstr "Melon"
+
+#: data/AboutDialog.qml:58
+#, kde-format
+msgid "Simple file manager"
+msgstr "Basit Dosya Yöneticisi"
+
+#: data/AboutDialog.qml:64
+#, kde-format
+msgid "Melon Git Master Version"
+msgstr "Melon Git Master Sürümü"
+
+#: data/AboutDialog.qml:72
+#, kde-format
+msgid "Copyright 2022 Janet Blackquill"
+msgstr "Telif hakkı 2022 Janet Blackquill"
+
+#: data/AbstractFileView.qml:37
+#, kde-format
+msgid "Search through:"
+msgstr "Şuralarda ara:"
+
+#: data/AbstractFileView.qml:41
+#, kde-format
+msgid "This Computer"
+msgstr "Bu Bilgisayar"
+
+#: data/AbstractFileView.qml:46
+#, kde-format
+msgid "%1"
+msgstr "%1"
+
+#: data/AbstractFileView.qml:54
+#, kde-format
+msgid "Contents"
+msgstr "İçerik"
+
+#: data/AbstractFileView.qml:59
+#, kde-format
+msgid "File Name"
+msgstr "Dosya Adı"
+
+#: data/AbstractFileView.qml:67
+#, kde-format
+msgid "Save"
+msgstr "Kaydet"
+
+#: data/AbstractFileView.qml:89 data/SingleColumn.qml:54
+#, kde-format
+msgid "There are no objects in this directory"
+msgstr "Bu dizinde bir nesne yok"
+
+#: data/FileItemColumn.qml:77
+#, kde-format
+msgid "Name"
+msgstr "Ad"
+
+#: data/FileItemColumn.qml:84
+#, kde-format
+msgid "Type"
+msgstr "Tür"
+
+#: data/FileItemColumn.qml:90
+#, kde-format
+msgid "Size"
+msgstr "Boyut"
+
+#: data/FileItemColumn.qml:96
+#, kde-format
+msgid "Created"
+msgstr "Oluşturulma"
+
+#: data/FileItemColumn.qml:102
+#, kde-format
+msgid "Changed"
+msgstr "Değiştirilme"
+
+#: data/FileItemColumn.qml:108
+#, kde-format
+msgid "Last Opened"
+msgstr "Son Açılma"
+
+#: data/FileItemColumn.qml:115
+#, kde-format
+msgid "More Information"
+msgstr "Daha Fazla Bilgi"
+
+#: data/Window.qml:15
+#, kde-format
+msgid "%1 - Melon"
+msgstr "%1 — Melon"
+
+#: data/WindowToolBar.qml:40
+#, kde-format
+msgid "%1 File(s), %2 Folder(s), %3"
+msgstr "%1 dosya, %2 klasör, %3"
+
+#: src/app.cpp:90
+#, kde-format
+msgctxt "user's downloads folder"
+msgid "Downloads"
+msgstr "İndirmeler"
+
+#: src/app.cpp:94
+#, kde-format
+msgctxt "user's documents folder"
+msgid "Documents"
+msgstr "Belgeler"
+
+#: src/app.cpp:98
+#, kde-format
+msgctxt "user's desktop folder"
+msgid "Desktop"
+msgstr "Masaüstü"
+
+#: src/app.cpp:102
+#, kde-format
+msgctxt "user's home folder"
+msgid "Home"
+msgstr "Ana Klasör"
+
+#: src/app.cpp:106
+#, kde-format
+msgctxt "root folder"
+msgid "Computer"
+msgstr "Bilgisayar"
+
+#: src/app.cpp:342
+#, kde-format
+msgid "Open In New Tab"
+msgstr "Yeni Sekmede Aç"
+
+#: src/app.cpp:348
+#, kde-format
+msgid "Open In New Window"
+msgstr "Yeni Pencerede Aç"
+
+#: src/document.cpp:509 src/toolbardelegate.cpp:49
+#, kde-format
+msgid "Search"
+msgstr "Ara"
+
+#: src/document.cpp:659 src/document.cpp:668
+#, kde-format
+msgctxt "<filename> copy"
+msgid "%1 copy"
+msgstr "%1 kopya"
+
+#: src/document.cpp:704 src/document.cpp:713
+#, kde-format
+msgctxt "<filename> alias"
+msgid "%1 alias"
+msgstr "%1 arma"
+
+#: src/document.cpp:757 src/menubar.cpp:274
+#, kde-format
+msgid "Get Info"
+msgstr "Bilgi Al"
+
+#: src/document.cpp:912
+#, kde-format
+msgid "Search for %1 in %2"
+msgstr "%2 içinde %1 ara"
+
+#: src/document.cpp:913
+#, kde-format
+msgid "Search for %1"
+msgstr "%1 ara"
+
+#: src/menubar.cpp:251
+#, kde-format
+msgid "Preferences"
+msgstr "Tercihler"
+
+#: src/menubar.cpp:253
+#, kde-format
+msgid "Empty Trash"
+msgstr "Çöp Kutusunu Boşalt"
+
+#: src/menubar.cpp:255
+#, kde-format
+msgid "Quit Melon"
+msgstr "Melon’dan Çık"
+
+#: src/menubar.cpp:258
+#, kde-format
+msgid "File"
+msgstr "Dosya"
+
+#: src/menubar.cpp:268 src/toolbardelegate.cpp:47
+#, kde-format
+msgid "New Window"
+msgstr "Yeni Pencere"
+
+#: src/menubar.cpp:269
+#, kde-format
+msgid "New Tab"
+msgstr "Yeni Sekme"
+
+#: src/menubar.cpp:270
+#, kde-format
+msgid "New File"
+msgstr "Yeni Dosya"
+
+#: src/menubar.cpp:271
+#, kde-format
+msgid "Open"
+msgstr "Aç"
+
+#: src/menubar.cpp:272
+#, kde-format
+msgid "Close Window"
+msgstr "Pencereyi Kapat"
+
+#: src/menubar.cpp:275
+#, kde-format
+msgid "Duplicate"
+msgstr "Çoğalt"
+
+#: src/menubar.cpp:276
+#, kde-format
+msgid "Make Alias"
+msgstr "Arma Yap"
+
+#: src/menubar.cpp:278
+#, kde-format
+msgid "Move To Trash"
+msgstr "Çöp Kutusuna Taşı"
+
+#: src/menubar.cpp:281
+#, kde-format
+msgid "Edit"
+msgstr "Düzen"
+
+#: src/menubar.cpp:284
+#, kde-format
+msgid "Undo"
+msgstr "Geri Al"
+
+#: src/menubar.cpp:286
+#, kde-format
+msgid "Cut"
+msgstr "Kes"
+
+#: src/menubar.cpp:287
+#, kde-format
+msgid "Copy"
+msgstr "Kopyala"
+
+#: src/menubar.cpp:288
+#, kde-format
+msgid "Paste"
+msgstr "Yapıştır"
+
+#: src/menubar.cpp:289
+#, kde-format
+msgid "Select All"
+msgstr "Tümünü Seç"
+
+#: src/menubar.cpp:292
+#, kde-format
+msgid "View"
+msgstr "Görünüm"
+
+#: src/menubar.cpp:295
+#, kde-format
+msgid "as Icons"
+msgstr "Simge Olarak"
+
+#: src/menubar.cpp:296
+#, kde-format
+msgid "as List"
+msgstr "Liste Olarak"
+
+#: src/menubar.cpp:297
+#, kde-format
+msgid "as Columns"
+msgstr "Sütunlar Olarak"
+
+#: src/menubar.cpp:299 src/menubar.cpp:343
+#, kde-format
+msgid "Show Path Bar"
+msgstr "Yol Çubuğunu Göster"
+
+#: src/menubar.cpp:300 src/menubar.cpp:353
+#, kde-format
+msgid "Show Status Bar"
+msgstr "Durum Çubuğunu Göster"
+
+#: src/menubar.cpp:301 src/menubar.cpp:333
+#, kde-format
+msgid "Show Sidebar"
+msgstr "Kenar Çubuğunu Göster"
+
+#: src/menubar.cpp:303 src/menubar.cpp:363
+#, kde-format
+msgid "Show Toolbar"
+msgstr "Araç Çubuğunu Göster"
+
+#: src/menubar.cpp:304 src/menubar.cpp:373
+#, kde-format
+msgid "Customise Toolbar..."
+msgstr "Araç Çubuğunu Özelleştir…"
+
+#: src/menubar.cpp:307
+#, kde-format
+msgid "Go"
+msgstr "Git"
+
+#: src/menubar.cpp:310 src/toolbardelegate.cpp:43
+#, kde-format
+msgid "Back"
+msgstr "Geri"
+
+#: src/menubar.cpp:311 src/toolbardelegate.cpp:44
+#, kde-format
+msgid "Forward"
+msgstr "İleri"
+
+#: src/menubar.cpp:312
+#, kde-format
+msgid "Containing Folder"
+msgstr "İçeren Klasör"
+
+#: src/menubar.cpp:319
+#, kde-format
+msgid "Bookmark Current Folder"
+msgstr "Geçerli Klasöre Yer İmi Koy"
+
+#: src/menubar.cpp:320
+#, kde-format
+msgid "Edit Bookmarks..."
+msgstr "Yer İmlerini Düzenle…"
+
+#: src/menubar.cpp:331
+#, kde-format
+msgid "Hide Sidebar"
+msgstr "Kenar Çubuğunu Gizle"
+
+#: src/menubar.cpp:341
+#, kde-format
+msgid "Hide Path Bar"
+msgstr "Yol Çubuğunu Gizle"
+
+#: src/menubar.cpp:351
+#, kde-format
+msgid "Hide Status Bar"
+msgstr "Durum Çubuğunu Gizle"
+
+#: src/menubar.cpp:361
+#, kde-format
+msgid "Hide Toolbar"
+msgstr "Araç Çubuğunu Gizle"
+
+#: src/menubar.cpp:371
+#, kde-format
+msgid "Finish Customising Toolbar"
+msgstr "Özelleştirme Araç Çubuğunu Bitir"
+
+#: src/toolbardelegate.cpp:45
+#, kde-format
+msgid "Up"
+msgstr "Yukarı"
+
+#: src/toolbardelegate.cpp:46
+#, kde-format
+msgid "Expanding Spacer"
+msgstr "Genişleyen Boşluklandırıcı"
+
+#: src/toolbardelegate.cpp:48
+#, kde-format
+msgid "Create New"
+msgstr "Yeni Oluştur"
