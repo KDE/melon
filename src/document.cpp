@@ -33,6 +33,7 @@
 #include <optional>
 #include <QRegularExpression>
 #include <QDropEvent>
+#include <KIO/RenameFileDialog>
 
 #include "app.h"
 #include "document.h"
@@ -627,6 +628,18 @@ void SDocument::getInfoOnSelectedFiles()
 void SDocument::getInfoOnFile(KFileItem item)
 {
 	auto dialog = new KPropertiesDialog({item});
+	dialog->createWinId();
+	dialog->windowHandle()->setTransientParent(qGuiApp->focusWindow());
+	dialog->show();
+}
+
+void SDocument::renameSelectedFiles()
+{
+	const auto files = selectedFiles();
+	if (files.isEmpty())
+		return;
+
+	auto dialog = new KIO::RenameFileDialog(files, nullptr);
 	dialog->createWinId();
 	dialog->windowHandle()->setTransientParent(qGuiApp->focusWindow());
 	dialog->show();

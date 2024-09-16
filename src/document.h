@@ -140,6 +140,7 @@ public:
 	Q_INVOKABLE void openNewFileMenuFor(QQuickItem* item);
 	Q_INVOKABLE void drop(QQuickItem* target, QDropEvent* event, const QUrl& url = {});
 	Q_INVOKABLE void openSelectedFiles();
+	Q_INVOKABLE void renameSelectedFiles();
 	Q_INVOKABLE void duplicateSelectedFiles();
 	Q_INVOKABLE void getInfoOnSelectedFiles();
 	Q_INVOKABLE void getInfoOnFile(KFileItem item);

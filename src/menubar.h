@@ -31,6 +31,7 @@ public:
 	void open();
 	void getInfo();
 	void closeWindow();
+	void rename();
 	void duplicate();
 	void makeAlias();
 	void moveToTrash();

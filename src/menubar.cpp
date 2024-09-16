@@ -103,6 +103,7 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 	d->fileItemActions.reset(new KFileItemActions);
 	d->newFileMenu.reset(new KNewFileMenu(this));
 	d->ac->addAction(u"new_file"_s, d->newFileMenu.get());
+	d->newFileMenu->setIcon(QIcon());
 	d->dummyMenu.reset(new QMenu());
 	d->bookmarksMenuManager.reset(new KBookmarkMenu(sApp->bookmarkManager(), this, d->dummyMenu.get()));
 
@@ -181,6 +182,8 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 
 	d->ac->add<QAction>(
 		u"get_info"_s, this, &SMenuBar::getInfo);
+	d->ac->add<QAction>(
+		u"rename"_s, this, &SMenuBar::rename);
 	d->ac->add<QAction>(
 		u"duplicate"_s, this, &SMenuBar::duplicate);
 	d->ac->add<QAction>(
@@ -272,6 +275,7 @@ SMenuBar::SMenuBar(QObject* parent) : QObject(parent), d(new Private)
 		Action(u"close_window"_s, i18n("Close Window"), QKeySequence::Close)
 		Separator
 		Action(u"get_info"_s, i18n("Get Info"), u"Ctrl+I"_s)
+		Action(u"rename"_s, i18n("Rename"), u"F2"_s)
 		Action(u"duplicate"_s, i18n("Duplicate"), u"Ctrl+D"_s)
 		Action(u"make_alias"_s, i18n("Make Alias"), u"Ctrl+L"_s)
 		Separator
@@ -493,6 +497,14 @@ void SMenuBar::closeWindow()
 	ActionForWindow
 
 		window->close();
+}
+
+void SMenuBar::rename()
+{
+	ActionForWindow
+
+		swindow->activeDocument()
+			->renameSelectedFiles();
 }
 
 void SMenuBar::duplicate()
