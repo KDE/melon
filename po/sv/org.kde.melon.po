@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: melon\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-11 01:46+0000\n"
+"POT-Creation-Date: 2024-09-16 02:10+0000\n"
 "PO-Revision-Date: 2024-09-11 19:36+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -27,12 +27,12 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "stefan.asserhall@gmail.com"
 
-#: data/AboutDialog.qml:14 src/menubar.cpp:249
+#: data/AboutDialog.qml:14 src/menubar.cpp:252
 #, kde-format
 msgid "About Melon"
 msgstr "Om Melon"
 
-#: data/AboutDialog.qml:51 src/menubar.cpp:246
+#: data/AboutDialog.qml:51 src/menubar.cpp:249
 #, kde-format
 msgid "Melon"
 msgstr "Melon"
@@ -172,224 +172,229 @@ msgstr "Öppna under ny flik"
 msgid "Open In New Window"
 msgstr "Öppna i nytt fönster"
 
-#: src/document.cpp:509 src/toolbardelegate.cpp:49
+#: src/document.cpp:510 src/toolbardelegate.cpp:49
 #, kde-format
 msgid "Search"
 msgstr "Sök"
 
-#: src/document.cpp:659 src/document.cpp:668
+#: src/document.cpp:672 src/document.cpp:681
 #, kde-format
 msgctxt "<filename> copy"
 msgid "%1 copy"
 msgstr "%1 kopia"
 
-#: src/document.cpp:704 src/document.cpp:713
+#: src/document.cpp:717 src/document.cpp:726
 #, kde-format
 msgctxt "<filename> alias"
 msgid "%1 alias"
 msgstr "%1 alias"
 
-#: src/document.cpp:757 src/menubar.cpp:274
+#: src/document.cpp:770 src/menubar.cpp:277
 #, kde-format
 msgid "Get Info"
 msgstr "Hämta information"
 
-#: src/document.cpp:912
+#: src/document.cpp:925
 #, kde-format
 msgid "Search for %1 in %2"
 msgstr "Sök efter %1 i %2"
 
-#: src/document.cpp:913
+#: src/document.cpp:926
 #, kde-format
 msgid "Search for %1"
 msgstr "Sök efter %1"
 
-#: src/menubar.cpp:251
+#: src/menubar.cpp:254
 #, kde-format
 msgid "Preferences"
 msgstr "Inställningar"
 
-#: src/menubar.cpp:253
+#: src/menubar.cpp:256
 #, kde-format
 msgid "Empty Trash"
 msgstr "Töm papperskorgen"
 
-#: src/menubar.cpp:255
+#: src/menubar.cpp:258
 #, kde-format
 msgid "Quit Melon"
 msgstr "Avsluta Melon"
 
-#: src/menubar.cpp:258
+#: src/menubar.cpp:261
 #, kde-format
 msgid "File"
 msgstr "Arkiv"
 
-#: src/menubar.cpp:268 src/toolbardelegate.cpp:47
+#: src/menubar.cpp:271 src/toolbardelegate.cpp:47
 #, kde-format
 msgid "New Window"
 msgstr "Nytt fönster"
 
-#: src/menubar.cpp:269
+#: src/menubar.cpp:272
 #, kde-format
 msgid "New Tab"
 msgstr "Ny flik"
 
-#: src/menubar.cpp:270
+#: src/menubar.cpp:273
 #, kde-format
 msgid "New File"
 msgstr "Ny fil"
 
-#: src/menubar.cpp:271
+#: src/menubar.cpp:274
 #, kde-format
 msgid "Open"
 msgstr "Öppna"
 
-#: src/menubar.cpp:272
+#: src/menubar.cpp:275
 #, kde-format
 msgid "Close Window"
 msgstr "Stäng fönster"
 
-#: src/menubar.cpp:275
+#: src/menubar.cpp:278
+#, kde-format
+msgid "Rename"
+msgstr ""
+
+#: src/menubar.cpp:279
 #, kde-format
 msgid "Duplicate"
 msgstr "Duplicera"
 
-#: src/menubar.cpp:276
+#: src/menubar.cpp:280
 #, kde-format
 msgid "Make Alias"
 msgstr "Skapa alias"
 
-#: src/menubar.cpp:278
+#: src/menubar.cpp:282
 #, kde-format
 msgid "Move To Trash"
 msgstr "Flytta till papperskorgen"
 
-#: src/menubar.cpp:281
+#: src/menubar.cpp:285
 #, kde-format
 msgid "Edit"
 msgstr "Redigera"
 
-#: src/menubar.cpp:284
+#: src/menubar.cpp:288
 #, kde-format
 msgid "Undo"
 msgstr "Ångra"
 
-#: src/menubar.cpp:286
+#: src/menubar.cpp:290
 #, kde-format
 msgid "Cut"
 msgstr "Klipp ut"
 
-#: src/menubar.cpp:287
+#: src/menubar.cpp:291
 #, kde-format
 msgid "Copy"
 msgstr "Kopiera"
 
-#: src/menubar.cpp:288
+#: src/menubar.cpp:292
 #, kde-format
 msgid "Paste"
 msgstr "Klistra in"
 
-#: src/menubar.cpp:289
+#: src/menubar.cpp:293
 #, kde-format
 msgid "Select All"
 msgstr "Markera alla"
 
-#: src/menubar.cpp:292
+#: src/menubar.cpp:296
 #, kde-format
 msgid "View"
 msgstr "Visa"
 
-#: src/menubar.cpp:295
+#: src/menubar.cpp:299
 #, kde-format
 msgid "as Icons"
 msgstr "som ikoner"
 
-#: src/menubar.cpp:296
+#: src/menubar.cpp:300
 #, kde-format
 msgid "as List"
 msgstr "som lista"
 
-#: src/menubar.cpp:297
+#: src/menubar.cpp:301
 #, kde-format
 msgid "as Columns"
 msgstr "som kolumner"
 
-#: src/menubar.cpp:299 src/menubar.cpp:343
+#: src/menubar.cpp:303 src/menubar.cpp:347
 #, kde-format
 msgid "Show Path Bar"
 msgstr "Visa sökrad"
 
-#: src/menubar.cpp:300 src/menubar.cpp:353
+#: src/menubar.cpp:304 src/menubar.cpp:357
 #, kde-format
 msgid "Show Status Bar"
 msgstr "Visa statusrad"
 
-#: src/menubar.cpp:301 src/menubar.cpp:333
+#: src/menubar.cpp:305 src/menubar.cpp:337
 #, kde-format
 msgid "Show Sidebar"
 msgstr "Visa sidorad"
 
-#: src/menubar.cpp:303 src/menubar.cpp:363
+#: src/menubar.cpp:307 src/menubar.cpp:367
 #, kde-format
 msgid "Show Toolbar"
 msgstr "Visa verktygsrad"
 
-#: src/menubar.cpp:304 src/menubar.cpp:373
+#: src/menubar.cpp:308 src/menubar.cpp:377
 #, kde-format
 msgid "Customise Toolbar..."
 msgstr "Anpassa verktygsrad..."
 
-#: src/menubar.cpp:307
+#: src/menubar.cpp:311
 #, kde-format
 msgid "Go"
 msgstr "Gå"
 
-#: src/menubar.cpp:310 src/toolbardelegate.cpp:43
+#: src/menubar.cpp:314 src/toolbardelegate.cpp:43
 #, kde-format
 msgid "Back"
 msgstr "Bakåt"
 
-#: src/menubar.cpp:311 src/toolbardelegate.cpp:44
+#: src/menubar.cpp:315 src/toolbardelegate.cpp:44
 #, kde-format
 msgid "Forward"
 msgstr "Framåt"
 
-#: src/menubar.cpp:312
+#: src/menubar.cpp:316
 #, kde-format
 msgid "Containing Folder"
 msgstr "Katalog med innehåll"
 
-#: src/menubar.cpp:319
+#: src/menubar.cpp:323
 #, kde-format
 msgid "Bookmark Current Folder"
 msgstr "Bokmärk nuvarande katalog"
 
-#: src/menubar.cpp:320
+#: src/menubar.cpp:324
 #, kde-format
 msgid "Edit Bookmarks..."
 msgstr "Redigera bokmärken..."
 
-#: src/menubar.cpp:331
+#: src/menubar.cpp:335
 #, kde-format
 msgid "Hide Sidebar"
 msgstr "Dölj sidorad"
 
-#: src/menubar.cpp:341
+#: src/menubar.cpp:345
 #, kde-format
 msgid "Hide Path Bar"
 msgstr "Dölj sökrad"
 
-#: src/menubar.cpp:351
+#: src/menubar.cpp:355
 #, kde-format
 msgid "Hide Status Bar"
 msgstr "Dölj statusrad"
 
-#: src/menubar.cpp:361
+#: src/menubar.cpp:365
 #, kde-format
 msgid "Hide Toolbar"
 msgstr "Dölj verktygsrad "
 
-#: src/menubar.cpp:371
+#: src/menubar.cpp:375
 #, kde-format
 msgid "Finish Customising Toolbar"
 msgstr "Avsluta anpassning av verktygsrad"

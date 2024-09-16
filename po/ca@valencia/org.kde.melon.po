@@ -1,249 +1,255 @@
+# Translation of org.kde.melon.po to Catalan (Valencian)
+# Copyright (C) 2024 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
 #
+# SPDX-FileCopyrightText: 2024 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: melon\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-16 02:10+0000\n"
-"PO-Revision-Date: 2024-09-11 05:32+0200\n"
-"Last-Translator: KDE Francophone <kde-francophone@kde.org>\n"
-"Language-Team: KDE Francophone <kde-francophone@kde.org>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2024-09-10 11:47+0200\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 24.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Josep M. Ferrer"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "txemaq@gmail.com"
 
 #: data/AboutDialog.qml:14 src/menubar.cpp:252
 #, kde-format
 msgid "About Melon"
-msgstr ""
+msgstr "Quant a Melon"
 
 #: data/AboutDialog.qml:51 src/menubar.cpp:249
 #, kde-format
 msgid "Melon"
-msgstr ""
+msgstr "Melon"
 
 #: data/AboutDialog.qml:58
 #, kde-format
 msgid "Simple file manager"
-msgstr ""
+msgstr "Gestor de fitxers senzill"
 
 #: data/AboutDialog.qml:64
 #, kde-format
 msgid "Melon Git Master Version"
-msgstr ""
+msgstr "Versió Master de Git de Melon"
 
 #: data/AboutDialog.qml:72
 #, kde-format
 msgid "Copyright 2022 Janet Blackquill"
-msgstr ""
+msgstr "Copyright 2022 Janet Blackquill"
 
 #: data/AbstractFileView.qml:37
 #, kde-format
 msgid "Search through:"
-msgstr ""
+msgstr "Busca en:"
 
 #: data/AbstractFileView.qml:41
 #, kde-format
 msgid "This Computer"
-msgstr ""
+msgstr "Este ordinador"
 
 #: data/AbstractFileView.qml:46
 #, kde-format
 msgid "%1"
-msgstr ""
+msgstr "%1"
 
 #: data/AbstractFileView.qml:54
 #, kde-format
 msgid "Contents"
-msgstr ""
+msgstr "Contingut"
 
 #: data/AbstractFileView.qml:59
 #, kde-format
 msgid "File Name"
-msgstr ""
+msgstr "Nom de fitxer"
 
 #: data/AbstractFileView.qml:67
 #, kde-format
 msgid "Save"
-msgstr ""
+msgstr "Guarda"
 
 #: data/AbstractFileView.qml:89 data/SingleColumn.qml:54
 #, kde-format
 msgid "There are no objects in this directory"
-msgstr ""
+msgstr "No hi ha cap objecte en este directori"
 
 #: data/FileItemColumn.qml:77
 #, kde-format
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: data/FileItemColumn.qml:84
 #, kde-format
 msgid "Type"
-msgstr ""
+msgstr "Tipus"
 
 #: data/FileItemColumn.qml:90
 #, kde-format
 msgid "Size"
-msgstr ""
+msgstr "Mida"
 
 #: data/FileItemColumn.qml:96
 #, kde-format
 msgid "Created"
-msgstr ""
+msgstr "Creat"
 
 #: data/FileItemColumn.qml:102
 #, kde-format
 msgid "Changed"
-msgstr ""
+msgstr "Canviat"
 
 #: data/FileItemColumn.qml:108
 #, kde-format
 msgid "Last Opened"
-msgstr ""
+msgstr "Última obertura"
 
 #: data/FileItemColumn.qml:115
 #, kde-format
 msgid "More Information"
-msgstr ""
+msgstr "Més informació"
 
 #: data/Window.qml:15
 #, kde-format
 msgid "%1 - Melon"
-msgstr ""
+msgstr "%1 - Melon"
 
 #: data/WindowToolBar.qml:40
 #, kde-format
 msgid "%1 File(s), %2 Folder(s), %3"
-msgstr ""
+msgstr "%1 fitxers, %2 carpetes, %3"
 
 #: src/app.cpp:90
 #, kde-format
 msgctxt "user's downloads folder"
 msgid "Downloads"
-msgstr ""
+msgstr "Baixades"
 
 #: src/app.cpp:94
 #, kde-format
 msgctxt "user's documents folder"
 msgid "Documents"
-msgstr ""
+msgstr "Documents"
 
 #: src/app.cpp:98
 #, kde-format
 msgctxt "user's desktop folder"
 msgid "Desktop"
-msgstr ""
+msgstr "Escriptori"
 
 #: src/app.cpp:102
 #, kde-format
 msgctxt "user's home folder"
 msgid "Home"
-msgstr ""
+msgstr "Inici"
 
 #: src/app.cpp:106
 #, kde-format
 msgctxt "root folder"
 msgid "Computer"
-msgstr ""
+msgstr "Ordinador"
 
 #: src/app.cpp:342
 #, kde-format
 msgid "Open In New Tab"
-msgstr ""
+msgstr "Obri en una pestanya nova"
 
 #: src/app.cpp:348
 #, kde-format
 msgid "Open In New Window"
-msgstr ""
+msgstr "Obri en una finestra nova"
 
 #: src/document.cpp:510 src/toolbardelegate.cpp:49
 #, kde-format
 msgid "Search"
-msgstr ""
+msgstr "Busca"
 
 #: src/document.cpp:672 src/document.cpp:681
 #, kde-format
 msgctxt "<filename> copy"
 msgid "%1 copy"
-msgstr ""
+msgstr "Copia de %1"
 
 #: src/document.cpp:717 src/document.cpp:726
 #, kde-format
 msgctxt "<filename> alias"
 msgid "%1 alias"
-msgstr ""
+msgstr "Àlies de %1"
 
 #: src/document.cpp:770 src/menubar.cpp:277
 #, kde-format
 msgid "Get Info"
-msgstr ""
+msgstr "Obtín informació"
 
 #: src/document.cpp:925
 #, kde-format
 msgid "Search for %1 in %2"
-msgstr ""
+msgstr "Busca %1 en %2"
 
 #: src/document.cpp:926
 #, kde-format
 msgid "Search for %1"
-msgstr ""
+msgstr "Busca %1"
 
 #: src/menubar.cpp:254
 #, kde-format
 msgid "Preferences"
-msgstr ""
+msgstr "Preferències"
 
 #: src/menubar.cpp:256
 #, kde-format
 msgid "Empty Trash"
-msgstr ""
+msgstr "Buida la paperera"
 
 #: src/menubar.cpp:258
 #, kde-format
 msgid "Quit Melon"
-msgstr ""
+msgstr "Ix de Melon"
 
 #: src/menubar.cpp:261
 #, kde-format
 msgid "File"
-msgstr ""
+msgstr "Fitxer"
 
 #: src/menubar.cpp:271 src/toolbardelegate.cpp:47
 #, kde-format
 msgid "New Window"
-msgstr ""
+msgstr "Finestra nova"
 
 #: src/menubar.cpp:272
 #, kde-format
 msgid "New Tab"
-msgstr ""
+msgstr "Pestanya nova"
 
 #: src/menubar.cpp:273
 #, kde-format
 msgid "New File"
-msgstr ""
+msgstr "Fitxer nou"
 
 #: src/menubar.cpp:274
 #, kde-format
 msgid "Open"
-msgstr ""
+msgstr "Obri"
 
 #: src/menubar.cpp:275
 #, kde-format
 msgid "Close Window"
-msgstr ""
+msgstr "Tanca la finestra"
 
 #: src/menubar.cpp:278
 #, kde-format
@@ -253,159 +259,159 @@ msgstr ""
 #: src/menubar.cpp:279
 #, kde-format
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplica"
 
 #: src/menubar.cpp:280
 #, kde-format
 msgid "Make Alias"
-msgstr ""
+msgstr "Fes un àlies"
 
 #: src/menubar.cpp:282
 #, kde-format
 msgid "Move To Trash"
-msgstr ""
+msgstr "Mou cap a dins de la paperera"
 
 #: src/menubar.cpp:285
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "Edita"
 
 #: src/menubar.cpp:288
 #, kde-format
 msgid "Undo"
-msgstr ""
+msgstr "Desfés"
 
 #: src/menubar.cpp:290
 #, kde-format
 msgid "Cut"
-msgstr ""
+msgstr "Retalla"
 
 #: src/menubar.cpp:291
 #, kde-format
 msgid "Copy"
-msgstr ""
+msgstr "Copia"
 
 #: src/menubar.cpp:292
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "Apega"
 
 #: src/menubar.cpp:293
 #, kde-format
 msgid "Select All"
-msgstr ""
+msgstr "Selecciona-ho tot"
 
 #: src/menubar.cpp:296
 #, kde-format
 msgid "View"
-msgstr ""
+msgstr "Visualitza"
 
 #: src/menubar.cpp:299
 #, kde-format
 msgid "as Icons"
-msgstr ""
+msgstr "com a icones"
 
 #: src/menubar.cpp:300
 #, kde-format
 msgid "as List"
-msgstr ""
+msgstr "com a llista"
 
 #: src/menubar.cpp:301
 #, kde-format
 msgid "as Columns"
-msgstr ""
+msgstr "com a columnes"
 
 #: src/menubar.cpp:303 src/menubar.cpp:347
 #, kde-format
 msgid "Show Path Bar"
-msgstr ""
+msgstr "Mostra la barra del camí"
 
 #: src/menubar.cpp:304 src/menubar.cpp:357
 #, kde-format
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Mostra la barra d'estat"
 
 #: src/menubar.cpp:305 src/menubar.cpp:337
 #, kde-format
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Mostra la barra lateral"
 
 #: src/menubar.cpp:307 src/menubar.cpp:367
 #, kde-format
 msgid "Show Toolbar"
-msgstr ""
+msgstr "Mostra la barra d'eines"
 
 #: src/menubar.cpp:308 src/menubar.cpp:377
 #, kde-format
 msgid "Customise Toolbar..."
-msgstr ""
+msgstr "Personalitza la barra d'eines…"
 
 #: src/menubar.cpp:311
 #, kde-format
 msgid "Go"
-msgstr ""
+msgstr "Ves"
 
 #: src/menubar.cpp:314 src/toolbardelegate.cpp:43
 #, kde-format
 msgid "Back"
-msgstr ""
+msgstr "Arrere"
 
 #: src/menubar.cpp:315 src/toolbardelegate.cpp:44
 #, kde-format
 msgid "Forward"
-msgstr ""
+msgstr "Avant"
 
 #: src/menubar.cpp:316
 #, kde-format
 msgid "Containing Folder"
-msgstr ""
+msgstr "Carpeta contenidora"
 
 #: src/menubar.cpp:323
 #, kde-format
 msgid "Bookmark Current Folder"
-msgstr ""
+msgstr "Apunta la carpeta actual"
 
 #: src/menubar.cpp:324
 #, kde-format
 msgid "Edit Bookmarks..."
-msgstr ""
+msgstr "Edita els punts…"
 
 #: src/menubar.cpp:335
 #, kde-format
 msgid "Hide Sidebar"
-msgstr ""
+msgstr "Oculta la barra lateral"
 
 #: src/menubar.cpp:345
 #, kde-format
 msgid "Hide Path Bar"
-msgstr ""
+msgstr "Oculta la barra del camí"
 
 #: src/menubar.cpp:355
 #, kde-format
 msgid "Hide Status Bar"
-msgstr ""
+msgstr "Oculta la barra d'estat"
 
 #: src/menubar.cpp:365
 #, kde-format
 msgid "Hide Toolbar"
-msgstr ""
+msgstr "Oculta la barra d'eines"
 
 #: src/menubar.cpp:375
 #, kde-format
 msgid "Finish Customising Toolbar"
-msgstr ""
+msgstr "Acaba la personalització de la barra d'eines"
 
 #: src/toolbardelegate.cpp:45
 #, kde-format
 msgid "Up"
-msgstr ""
+msgstr "Amunt"
 
 #: src/toolbardelegate.cpp:46
 #, kde-format
 msgid "Expanding Spacer"
-msgstr ""
+msgstr "Espaiador expansible"
 
 #: src/toolbardelegate.cpp:48
 #, kde-format
 msgid "Create New"
-msgstr ""
+msgstr "Crea nou"
