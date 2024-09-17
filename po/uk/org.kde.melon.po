@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: melon\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-16 02:10+0000\n"
-"PO-Revision-Date: 2024-09-10 09:39+0300\n"
+"PO-Revision-Date: 2024-09-16 18:21+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -253,7 +253,7 @@ msgstr "Закрити вікно"
 #: src/menubar.cpp:278
 #, kde-format
 msgid "Rename"
-msgstr ""
+msgstr "Перейменувати"
 
 #: src/menubar.cpp:279
 #, kde-format

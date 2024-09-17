@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: melon\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-16 02:10+0000\n"
-"PO-Revision-Date: 2024-09-10 11:41+0200\n"
+"PO-Revision-Date: 2024-09-16 14:12+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.0\n"
+"X-Generator: Lokalize 24.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -252,7 +252,7 @@ msgstr "Venster sluiten"
 #: src/menubar.cpp:278
 #, kde-format
 msgid "Rename"
-msgstr ""
+msgstr "Hernoemen"
 
 #: src/menubar.cpp:279
 #, kde-format

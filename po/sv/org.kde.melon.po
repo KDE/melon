@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: melon\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-16 02:10+0000\n"
-"PO-Revision-Date: 2024-09-11 19:36+0200\n"
+"PO-Revision-Date: 2024-09-16 20:10+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -252,7 +252,7 @@ msgstr "Stäng fönster"
 #: src/menubar.cpp:278
 #, kde-format
 msgid "Rename"
-msgstr ""
+msgstr "Byt namn"
 
 #: src/menubar.cpp:279
 #, kde-format
