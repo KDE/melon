@@ -1,36 +1,36 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the melon package.
-# SPDX-FileCopyrightText: 2024 Vincenzo Reale <smart2128vr@gmail.com>
+# SPDX-FileCopyrightText: 2024 Vit Pelcak <vit@pelcak.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: melon\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-16 02:10+0000\n"
-"PO-Revision-Date: 2024-09-16 20:24+0200\n"
-"Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
-"Language-Team: Italian <kde-i18n-it@kde.org>\n"
-"Language: it\n"
+"PO-Revision-Date: 2024-09-17 13:49+0200\n"
+"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Lokalize 24.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Vincenzo Reale"
+msgstr "Vít Pelčák"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "smart2128vr@gmail.com"
+msgstr "vit@pelcak.org"
 
 #: data/AboutDialog.qml:14 src/menubar.cpp:252
 #, kde-format
 msgid "About Melon"
-msgstr "Informazioni su Melon"
+msgstr "O aplikaci Melon"
 
 #: data/AboutDialog.qml:51 src/menubar.cpp:249
 #, kde-format
@@ -40,12 +40,12 @@ msgstr "Melon"
 #: data/AboutDialog.qml:58
 #, kde-format
 msgid "Simple file manager"
-msgstr "Gestore dei file semplice"
+msgstr "Jednoduchý správce souborů"
 
 #: data/AboutDialog.qml:64
 #, kde-format
 msgid "Melon Git Master Version"
-msgstr "Versione Git Master di Melon"
+msgstr ""
 
 #: data/AboutDialog.qml:72
 #, kde-format
@@ -55,12 +55,12 @@ msgstr "Copyright 2022 Janet Blackquill"
 #: data/AbstractFileView.qml:37
 #, kde-format
 msgid "Search through:"
-msgstr "Cerca in:"
+msgstr "Prohledávat:"
 
 #: data/AbstractFileView.qml:41
 #, kde-format
 msgid "This Computer"
-msgstr "Questo computer"
+msgstr "Tento počítač"
 
 #: data/AbstractFileView.qml:46
 #, kde-format
@@ -70,57 +70,57 @@ msgstr "%1"
 #: data/AbstractFileView.qml:54
 #, kde-format
 msgid "Contents"
-msgstr "Contenuto"
+msgstr "Obsah"
 
 #: data/AbstractFileView.qml:59
 #, kde-format
 msgid "File Name"
-msgstr "Nome del file"
+msgstr "Název souboru"
 
 #: data/AbstractFileView.qml:67
 #, kde-format
 msgid "Save"
-msgstr "Salva"
+msgstr "Uložit"
 
 #: data/AbstractFileView.qml:89 data/SingleColumn.qml:54
 #, kde-format
 msgid "There are no objects in this directory"
-msgstr "Non ci sono oggetti in questa cartella"
+msgstr ""
 
 #: data/FileItemColumn.qml:77
 #, kde-format
 msgid "Name"
-msgstr "Nome"
+msgstr "Název"
 
 #: data/FileItemColumn.qml:84
 #, kde-format
 msgid "Type"
-msgstr "Tipo"
+msgstr "Typ"
 
 #: data/FileItemColumn.qml:90
 #, kde-format
 msgid "Size"
-msgstr "Dimensione"
+msgstr "Velikost"
 
 #: data/FileItemColumn.qml:96
 #, kde-format
 msgid "Created"
-msgstr "Creato"
+msgstr "Vytvořeno"
 
 #: data/FileItemColumn.qml:102
 #, kde-format
 msgid "Changed"
-msgstr "Modificato"
+msgstr "Změněno"
 
 #: data/FileItemColumn.qml:108
 #, kde-format
 msgid "Last Opened"
-msgstr "Ultima apertura"
+msgstr "Naposledy otevřeno"
 
 #: data/FileItemColumn.qml:115
 #, kde-format
 msgid "More Information"
-msgstr "Altre informazioni"
+msgstr "Více informací"
 
 #: data/Window.qml:15
 #, kde-format
@@ -130,286 +130,286 @@ msgstr "%1 - Melon"
 #: data/WindowToolBar.qml:40
 #, kde-format
 msgid "%1 File(s), %2 Folder(s), %3"
-msgstr "%1 file, %2 cartelle, %3"
+msgstr "%1 Soubor(ů), %2 Složky(Složek), %3"
 
 #: src/app.cpp:90
 #, kde-format
 msgctxt "user's downloads folder"
 msgid "Downloads"
-msgstr "Scaricamenti"
+msgstr "Stahování"
 
 #: src/app.cpp:94
 #, kde-format
 msgctxt "user's documents folder"
 msgid "Documents"
-msgstr "Documenti"
+msgstr "Dokumenty"
 
 #: src/app.cpp:98
 #, kde-format
 msgctxt "user's desktop folder"
 msgid "Desktop"
-msgstr "Desktop"
+msgstr "Pracovní plocha"
 
 #: src/app.cpp:102
 #, kde-format
 msgctxt "user's home folder"
 msgid "Home"
-msgstr "Home"
+msgstr "Domů"
 
 #: src/app.cpp:106
 #, kde-format
 msgctxt "root folder"
 msgid "Computer"
-msgstr "Computer"
+msgstr "Počítač"
 
 #: src/app.cpp:342
 #, kde-format
 msgid "Open In New Tab"
-msgstr "Apri in una nuova scheda"
+msgstr "Otevřít v nové kartě"
 
 #: src/app.cpp:348
 #, kde-format
 msgid "Open In New Window"
-msgstr "Apri in una nuova finestra"
+msgstr "Otevřít v novém okně"
 
 #: src/document.cpp:510 src/toolbardelegate.cpp:49
 #, kde-format
 msgid "Search"
-msgstr "Cerca"
+msgstr "Hledat"
 
 #: src/document.cpp:672 src/document.cpp:681
 #, kde-format
 msgctxt "<filename> copy"
 msgid "%1 copy"
-msgstr "Copia di %1"
+msgstr "%1 kopírovat"
 
 #: src/document.cpp:717 src/document.cpp:726
 #, kde-format
 msgctxt "<filename> alias"
 msgid "%1 alias"
-msgstr "Alias di %1"
+msgstr "%1 alias"
 
 #: src/document.cpp:770 src/menubar.cpp:277
 #, kde-format
 msgid "Get Info"
-msgstr "Ottieni informazioni"
+msgstr ""
 
 #: src/document.cpp:925
 #, kde-format
 msgid "Search for %1 in %2"
-msgstr "Cerca %1 in %2"
+msgstr "Hledat %1 v %2"
 
 #: src/document.cpp:926
 #, kde-format
 msgid "Search for %1"
-msgstr "Ricerca di %1"
+msgstr "Vyhledávám %1"
 
 #: src/menubar.cpp:254
 #, kde-format
 msgid "Preferences"
-msgstr "Preferenze"
+msgstr "Předvolby"
 
 #: src/menubar.cpp:256
 #, kde-format
 msgid "Empty Trash"
-msgstr "Svuota il cestino"
+msgstr "Vyprázdnit koš"
 
 #: src/menubar.cpp:258
 #, kde-format
 msgid "Quit Melon"
-msgstr "Esci da Melon"
+msgstr "Ukončit Melon"
 
 #: src/menubar.cpp:261
 #, kde-format
 msgid "File"
-msgstr "File"
+msgstr "Soubor"
 
 #: src/menubar.cpp:271 src/toolbardelegate.cpp:47
 #, kde-format
 msgid "New Window"
-msgstr "Nuova finestra"
+msgstr "Nové okno"
 
 #: src/menubar.cpp:272
 #, kde-format
 msgid "New Tab"
-msgstr "Nuova scheda"
+msgstr "Nová karta"
 
 #: src/menubar.cpp:273
 #, kde-format
 msgid "New File"
-msgstr "Nuovo file"
+msgstr "Nový soubor"
 
 #: src/menubar.cpp:274
 #, kde-format
 msgid "Open"
-msgstr "Apri"
+msgstr "Otevřít"
 
 #: src/menubar.cpp:275
 #, kde-format
 msgid "Close Window"
-msgstr "Chiudi finestra"
+msgstr "Zavřít okno"
 
 #: src/menubar.cpp:278
 #, kde-format
 msgid "Rename"
-msgstr "Rinomina"
+msgstr "Přejmenovat"
 
 #: src/menubar.cpp:279
 #, kde-format
 msgid "Duplicate"
-msgstr "Duplica"
+msgstr "Duplikovat"
 
 #: src/menubar.cpp:280
 #, kde-format
 msgid "Make Alias"
-msgstr "Crea alias"
+msgstr "Vytvořit alias"
 
 #: src/menubar.cpp:282
 #, kde-format
 msgid "Move To Trash"
-msgstr "Cestina"
+msgstr "Přesunout do koše"
 
 #: src/menubar.cpp:285
 #, kde-format
 msgid "Edit"
-msgstr "Modifica"
+msgstr "Upravit"
 
 #: src/menubar.cpp:288
 #, kde-format
 msgid "Undo"
-msgstr "Annulla"
+msgstr "Zpět"
 
 #: src/menubar.cpp:290
 #, kde-format
 msgid "Cut"
-msgstr "Taglia"
+msgstr "Vyjmout"
 
 #: src/menubar.cpp:291
 #, kde-format
 msgid "Copy"
-msgstr "Copia"
+msgstr "Kopírovat"
 
 #: src/menubar.cpp:292
 #, kde-format
 msgid "Paste"
-msgstr "Incolla"
+msgstr "Vložit"
 
 #: src/menubar.cpp:293
 #, kde-format
 msgid "Select All"
-msgstr "Seleziona tutto"
+msgstr "Vybrat vše"
 
 #: src/menubar.cpp:296
 #, kde-format
 msgid "View"
-msgstr "Visualizza"
+msgstr "Pohled"
 
 #: src/menubar.cpp:299
 #, kde-format
 msgid "as Icons"
-msgstr "come icone"
+msgstr "jako ikony"
 
 #: src/menubar.cpp:300
 #, kde-format
 msgid "as List"
-msgstr "come elenco"
+msgstr "jako seznam"
 
 #: src/menubar.cpp:301
 #, kde-format
 msgid "as Columns"
-msgstr "come colonne"
+msgstr "jako sloupce"
 
 #: src/menubar.cpp:303 src/menubar.cpp:347
 #, kde-format
 msgid "Show Path Bar"
-msgstr "Mostra la barra del percorso"
+msgstr "Zobrazit pruh s cestou"
 
 #: src/menubar.cpp:304 src/menubar.cpp:357
 #, kde-format
 msgid "Show Status Bar"
-msgstr "Mostra la barra di stato"
+msgstr "Zobrazit stavový řádek"
 
 #: src/menubar.cpp:305 src/menubar.cpp:337
 #, kde-format
 msgid "Show Sidebar"
-msgstr "Mostra la barra laterale"
+msgstr "Zobrazit postranní lištu"
 
 #: src/menubar.cpp:307 src/menubar.cpp:367
 #, kde-format
 msgid "Show Toolbar"
-msgstr "Mostra la barra degli strumenti"
+msgstr "Zobrazit panel nástrojů"
 
 #: src/menubar.cpp:308 src/menubar.cpp:377
 #, kde-format
 msgid "Customise Toolbar..."
-msgstr "Personalizza la barra degli strumenti..."
+msgstr "Upravit Panel nástrojů..."
 
 #: src/menubar.cpp:311
 #, kde-format
 msgid "Go"
-msgstr "Vai"
+msgstr "Přejít"
 
 #: src/menubar.cpp:314 src/toolbardelegate.cpp:43
 #, kde-format
 msgid "Back"
-msgstr "Indietro"
+msgstr "Zpět"
 
 #: src/menubar.cpp:315 src/toolbardelegate.cpp:44
 #, kde-format
 msgid "Forward"
-msgstr "Avanti"
+msgstr "Vpřed"
 
 #: src/menubar.cpp:316
 #, kde-format
 msgid "Containing Folder"
-msgstr "Cartella contenitore"
+msgstr ""
 
 #: src/menubar.cpp:323
 #, kde-format
 msgid "Bookmark Current Folder"
-msgstr "Aggiungi ai segnalibri la cartella attuale"
+msgstr "Přidat současnou složku do záložek"
 
 #: src/menubar.cpp:324
 #, kde-format
 msgid "Edit Bookmarks..."
-msgstr "Modifica segnalibri..."
+msgstr "Upravit záložky..."
 
 #: src/menubar.cpp:335
 #, kde-format
 msgid "Hide Sidebar"
-msgstr "Nascondi barra laterale"
+msgstr "Skrýt postranní panel"
 
 #: src/menubar.cpp:345
 #, kde-format
 msgid "Hide Path Bar"
-msgstr "Nascondi la barra del percorso"
+msgstr "Skrýt pruh s cestou"
 
 #: src/menubar.cpp:355
 #, kde-format
 msgid "Hide Status Bar"
-msgstr "Nascondi la barra di stato"
+msgstr "Skrýt stavový panel"
 
 #: src/menubar.cpp:365
 #, kde-format
 msgid "Hide Toolbar"
-msgstr "Nascondi barra degli strumenti"
+msgstr "Skrýt panel nástrojů"
 
 #: src/menubar.cpp:375
 #, kde-format
 msgid "Finish Customising Toolbar"
-msgstr "Termina la personalizzazione della barra degli strumenti"
+msgstr "Dokončit úpravy panelu nástrojů"
 
 #: src/toolbardelegate.cpp:45
 #, kde-format
 msgid "Up"
-msgstr "Su"
+msgstr "Nahoru"
 
 #: src/toolbardelegate.cpp:46
 #, kde-format
 msgid "Expanding Spacer"
-msgstr "Spaziatore di espansione"
+msgstr "Mezera"
 
 #: src/toolbardelegate.cpp:48
 #, kde-format
 msgid "Create New"
-msgstr "Crea nuovo"
+msgstr "Vytvořit nový"

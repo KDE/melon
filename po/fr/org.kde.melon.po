@@ -1,17 +1,19 @@
 #
+# SPDX-FileCopyrightText: 2024 Sylvain <sylvain.saboua@free.fr>
 msgid ""
 msgstr ""
 "Project-Id-Version: melon\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-16 02:10+0000\n"
-"PO-Revision-Date: 2024-09-11 05:32+0200\n"
-"Last-Translator: KDE Francophone <kde-francophone@kde.org>\n"
-"Language-Team: KDE Francophone <kde-francophone@kde.org>\n"
+"PO-Revision-Date: 2024-09-16 19:23+0200\n"
+"Last-Translator: Sylvain <sylvain.saboua@free.fr>\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -26,7 +28,7 @@ msgstr ""
 #: data/AboutDialog.qml:14 src/menubar.cpp:252
 #, kde-format
 msgid "About Melon"
-msgstr ""
+msgstr "À propos de Melon"
 
 #: data/AboutDialog.qml:51 src/menubar.cpp:249
 #, kde-format
@@ -41,7 +43,7 @@ msgstr ""
 #: data/AboutDialog.qml:64
 #, kde-format
 msgid "Melon Git Master Version"
-msgstr ""
+msgstr "Version Git principale de Melon"
 
 #: data/AboutDialog.qml:72
 #, kde-format
@@ -51,7 +53,7 @@ msgstr ""
 #: data/AbstractFileView.qml:37
 #, kde-format
 msgid "Search through:"
-msgstr ""
+msgstr "Recherche:"
 
 #: data/AbstractFileView.qml:41
 #, kde-format
@@ -76,7 +78,7 @@ msgstr ""
 #: data/AbstractFileView.qml:67
 #, kde-format
 msgid "Save"
-msgstr ""
+msgstr "Sauvegarder"
 
 #: data/AbstractFileView.qml:89 data/SingleColumn.qml:54
 #, kde-format
@@ -101,27 +103,27 @@ msgstr ""
 #: data/FileItemColumn.qml:96
 #, kde-format
 msgid "Created"
-msgstr ""
+msgstr "Créé"
 
 #: data/FileItemColumn.qml:102
 #, kde-format
 msgid "Changed"
-msgstr ""
+msgstr "Modifié le"
 
 #: data/FileItemColumn.qml:108
 #, kde-format
 msgid "Last Opened"
-msgstr ""
+msgstr "Ouverts récemment"
 
 #: data/FileItemColumn.qml:115
 #, kde-format
 msgid "More Information"
-msgstr ""
+msgstr "Plus d'informations"
 
 #: data/Window.qml:15
 #, kde-format
 msgid "%1 - Melon"
-msgstr ""
+msgstr "%1 melon"
 
 #: data/WindowToolBar.qml:40
 #, kde-format
@@ -144,7 +146,7 @@ msgstr ""
 #, kde-format
 msgctxt "user's desktop folder"
 msgid "Desktop"
-msgstr ""
+msgstr "Bureau"
 
 #: src/app.cpp:102
 #, kde-format
@@ -177,7 +179,7 @@ msgstr ""
 #, kde-format
 msgctxt "<filename> copy"
 msgid "%1 copy"
-msgstr ""
+msgstr "%1 copie"
 
 #: src/document.cpp:717 src/document.cpp:726
 #, kde-format
@@ -188,7 +190,7 @@ msgstr ""
 #: src/document.cpp:770 src/menubar.cpp:277
 #, kde-format
 msgid "Get Info"
-msgstr ""
+msgstr "Informations"
 
 #: src/document.cpp:925
 #, kde-format
@@ -213,7 +215,7 @@ msgstr ""
 #: src/menubar.cpp:258
 #, kde-format
 msgid "Quit Melon"
-msgstr ""
+msgstr "Quitter Melon"
 
 #: src/menubar.cpp:261
 #, kde-format
@@ -223,7 +225,7 @@ msgstr ""
 #: src/menubar.cpp:271 src/toolbardelegate.cpp:47
 #, kde-format
 msgid "New Window"
-msgstr ""
+msgstr "Nouvelle Fenêtre"
 
 #: src/menubar.cpp:272
 #, kde-format
@@ -263,12 +265,12 @@ msgstr ""
 #: src/menubar.cpp:282
 #, kde-format
 msgid "Move To Trash"
-msgstr ""
+msgstr "Déplacer dans la corbeille"
 
 #: src/menubar.cpp:285
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "Éditer"
 
 #: src/menubar.cpp:288
 #, kde-format
@@ -278,17 +280,17 @@ msgstr ""
 #: src/menubar.cpp:290
 #, kde-format
 msgid "Cut"
-msgstr ""
+msgstr "Couper"
 
 #: src/menubar.cpp:291
 #, kde-format
 msgid "Copy"
-msgstr ""
+msgstr "Copier"
 
 #: src/menubar.cpp:292
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "Coller"
 
 #: src/menubar.cpp:293
 #, kde-format
@@ -313,7 +315,7 @@ msgstr ""
 #: src/menubar.cpp:301
 #, kde-format
 msgid "as Columns"
-msgstr ""
+msgstr "sous forme de colonnes"
 
 #: src/menubar.cpp:303 src/menubar.cpp:347
 #, kde-format
@@ -358,17 +360,17 @@ msgstr ""
 #: src/menubar.cpp:316
 #, kde-format
 msgid "Containing Folder"
-msgstr ""
+msgstr "Ouvrir le dossier conteneur"
 
 #: src/menubar.cpp:323
 #, kde-format
 msgid "Bookmark Current Folder"
-msgstr ""
+msgstr "Ajouter aux signets"
 
 #: src/menubar.cpp:324
 #, kde-format
 msgid "Edit Bookmarks..."
-msgstr ""
+msgstr "Modifier les signets..."
 
 #: src/menubar.cpp:335
 #, kde-format
@@ -388,12 +390,12 @@ msgstr ""
 #: src/menubar.cpp:365
 #, kde-format
 msgid "Hide Toolbar"
-msgstr ""
+msgstr "Masquer la barre d'outils"
 
 #: src/menubar.cpp:375
 #, kde-format
 msgid "Finish Customising Toolbar"
-msgstr ""
+msgstr "Achever de personnaliser la barre d'outils"
 
 #: src/toolbardelegate.cpp:45
 #, kde-format
