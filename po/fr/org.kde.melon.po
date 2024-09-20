@@ -1,4 +1,3 @@
-#
 # SPDX-FileCopyrightText: 2024 Sylvain <sylvain.saboua@free.fr>
 msgid ""
 msgstr ""
