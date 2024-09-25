@@ -49,7 +49,7 @@ public:
 
 	SApp();
 	~SApp();
-	void start();
+	void activate(const QStringList &args, const QString &cwd);
 	Q_INVOKABLE void newWindow();
 	Q_INVOKABLE void newWindowAtUrl(const QUrl& url);
 	Q_INVOKABLE void ensureShown(const QUrl& url);

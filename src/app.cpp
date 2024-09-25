@@ -138,10 +138,21 @@ SApp::~SApp()
 	qWarning() << "self destruct";
 }
 
-void SApp::start()
+void SApp::activate(const QStringList &params, const QString &cwd)
 {
-	if (windows.isEmpty())
-		newWindow();
+	if (params.count() == 2) {
+		ensureShown(QUrl::fromLocalFile(cwd).resolved(QUrl::fromLocalFile(params[1])));
+	} else {
+		if (windows.isEmpty()) {
+			newWindow();
+		} else {
+			auto window = windows.first()->displayedIn()->windowHandle();
+			window->show();
+			KWindowSystem::updateStartupId(window);
+			window->raise();
+			KWindowSystem::activateWindow(window);
+		}
+	}
 }
 
 NGToolBarController* SApp::toolbarController() const
@@ -191,9 +202,11 @@ void SApp::newWindow()
 	windowComponent->completeCreate();
 
 	closeWindow->show();
+	KWindowSystem::updateStartupId(window->displayedIn()->windowHandle());
 
 	windows << window;
 	connect(window, &SWindow::closing, this, &SApp::windowClosing);
+	window->displayedIn()->windowHandle()->raise();
 	KWindowSystem::activateWindow(window->displayedIn()->windowHandle());
 }
 
@@ -205,15 +218,17 @@ void SApp::newWindowAtUrl(const QUrl& url)
 	auto closeWindow = new SCloseSignalWindow();
 	closeWindow->init(win);
 
-	auto window = new SWindow(url.adjusted(QUrl::RemoveFilename), closeWindow, engine.get());
+	auto window = new SWindow(url, closeWindow, engine.get());
 
 	closeWindow->show();
+	KWindowSystem::updateStartupId(window->displayedIn()->windowHandle());
 
 	windowComponent->setInitialProperties(win, {{u"window"_s, QVariant::fromValue(window)}});
 	windowComponent->completeCreate();
 
 	windows << window;
 	connect(window, &SWindow::closing, this, &SApp::windowClosing);
+	window->displayedIn()->windowHandle()->raise();
 	KWindowSystem::activateWindow(window->displayedIn()->windowHandle());
 }
 
@@ -231,6 +246,10 @@ void SApp::ensureShown(const QUrl& url)
 			if (doc->navigator()->currentLocationUrl() == url ||
 				doc->navigator()->currentLocationUrl().adjusted(QUrl::RemoveFilename) == url.adjusted(QUrl::RemoveFilename)) {
 
+				window->displayedIn()->windowHandle()->show();
+				KWindowSystem::updateStartupId(window->displayedIn()->windowHandle());
+
+				window->displayedIn()->windowHandle()->raise();
 				KWindowSystem::activateWindow(window->displayedIn()->windowHandle());
 				return;
 			}

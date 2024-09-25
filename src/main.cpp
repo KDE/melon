@@ -19,7 +19,9 @@ int main(int argc, char *argv[])
 		.translationDomain = "org.kde.melon",
 		.desktopFile = u"org.kde.Melon"_s,
 		.aboutData = KAboutData(),
-		.initialisedCallback = [] { sApp->start(); },
+		.activatedCallback = [] (const QStringList &params, const QString &cwd) {
+			sApp->activate(params, cwd);
+		}
 	};
 	return NGAppMain(&argc, &argv, appData);
 }
