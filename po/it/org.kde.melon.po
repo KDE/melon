@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: melon\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 02:10+0000\n"
+"POT-Creation-Date: 2024-09-28 01:50+0000\n"
 "PO-Revision-Date: 2024-09-16 20:24+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -162,12 +162,12 @@ msgctxt "root folder"
 msgid "Computer"
 msgstr "Computer"
 
-#: src/app.cpp:342
+#: src/app.cpp:361
 #, kde-format
 msgid "Open In New Tab"
 msgstr "Apri in una nuova scheda"
 
-#: src/app.cpp:348
+#: src/app.cpp:367
 #, kde-format
 msgid "Open In New Window"
 msgstr "Apri in una nuova finestra"

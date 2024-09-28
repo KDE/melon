@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: melon\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 02:10+0000\n"
+"POT-Creation-Date: 2024-09-28 01:50+0000\n"
 "PO-Revision-Date: 2024-09-16 20:10+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -162,12 +162,12 @@ msgctxt "root folder"
 msgid "Computer"
 msgstr "Dator"
 
-#: src/app.cpp:342
+#: src/app.cpp:361
 #, kde-format
 msgid "Open In New Tab"
 msgstr "Öppna under ny flik"
 
-#: src/app.cpp:348
+#: src/app.cpp:367
 #, kde-format
 msgid "Open In New Window"
 msgstr "Öppna i nytt fönster"
