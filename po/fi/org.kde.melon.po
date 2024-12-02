@@ -1,0 +1,416 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the melon package.
+# SPDX-FileCopyrightText: 2024 Tommi Nieminen <translator@legisign.org>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: melon\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-09-28 01:50+0000\n"
+"PO-Revision-Date: 2024-10-17 11:07+0300\n"
+"Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
+"Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 23.08.5\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Tommi Nieminen"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "translator@legisign.org"
+
+#: data/AboutDialog.qml:14 src/menubar.cpp:252
+#, kde-format
+msgid "About Melon"
+msgstr "Tietoa Melonista"
+
+#: data/AboutDialog.qml:51 src/menubar.cpp:249
+#, kde-format
+msgid "Melon"
+msgstr "Melon"
+
+#: data/AboutDialog.qml:58
+#, kde-format
+msgid "Simple file manager"
+msgstr "Yksinkertainen tiedostonhallinta"
+
+#: data/AboutDialog.qml:64
+#, kde-format
+msgid "Melon Git Master Version"
+msgstr "Melonin Git-masterversio"
+
+#: data/AboutDialog.qml:72
+#, kde-format
+msgid "Copyright 2022 Janet Blackquill"
+msgstr "Tekijänoikeudet 2022 Janet Blackquill"
+
+#: data/AbstractFileView.qml:37
+#, kde-format
+msgid "Search through:"
+msgstr "Etsi:"
+
+# *** TARKISTA: Tämä voisi olla ”tältä tietokoneelta” tms., riippuu mihin yhdistyy
+#: data/AbstractFileView.qml:41
+#, kde-format
+msgid "This Computer"
+msgstr "Tämä tietokone"
+
+#: data/AbstractFileView.qml:46
+#, kde-format
+msgid "%1"
+msgstr "%1"
+
+#: data/AbstractFileView.qml:54
+#, kde-format
+msgid "Contents"
+msgstr "Sisältö"
+
+#: data/AbstractFileView.qml:59
+#, kde-format
+msgid "File Name"
+msgstr "Tiedostonimi"
+
+#: data/AbstractFileView.qml:67
+#, kde-format
+msgid "Save"
+msgstr "Tallenna"
+
+#: data/AbstractFileView.qml:89 data/SingleColumn.qml:54
+#, kde-format
+msgid "There are no objects in this directory"
+msgstr "Kansiossa ei ole kohteita"
+
+#: data/FileItemColumn.qml:77
+#, kde-format
+msgid "Name"
+msgstr "Nimi"
+
+#: data/FileItemColumn.qml:84
+#, kde-format
+msgid "Type"
+msgstr "Tyyppi"
+
+#: data/FileItemColumn.qml:90
+#, kde-format
+msgid "Size"
+msgstr "Koko"
+
+#: data/FileItemColumn.qml:96
+#, kde-format
+msgid "Created"
+msgstr "Luotu"
+
+#: data/FileItemColumn.qml:102
+#, kde-format
+msgid "Changed"
+msgstr "Muutettu"
+
+#: data/FileItemColumn.qml:108
+#, kde-format
+msgid "Last Opened"
+msgstr "Viimeksi avattu"
+
+#: data/FileItemColumn.qml:115
+#, kde-format
+msgid "More Information"
+msgstr "Lisätietoa"
+
+#: data/Window.qml:15
+#, kde-format
+msgid "%1 - Melon"
+msgstr "%1 – Melon"
+
+#: data/WindowToolBar.qml:40
+#, kde-format
+msgid "%1 File(s), %2 Folder(s), %3"
+msgstr "%1 tiedosto(a), %2 kansio(ta), %3"
+
+#: src/app.cpp:90
+#, kde-format
+msgctxt "user's downloads folder"
+msgid "Downloads"
+msgstr "Lataukset"
+
+#: src/app.cpp:94
+#, kde-format
+msgctxt "user's documents folder"
+msgid "Documents"
+msgstr "Tiedostot"
+
+#: src/app.cpp:98
+#, kde-format
+msgctxt "user's desktop folder"
+msgid "Desktop"
+msgstr "Työpöytä"
+
+#: src/app.cpp:102
+#, kde-format
+msgctxt "user's home folder"
+msgid "Home"
+msgstr "Koti"
+
+#: src/app.cpp:106
+#, kde-format
+msgctxt "root folder"
+msgid "Computer"
+msgstr "Tietokone"
+
+#: src/app.cpp:361
+#, kde-format
+msgid "Open In New Tab"
+msgstr "Avaa uuteen välilehteen"
+
+#: src/app.cpp:367
+#, kde-format
+msgid "Open In New Window"
+msgstr "Avaa uuteen ikkunaan"
+
+#: src/document.cpp:510 src/toolbardelegate.cpp:49
+#, kde-format
+msgid "Search"
+msgstr "Etsi"
+
+#: src/document.cpp:672 src/document.cpp:681
+#, kde-format
+msgctxt "<filename> copy"
+msgid "%1 copy"
+msgstr "%1 – kopio"
+
+#: src/document.cpp:717 src/document.cpp:726
+#, kde-format
+msgctxt "<filename> alias"
+msgid "%1 alias"
+msgstr "%1 – alias"
+
+#: src/document.cpp:770 src/menubar.cpp:277
+#, kde-format
+msgid "Get Info"
+msgstr "Nouda tiedot"
+
+#: src/document.cpp:925
+#, kde-format
+msgid "Search for %1 in %2"
+msgstr "Etsi ”%1” kohteesta %2"
+
+#: src/document.cpp:926
+#, kde-format
+msgid "Search for %1"
+msgstr "Etsi ”%1”"
+
+#: src/menubar.cpp:254
+#, kde-format
+msgid "Preferences"
+msgstr "Valinnat"
+
+#: src/menubar.cpp:256
+#, kde-format
+msgid "Empty Trash"
+msgstr "Tyhjennä roskakori"
+
+#: src/menubar.cpp:258
+#, kde-format
+msgid "Quit Melon"
+msgstr "Lopeta Melon"
+
+#: src/menubar.cpp:261
+#, kde-format
+msgid "File"
+msgstr "Tiedosto"
+
+#: src/menubar.cpp:271 src/toolbardelegate.cpp:47
+#, kde-format
+msgid "New Window"
+msgstr "Uusi ikkuna"
+
+#: src/menubar.cpp:272
+#, kde-format
+msgid "New Tab"
+msgstr "Uusi välilehti"
+
+#: src/menubar.cpp:273
+#, kde-format
+msgid "New File"
+msgstr "Uusi tiedosto"
+
+#: src/menubar.cpp:274
+#, kde-format
+msgid "Open"
+msgstr "Avaa"
+
+#: src/menubar.cpp:275
+#, kde-format
+msgid "Close Window"
+msgstr "Sulje ikkuna"
+
+#: src/menubar.cpp:278
+#, kde-format
+msgid "Rename"
+msgstr "Muuta nimeä"
+
+#: src/menubar.cpp:279
+#, kde-format
+msgid "Duplicate"
+msgstr "Monista"
+
+#: src/menubar.cpp:280
+#, kde-format
+msgid "Make Alias"
+msgstr "Tee alias"
+
+#: src/menubar.cpp:282
+#, kde-format
+msgid "Move To Trash"
+msgstr "Siirrä roskakoriin"
+
+#: src/menubar.cpp:285
+#, kde-format
+msgid "Edit"
+msgstr "Muokkaa"
+
+#: src/menubar.cpp:288
+#, kde-format
+msgid "Undo"
+msgstr "Kumoa"
+
+#: src/menubar.cpp:290
+#, kde-format
+msgid "Cut"
+msgstr "Leikkaa"
+
+#: src/menubar.cpp:291
+#, kde-format
+msgid "Copy"
+msgstr "Kopioi"
+
+#: src/menubar.cpp:292
+#, kde-format
+msgid "Paste"
+msgstr "Liitä"
+
+#: src/menubar.cpp:293
+#, kde-format
+msgid "Select All"
+msgstr "Valitse kaikki"
+
+#: src/menubar.cpp:296
+#, kde-format
+msgid "View"
+msgstr "Näkymä"
+
+#: src/menubar.cpp:299
+#, kde-format
+msgid "as Icons"
+msgstr "kuvakkeina"
+
+#: src/menubar.cpp:300
+#, kde-format
+msgid "as List"
+msgstr "luettelona"
+
+#: src/menubar.cpp:301
+#, kde-format
+msgid "as Columns"
+msgstr "sarakkeina"
+
+#: src/menubar.cpp:303 src/menubar.cpp:347
+#, kde-format
+msgid "Show Path Bar"
+msgstr "Näytä sijaintipolku"
+
+#: src/menubar.cpp:304 src/menubar.cpp:357
+#, kde-format
+msgid "Show Status Bar"
+msgstr "Näytä tilarivi"
+
+#: src/menubar.cpp:305 src/menubar.cpp:337
+#, kde-format
+msgid "Show Sidebar"
+msgstr "Näytä sivupaneeli"
+
+#: src/menubar.cpp:307 src/menubar.cpp:367
+#, kde-format
+msgid "Show Toolbar"
+msgstr "Näytä työkalurivi"
+
+#: src/menubar.cpp:308 src/menubar.cpp:377
+#, kde-format
+msgid "Customise Toolbar..."
+msgstr "Mukauta työkaluriviä…"
+
+#: src/menubar.cpp:311
+#, kde-format
+msgid "Go"
+msgstr "Siirry"
+
+#: src/menubar.cpp:314 src/toolbardelegate.cpp:43
+#, kde-format
+msgid "Back"
+msgstr "Takaisin"
+
+#: src/menubar.cpp:315 src/toolbardelegate.cpp:44
+#, kde-format
+msgid "Forward"
+msgstr "Eteenpäin"
+
+#: src/menubar.cpp:316
+#, kde-format
+msgid "Containing Folder"
+msgstr "Yläkansio"
+
+#: src/menubar.cpp:323
+#, kde-format
+msgid "Bookmark Current Folder"
+msgstr "Tee nykyisestä kansiosta kirjanmerkki"
+
+#: src/menubar.cpp:324
+#, kde-format
+msgid "Edit Bookmarks..."
+msgstr "Muokkaa kirjanmerkkejä…"
+
+#: src/menubar.cpp:335
+#, kde-format
+msgid "Hide Sidebar"
+msgstr "Piilota sivupaneeli"
+
+#: src/menubar.cpp:345
+#, kde-format
+msgid "Hide Path Bar"
+msgstr "Näytä sijaintipolku"
+
+#: src/menubar.cpp:355
+#, kde-format
+msgid "Hide Status Bar"
+msgstr "Piilota tilarivi"
+
+#: src/menubar.cpp:365
+#, kde-format
+msgid "Hide Toolbar"
+msgstr "Piilota työkalurivi"
+
+#: src/menubar.cpp:375
+#, kde-format
+msgid "Finish Customising Toolbar"
+msgstr "Viimeistele työkalurivin mukauttaminen"
+
+#: src/toolbardelegate.cpp:45
+#, kde-format
+msgid "Up"
+msgstr "Ylemmäs"
+
+#: src/toolbardelegate.cpp:46
+#, kde-format
+msgid "Expanding Spacer"
+msgstr "Laajeneva erotin"
+
+#: src/toolbardelegate.cpp:48
+#, kde-format
+msgid "Create New"
+msgstr "Luo uusi"
