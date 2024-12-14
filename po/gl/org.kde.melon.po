@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: melon\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-28 01:50+0000\n"
-"PO-Revision-Date: 2024-09-20 11:44+0200\n"
+"PO-Revision-Date: 2024-12-13 21:08+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -55,7 +55,7 @@ msgstr "© 2022 Janet Blackquill"
 #: data/AbstractFileView.qml:37
 #, kde-format
 msgid "Search through:"
-msgstr "Seleccionar mediante:"
+msgstr "Buscar mediante:"
 
 #: data/AbstractFileView.qml:41
 #, kde-format
