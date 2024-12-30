@@ -1,0 +1,414 @@
+# Sanskrit translations for melon package.
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the melon package.
+# Kali <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: melon\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-09-28 01:50+0000\n"
+"PO-Revision-Date: 2024-12-29 16:05+0530\n"
+"Last-Translator: Kali <EMAIL@ADDRESS>\n"
+"Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
+"Language: sa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "भवतः नामानि"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "भवतः ईमेलपत्राणि"
+
+#: data/AboutDialog.qml:14 src/menubar.cpp:252
+#, kde-format
+msgid "About Melon"
+msgstr "खरबूजस्य विषये"
+
+#: data/AboutDialog.qml:51 src/menubar.cpp:249
+#, kde-format
+msgid "Melon"
+msgstr "खरबूजा"
+
+#: data/AboutDialog.qml:58
+#, kde-format
+msgid "Simple file manager"
+msgstr "सरलः सञ्चिकाप्रबन्धकः"
+
+#: data/AboutDialog.qml:64
+#, kde-format
+msgid "Melon Git Master Version"
+msgstr "खरबूजा गिट मास्टर संस्करण"
+
+#: data/AboutDialog.qml:72
+#, kde-format
+msgid "Copyright 2022 Janet Blackquill"
+msgstr "प्रतिलिपि अधिकार २०२२ जेनेट् ब्लैकक्विल्"
+
+#: data/AbstractFileView.qml:37
+#, kde-format
+msgid "Search through:"
+msgstr "अन्वेषणं कुर्वन्तु:"
+
+#: data/AbstractFileView.qml:41
+#, kde-format
+msgid "This Computer"
+msgstr "एतत् कम्प्यूटरम्"
+
+#: data/AbstractFileView.qml:46
+#, kde-format
+msgid "%1"
+msgstr "%1"
+
+#: data/AbstractFileView.qml:54
+#, kde-format
+msgid "Contents"
+msgstr "विषयवस्तु"
+
+#: data/AbstractFileView.qml:59
+#, kde-format
+msgid "File Name"
+msgstr "सञ्चिकानाम"
+
+#: data/AbstractFileView.qml:67
+#, kde-format
+msgid "Save"
+msgstr "रक्ष्"
+
+#: data/AbstractFileView.qml:89 data/SingleColumn.qml:54
+#, kde-format
+msgid "There are no objects in this directory"
+msgstr "अस्मिन् निर्देशिकायां वस्तुनि नास्ति"
+
+#: data/FileItemColumn.qml:77
+#, kde-format
+msgid "Name"
+msgstr "नामः"
+
+#: data/FileItemColumn.qml:84
+#, kde-format
+msgid "Type"
+msgstr "प्रकारः"
+
+#: data/FileItemColumn.qml:90
+#, kde-format
+msgid "Size"
+msgstr "आकृति"
+
+#: data/FileItemColumn.qml:96
+#, kde-format
+msgid "Created"
+msgstr "निर्मितम्"
+
+#: data/FileItemColumn.qml:102
+#, kde-format
+msgid "Changed"
+msgstr "परिवर्तितः"
+
+#: data/FileItemColumn.qml:108
+#, kde-format
+msgid "Last Opened"
+msgstr "अन्तिमः उद्घाटितः"
+
+#: data/FileItemColumn.qml:115
+#, kde-format
+msgid "More Information"
+msgstr "अधिक जानकारी"
+
+#: data/Window.qml:15
+#, kde-format
+msgid "%1 - Melon"
+msgstr "%1 - खरबूजा"
+
+#: data/WindowToolBar.qml:40
+#, kde-format
+msgid "%1 File(s), %2 Folder(s), %3"
+msgstr "%1 सञ्चिका(s), %2 पुट(s), %3"
+
+#: src/app.cpp:90
+#, kde-format
+msgctxt "user's downloads folder"
+msgid "Downloads"
+msgstr "डाउनलोड्स्"
+
+#: src/app.cpp:94
+#, kde-format
+msgctxt "user's documents folder"
+msgid "Documents"
+msgstr "दस्तावेजाः"
+
+#: src/app.cpp:98
+#, kde-format
+msgctxt "user's desktop folder"
+msgid "Desktop"
+msgstr "डेस्कटॉप"
+
+#: src/app.cpp:102
+#, kde-format
+msgctxt "user's home folder"
+msgid "Home"
+msgstr "गृहम्‌"
+
+#: src/app.cpp:106
+#, kde-format
+msgctxt "root folder"
+msgid "Computer"
+msgstr "संगणक"
+
+#: src/app.cpp:361
+#, kde-format
+msgid "Open In New Tab"
+msgstr "Open In New Tab इति"
+
+#: src/app.cpp:367
+#, kde-format
+msgid "Open In New Window"
+msgstr "Open In New Window इति"
+
+#: src/document.cpp:510 src/toolbardelegate.cpp:49
+#, kde-format
+msgid "Search"
+msgstr "अन्वेषण"
+
+#: src/document.cpp:672 src/document.cpp:681
+#, kde-format
+msgctxt "<filename> copy"
+msgid "%1 copy"
+msgstr "%1 प्रतिलिपिः"
+
+#: src/document.cpp:717 src/document.cpp:726
+#, kde-format
+msgctxt "<filename> alias"
+msgid "%1 alias"
+msgstr "%1 उपनाम"
+
+#: src/document.cpp:770 src/menubar.cpp:277
+#, kde-format
+msgid "Get Info"
+msgstr "सूचना प्राप्त करें"
+
+#: src/document.cpp:925
+#, kde-format
+msgid "Search for %1 in %2"
+msgstr "%2 मध्ये %1 अन्वेष्टुम्"
+
+#: src/document.cpp:926
+#, kde-format
+msgid "Search for %1"
+msgstr "%1 इत्यस्य अन्वेषणं कुर्वन्तु"
+
+#: src/menubar.cpp:254
+#, kde-format
+msgid "Preferences"
+msgstr "प्राधान्यानि"
+
+#: src/menubar.cpp:256
+#, kde-format
+msgid "Empty Trash"
+msgstr "रिक्त कचरा"
+
+#: src/menubar.cpp:258
+#, kde-format
+msgid "Quit Melon"
+msgstr "खरबूजा त्यजतु"
+
+#: src/menubar.cpp:261
+#, kde-format
+msgid "File"
+msgstr "संचिका"
+
+#: src/menubar.cpp:271 src/toolbardelegate.cpp:47
+#, kde-format
+msgid "New Window"
+msgstr "नवीन विण्डो"
+
+#: src/menubar.cpp:272
+#, kde-format
+msgid "New Tab"
+msgstr "नवीन ट्याब्"
+
+#: src/menubar.cpp:273
+#, kde-format
+msgid "New File"
+msgstr "नवीन सञ्चिका"
+
+#: src/menubar.cpp:274
+#, kde-format
+msgid "Open"
+msgstr "उद्घाटित"
+
+#: src/menubar.cpp:275
+#, kde-format
+msgid "Close Window"
+msgstr "विण्डो बन्दं कुर्वन्तु"
+
+#: src/menubar.cpp:278
+#, kde-format
+msgid "Rename"
+msgstr "पुनर्नाम"
+
+#: src/menubar.cpp:279
+#, kde-format
+msgid "Duplicate"
+msgstr "डुप्लिकेट्"
+
+#: src/menubar.cpp:280
+#, kde-format
+msgid "Make Alias"
+msgstr "उपनामं कुरुत"
+
+#: src/menubar.cpp:282
+#, kde-format
+msgid "Move To Trash"
+msgstr "Move To Trash इति"
+
+#: src/menubar.cpp:285
+#, kde-format
+msgid "Edit"
+msgstr "सम्पादन"
+
+#: src/menubar.cpp:288
+#, kde-format
+msgid "Undo"
+msgstr "पूर्ववत"
+
+#: src/menubar.cpp:290
+#, kde-format
+msgid "Cut"
+msgstr "छिन्न"
+
+#: src/menubar.cpp:291
+#, kde-format
+msgid "Copy"
+msgstr "प्रतिलिपि"
+
+#: src/menubar.cpp:292
+#, kde-format
+msgid "Paste"
+msgstr "चिनोतु"
+
+#: src/menubar.cpp:293
+#, kde-format
+msgid "Select All"
+msgstr "सर्वं चिनोतु"
+
+#: src/menubar.cpp:296
+#, kde-format
+msgid "View"
+msgstr "दृश्यं"
+
+#: src/menubar.cpp:299
+#, kde-format
+msgid "as Icons"
+msgstr "यथा चिह्नम्"
+
+#: src/menubar.cpp:300
+#, kde-format
+msgid "as List"
+msgstr "as List इति"
+
+#: src/menubar.cpp:301
+#, kde-format
+msgid "as Columns"
+msgstr "स्तम्भ इति"
+
+#: src/menubar.cpp:303 src/menubar.cpp:347
+#, kde-format
+msgid "Show Path Bar"
+msgstr "पथपट्टिकां दर्शयतु"
+
+#: src/menubar.cpp:304 src/menubar.cpp:357
+#, kde-format
+msgid "Show Status Bar"
+msgstr "स्थितिपट्टिकां दर्शयतु"
+
+#: src/menubar.cpp:305 src/menubar.cpp:337
+#, kde-format
+msgid "Show Sidebar"
+msgstr "पार्श्वपट्टिकां दर्शयतु"
+
+#: src/menubar.cpp:307 src/menubar.cpp:367
+#, kde-format
+msgid "Show Toolbar"
+msgstr "Toolbar दर्शयतु"
+
+#: src/menubar.cpp:308 src/menubar.cpp:377
+#, kde-format
+msgid "Customise Toolbar..."
+msgstr "टूलबार अनुकूलितं कुर्वन्तु..."
+
+#: src/menubar.cpp:311
+#, kde-format
+msgid "Go"
+msgstr "गच्छ"
+
+#: src/menubar.cpp:314 src/toolbardelegate.cpp:43
+#, kde-format
+msgid "Back"
+msgstr "पृष्ठभागः"
+
+#: src/menubar.cpp:315 src/toolbardelegate.cpp:44
+#, kde-format
+msgid "Forward"
+msgstr "अग्रतः"
+
+#: src/menubar.cpp:316
+#, kde-format
+msgid "Containing Folder"
+msgstr "Containing Folder इति"
+
+#: src/menubar.cpp:323
+#, kde-format
+msgid "Bookmark Current Folder"
+msgstr "वर्तमान पुटं बुकमार्कं कुर्वन्तु"
+
+#: src/menubar.cpp:324
+#, kde-format
+msgid "Edit Bookmarks..."
+msgstr "बुकमार्क सम्पादयतु..."
+
+#: src/menubar.cpp:335
+#, kde-format
+msgid "Hide Sidebar"
+msgstr "पार्श्वपट्टिका गोपयतु"
+
+#: src/menubar.cpp:345
+#, kde-format
+msgid "Hide Path Bar"
+msgstr "पथपट्टिकां गोपयतु"
+
+#: src/menubar.cpp:355
+#, kde-format
+msgid "Hide Status Bar"
+msgstr "स्थितिपट्टिकां गोपयन्तु"
+
+#: src/menubar.cpp:365
+#, kde-format
+msgid "Hide Toolbar"
+msgstr "Toolbar गोपयन्तु"
+
+#: src/menubar.cpp:375
+#, kde-format
+msgid "Finish Customising Toolbar"
+msgstr "Customizing Toolbar समाप्तं कुर्वन्तु"
+
+#: src/toolbardelegate.cpp:45
+#, kde-format
+msgid "Up"
+msgstr "उपरि"
+
+#: src/toolbardelegate.cpp:46
+#, kde-format
+msgid "Expanding Spacer"
+msgstr "विस्तारयन् स्पेसर"
+
+#: src/toolbardelegate.cpp:48
+#, kde-format
+msgid "Create New"
+msgstr "New रचयतु"
