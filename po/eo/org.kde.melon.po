@@ -1,0 +1,416 @@
+# translation of org.kde.melon.pot to Esperanto
+# Copyright (C) 2024 Free Software Foundation, Inc.
+# This file is distributed under the same license as the melon package.
+# Oliver Kellogg <olivermkellogg@gmail.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: melon\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-09-28 01:50+0000\n"
+"PO-Revision-Date: 2024-12-31 11:42+0100\n"
+"Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
+"Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
+"Language: eo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: translate-po (https://github.com/zcribe/translate-po)\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Oliver Kellogg"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "olivermkellogg@gmail.com"
+
+#: data/AboutDialog.qml:14 src/menubar.cpp:252
+#, kde-format
+msgid "About Melon"
+msgstr "Pri Melon"
+
+#: data/AboutDialog.qml:51 src/menubar.cpp:249
+#, kde-format
+msgid "Melon"
+msgstr "Melon"
+
+#: data/AboutDialog.qml:58
+#, kde-format
+msgid "Simple file manager"
+msgstr "Simpla dosiermastrumilo"
+
+#: data/AboutDialog.qml:64
+#, kde-format
+msgid "Melon Git Master Version"
+msgstr "Melon Git Master-Versio"
+
+#: data/AboutDialog.qml:72
+#, kde-format
+msgid "Copyright 2022 Janet Blackquill"
+msgstr "Kopirajto 2022 Janet Blackquill"
+
+#: data/AbstractFileView.qml:37
+#, kde-format
+msgid "Search through:"
+msgstr "Serĉu tra:"
+
+#: data/AbstractFileView.qml:41
+#, kde-format
+msgid "This Computer"
+msgstr "Ĉi tiu Komputilo"
+
+#: data/AbstractFileView.qml:46
+#, kde-format
+msgid "%1"
+msgstr "%1"
+
+#: data/AbstractFileView.qml:54
+#, kde-format
+msgid "Contents"
+msgstr "Enhavo"
+
+#: data/AbstractFileView.qml:59
+#, kde-format
+msgid "File Name"
+msgstr "Dosiernomo"
+
+#: data/AbstractFileView.qml:67
+#, kde-format
+msgid "Save"
+msgstr "Konservi"
+
+#: data/AbstractFileView.qml:89 data/SingleColumn.qml:54
+#, kde-format
+msgid "There are no objects in this directory"
+msgstr "Ne estas objektoj en ĉi tiu dosierujo"
+
+#: data/FileItemColumn.qml:77
+#, kde-format
+msgid "Name"
+msgstr "Nomo"
+
+#: data/FileItemColumn.qml:84
+#, kde-format
+msgid "Type"
+msgstr "Tipo"
+
+#: data/FileItemColumn.qml:90
+#, kde-format
+msgid "Size"
+msgstr "Grandeco"
+
+#: data/FileItemColumn.qml:96
+#, kde-format
+msgid "Created"
+msgstr "Kreita"
+
+#: data/FileItemColumn.qml:102
+#, kde-format
+msgid "Changed"
+msgstr "Ŝanĝita"
+
+#: data/FileItemColumn.qml:108
+#, kde-format
+msgid "Last Opened"
+msgstr "Laste Malfermita"
+
+#: data/FileItemColumn.qml:115
+#, kde-format
+msgid "More Information"
+msgstr "Pliaj Informoj"
+
+#: data/Window.qml:15
+#, kde-format
+msgid "%1 - Melon"
+msgstr "%1 - Melon"
+
+#: data/WindowToolBar.qml:40
+#, kde-format
+msgid "%1 File(s), %2 Folder(s), %3"
+msgstr "%1 Dosiero(j), %2 Dosierujo(j), %3"
+
+#: src/app.cpp:90
+#, kde-format
+msgctxt "user's downloads folder"
+msgid "Downloads"
+msgstr "Elŝutoj"
+
+#: src/app.cpp:94
+#, kde-format
+msgctxt "user's documents folder"
+msgid "Documents"
+msgstr "Dokumentoj"
+
+#: src/app.cpp:98
+#, kde-format
+msgctxt "user's desktop folder"
+msgid "Desktop"
+msgstr "Labortablo"
+
+#: src/app.cpp:102
+#, kde-format
+msgctxt "user's home folder"
+msgid "Home"
+msgstr "Hejmo"
+
+#: src/app.cpp:106
+#, kde-format
+msgctxt "root folder"
+msgid "Computer"
+msgstr "Komputilo"
+
+#: src/app.cpp:361
+#, kde-format
+msgid "Open In New Tab"
+msgstr "Malfermi En Nova Langeto"
+
+#: src/app.cpp:367
+#, kde-format
+msgid "Open In New Window"
+msgstr "Malfermi En Nova Fenestro"
+
+#: src/document.cpp:510 src/toolbardelegate.cpp:49
+#, kde-format
+msgid "Search"
+msgstr "Serĉi"
+
+#: src/document.cpp:672 src/document.cpp:681
+#, kde-format
+msgctxt "<filename> copy"
+msgid "%1 copy"
+msgstr "%1 kopio"
+
+#: src/document.cpp:717 src/document.cpp:726
+#, kde-format
+msgctxt "<filename> alias"
+msgid "%1 alias"
+msgstr "%1 kaŝnomo"
+
+#: src/document.cpp:770 src/menubar.cpp:277
+#, kde-format
+msgid "Get Info"
+msgstr "Akiri Informojn"
+
+#: src/document.cpp:925
+#, kde-format
+msgid "Search for %1 in %2"
+msgstr "Serĉi %1 en %2"
+
+#: src/document.cpp:926
+#, kde-format
+msgid "Search for %1"
+msgstr "Serĉi %1"
+
+#: src/menubar.cpp:254
+#, kde-format
+msgid "Preferences"
+msgstr "Preferoj"
+
+#: src/menubar.cpp:256
+#, kde-format
+msgid "Empty Trash"
+msgstr "Malplenigi Rubujon"
+
+#: src/menubar.cpp:258
+#, kde-format
+msgid "Quit Melon"
+msgstr "Forlasi Melon"
+
+#: src/menubar.cpp:261
+#, kde-format
+msgid "File"
+msgstr "Dosiero"
+
+#: src/menubar.cpp:271 src/toolbardelegate.cpp:47
+#, kde-format
+msgid "New Window"
+msgstr "Nove Fenestro"
+
+#: src/menubar.cpp:272
+#, kde-format
+msgid "New Tab"
+msgstr "Nova Langeto"
+
+#: src/menubar.cpp:273
+#, kde-format
+msgid "New File"
+msgstr "Nova Dosiero"
+
+#: src/menubar.cpp:274
+#, kde-format
+msgid "Open"
+msgstr "Malfermi"
+
+#: src/menubar.cpp:275
+#, kde-format
+msgid "Close Window"
+msgstr "Fermi fenestron"
+
+#: src/menubar.cpp:278
+#, kde-format
+msgid "Rename"
+msgstr "Alinomi"
+
+#: src/menubar.cpp:279
+#, kde-format
+msgid "Duplicate"
+msgstr "Duobligi"
+
+#: src/menubar.cpp:280
+#, kde-format
+msgid "Make Alias"
+msgstr "Fari Kaŝnomon"
+
+#: src/menubar.cpp:282
+#, kde-format
+msgid "Move To Trash"
+msgstr "Movi al Rubujo"
+
+#: src/menubar.cpp:285
+#, kde-format
+msgid "Edit"
+msgstr "Redakti"
+
+#: src/menubar.cpp:288
+#, kde-format
+msgid "Undo"
+msgstr "Malfari"
+
+#: src/menubar.cpp:290
+#, kde-format
+msgid "Cut"
+msgstr "Tondi"
+
+#: src/menubar.cpp:291
+#, kde-format
+msgid "Copy"
+msgstr "Kopii"
+
+#: src/menubar.cpp:292
+#, kde-format
+msgid "Paste"
+msgstr "Alglui"
+
+#: src/menubar.cpp:293
+#, kde-format
+msgid "Select All"
+msgstr "Elekti Ĉion"
+
+#: src/menubar.cpp:296
+#, kde-format
+msgid "View"
+msgstr "Vido"
+
+#: src/menubar.cpp:299
+#, kde-format
+msgid "as Icons"
+msgstr "kiel Piktogramoj"
+
+#: src/menubar.cpp:300
+#, kde-format
+msgid "as List"
+msgstr "kiel Listo"
+
+#: src/menubar.cpp:301
+#, kde-format
+msgid "as Columns"
+msgstr "kiel Kolumnoj"
+
+#: src/menubar.cpp:303 src/menubar.cpp:347
+#, kde-format
+msgid "Show Path Bar"
+msgstr "Montri Vojobreton"
+
+#: src/menubar.cpp:304 src/menubar.cpp:357
+#, kde-format
+msgid "Show Status Bar"
+msgstr "Montri Statusan Breton"
+
+#: src/menubar.cpp:305 src/menubar.cpp:337
+#, kde-format
+msgid "Show Sidebar"
+msgstr "Montri Flankbreton"
+
+#: src/menubar.cpp:307 src/menubar.cpp:367
+#, kde-format
+msgid "Show Toolbar"
+msgstr "Montri Ilobreton"
+
+#: src/menubar.cpp:308 src/menubar.cpp:377
+#, kde-format
+msgid "Customise Toolbar..."
+msgstr "Agordi Ilobreton..."
+
+#: src/menubar.cpp:311
+#, kde-format
+msgid "Go"
+msgstr "Go"
+
+#: src/menubar.cpp:314 src/toolbardelegate.cpp:43
+#, kde-format
+msgid "Back"
+msgstr "Malantaŭen/Reen"
+
+#: src/menubar.cpp:315 src/toolbardelegate.cpp:44
+#, kde-format
+msgid "Forward"
+msgstr "Plusendi"
+
+#: src/menubar.cpp:316
+#, kde-format
+msgid "Containing Folder"
+msgstr "Enhavanta Dosierujo"
+
+#: src/menubar.cpp:323
+#, kde-format
+msgid "Bookmark Current Folder"
+msgstr "Legomarki Aktualan Dosierujon"
+
+#: src/menubar.cpp:324
+#, kde-format
+msgid "Edit Bookmarks..."
+msgstr "Redakti Legosignojn..."
+
+#: src/menubar.cpp:335
+#, kde-format
+msgid "Hide Sidebar"
+msgstr "Kaŝi Flankbreton"
+
+#: src/menubar.cpp:345
+#, kde-format
+msgid "Hide Path Bar"
+msgstr "Kaŝi Vojbreton"
+
+#: src/menubar.cpp:355
+#, kde-format
+msgid "Hide Status Bar"
+msgstr "Kaŝi Statusbreton"
+
+#: src/menubar.cpp:365
+#, kde-format
+msgid "Hide Toolbar"
+msgstr "Kaŝi Ilobreton"
+
+#: src/menubar.cpp:375
+#, kde-format
+msgid "Finish Customising Toolbar"
+msgstr "Fini Tajloradon de Ilobreto"
+
+#: src/toolbardelegate.cpp:45
+#, kde-format
+msgid "Up"
+msgstr "Supren"
+
+#: src/toolbardelegate.cpp:46
+#, kde-format
+msgid "Expanding Spacer"
+msgstr "Vastiĝanta Spacer"
+
+#: src/toolbardelegate.cpp:48
+#, kde-format
+msgid "Create New"
+msgstr "Krei Novan"
