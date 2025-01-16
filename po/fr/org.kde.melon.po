@@ -1,11 +1,11 @@
 # SPDX-FileCopyrightText: 2024 Sylvain <sylvain.saboua@free.fr>
-# SPDX-FileCopyrightText: 2024 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2024, 2025 Xavier Besnard <xavier.besnard@kde.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: melon\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-28 01:50+0000\n"
-"PO-Revision-Date: 2024-11-15 14:02+0100\n"
+"PO-Revision-Date: 2025-01-14 13:48+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -78,12 +78,12 @@ msgstr "Nom de fichier"
 #: data/AbstractFileView.qml:67
 #, kde-format
 msgid "Save"
-msgstr "Sauvegarder"
+msgstr "Enregistrer"
 
 #: data/AbstractFileView.qml:89 data/SingleColumn.qml:54
 #, kde-format
 msgid "There are no objects in this directory"
-msgstr "Il n'y a aucun objet dans ce répertoire"
+msgstr "Il n'y a aucun objet dans ce dossier"
 
 #: data/FileItemColumn.qml:77
 #, kde-format
@@ -335,7 +335,7 @@ msgstr "Afficher la barre latérale"
 #: src/menubar.cpp:307 src/menubar.cpp:367
 #, kde-format
 msgid "Show Toolbar"
-msgstr "Afficher la barre d’outils"
+msgstr "Afficher la barre d'outils"
 
 #: src/menubar.cpp:308 src/menubar.cpp:377
 #, kde-format
@@ -385,7 +385,7 @@ msgstr "Masquer la barre d'emplacement"
 #: src/menubar.cpp:355
 #, kde-format
 msgid "Hide Status Bar"
-msgstr "Masquer la barre d’état"
+msgstr "Masquer la barre d'état"
 
 #: src/menubar.cpp:365
 #, kde-format
@@ -405,7 +405,7 @@ msgstr "Vers le haut"
 #: src/toolbardelegate.cpp:46
 #, kde-format
 msgid "Expanding Spacer"
-msgstr "Espaceur extensible"
+msgstr "Séparateur extensible"
 
 #: src/toolbardelegate.cpp:48
 #, kde-format
