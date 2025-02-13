@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: melon\n"
+"Project-Id-Version: org.kde.melon\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-28 01:50+0000\n"
 "PO-Revision-Date: 2024-10-11 10:59+0200\n"
