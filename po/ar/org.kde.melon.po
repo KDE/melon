@@ -1,0 +1,416 @@
+# Copyright (C) 2025 This file is copyright:
+# This file is distributed under the same license as the melon package.
+# SPDX-FileCopyrightText: 2025 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: melon\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-09-28 01:50+0000\n"
+"PO-Revision-Date: 2025-05-16 16:41+0400\n"
+"Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
+"Language-Team: ar\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Lokalize 23.08.5\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "زايد السعيدي"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "zayed.alsaidi@gmail.com"
+
+#: data/AboutDialog.qml:14 src/menubar.cpp:252
+#, kde-format
+msgid "About Melon"
+msgstr "عن بطيخ"
+
+#: data/AboutDialog.qml:51 src/menubar.cpp:249
+#, kde-format
+msgid "Melon"
+msgstr "بطيخ"
+
+#: data/AboutDialog.qml:58
+#, kde-format
+msgid "Simple file manager"
+msgstr "مدير ملفات بسيط"
+
+#: data/AboutDialog.qml:64
+#, kde-format
+msgid "Melon Git Master Version"
+msgstr "إصدار بطيخة غيت الرئيسة"
+
+#: data/AboutDialog.qml:72
+#, kde-format
+msgid "Copyright 2022 Janet Blackquill"
+msgstr "حقوق الطبع والنشر 2022 جانيت بلاككيل"
+
+#: data/AbstractFileView.qml:37
+#, kde-format
+msgid "Search through:"
+msgstr "ابحث من خلال:"
+
+#: data/AbstractFileView.qml:41
+#, kde-format
+msgid "This Computer"
+msgstr "هذا الحاسوب"
+
+#: data/AbstractFileView.qml:46
+#, kde-format
+msgid "%1"
+msgstr "%1"
+
+#: data/AbstractFileView.qml:54
+#, kde-format
+msgid "Contents"
+msgstr "المحتويات"
+
+#: data/AbstractFileView.qml:59
+#, kde-format
+msgid "File Name"
+msgstr "اسم الملفّ"
+
+#: data/AbstractFileView.qml:67
+#, kde-format
+msgid "Save"
+msgstr "احفظ"
+
+#: data/AbstractFileView.qml:89 data/SingleColumn.qml:54
+#, kde-format
+msgid "There are no objects in this directory"
+msgstr "لا توجد كائنات في هذا الدليل"
+
+#: data/FileItemColumn.qml:77
+#, kde-format
+msgid "Name"
+msgstr "الاسم"
+
+#: data/FileItemColumn.qml:84
+#, kde-format
+msgid "Type"
+msgstr "النوع"
+
+#: data/FileItemColumn.qml:90
+#, kde-format
+msgid "Size"
+msgstr "الحجم"
+
+#: data/FileItemColumn.qml:96
+#, kde-format
+msgid "Created"
+msgstr "أُنشئ"
+
+#: data/FileItemColumn.qml:102
+#, kde-format
+msgid "Changed"
+msgstr "مُغير"
+
+#: data/FileItemColumn.qml:108
+#, kde-format
+msgid "Last Opened"
+msgstr "آخر فتح"
+
+#: data/FileItemColumn.qml:115
+#, kde-format
+msgid "More Information"
+msgstr "معلومات أخرى"
+
+#: data/Window.qml:15
+#, kde-format
+msgid "%1 - Melon"
+msgstr "%1 - بطيخ"
+
+#: data/WindowToolBar.qml:40
+#, kde-format
+msgid "%1 File(s), %2 Folder(s), %3"
+msgstr "%1 ملف (ملفات)، %2 مجلد (مجلدات)، %3"
+
+#: src/app.cpp:90
+#, kde-format
+msgctxt "user's downloads folder"
+msgid "Downloads"
+msgstr "التنزيلات"
+
+#: src/app.cpp:94
+#, kde-format
+msgctxt "user's documents folder"
+msgid "Documents"
+msgstr "المستندات"
+
+#: src/app.cpp:98
+#, kde-format
+msgctxt "user's desktop folder"
+msgid "Desktop"
+msgstr "سطح المكتب"
+
+#: src/app.cpp:102
+#, kde-format
+msgctxt "user's home folder"
+msgid "Home"
+msgstr "المنزل"
+
+#: src/app.cpp:106
+#, kde-format
+msgctxt "root folder"
+msgid "Computer"
+msgstr "الحاسوب"
+
+#: src/app.cpp:361
+#, kde-format
+msgid "Open In New Tab"
+msgstr "افتح في لسان جديد"
+
+#: src/app.cpp:367
+#, kde-format
+msgid "Open In New Window"
+msgstr "افتح في نافذة جديدة"
+
+#: src/document.cpp:510 src/toolbardelegate.cpp:49
+#, kde-format
+msgid "Search"
+msgstr "ابحث"
+
+#: src/document.cpp:672 src/document.cpp:681
+#, kde-format
+msgctxt "<filename> copy"
+msgid "%1 copy"
+msgstr "%1 نسخة"
+
+#: src/document.cpp:717 src/document.cpp:726
+#, kde-format
+msgctxt "<filename> alias"
+msgid "%1 alias"
+msgstr "%1 كنية"
+
+#: src/document.cpp:770 src/menubar.cpp:277
+#, kde-format
+msgid "Get Info"
+msgstr "احصل على معلومات"
+
+#: src/document.cpp:925
+#, kde-format
+msgid "Search for %1 in %2"
+msgstr "ابحث عن %1 في %2"
+
+#: src/document.cpp:926
+#, kde-format
+msgid "Search for %1"
+msgstr "ابحث عن %1"
+
+#: src/menubar.cpp:254
+#, kde-format
+msgid "Preferences"
+msgstr "تفضيلات"
+
+#: src/menubar.cpp:256
+#, kde-format
+msgid "Empty Trash"
+msgstr "أفرغ المهملات"
+
+#: src/menubar.cpp:258
+#, kde-format
+msgid "Quit Melon"
+msgstr "أنهِ بطيخ"
+
+#: src/menubar.cpp:261
+#, kde-format
+msgid "File"
+msgstr "ملف"
+
+#: src/menubar.cpp:271 src/toolbardelegate.cpp:47
+#, kde-format
+msgid "New Window"
+msgstr "نافذة جديدة"
+
+#: src/menubar.cpp:272
+#, kde-format
+msgid "New Tab"
+msgstr "لسان جديد"
+
+#: src/menubar.cpp:273
+#, kde-format
+msgid "New File"
+msgstr "ملفّ جديد"
+
+#: src/menubar.cpp:274
+#, kde-format
+msgid "Open"
+msgstr "افتح"
+
+#: src/menubar.cpp:275
+#, kde-format
+msgid "Close Window"
+msgstr "أغلق النافذة"
+
+#: src/menubar.cpp:278
+#, kde-format
+msgid "Rename"
+msgstr "غيّر الاسم"
+
+#: src/menubar.cpp:279
+#, kde-format
+msgid "Duplicate"
+msgstr "كرّر"
+
+#: src/menubar.cpp:280
+#, kde-format
+msgid "Make Alias"
+msgstr "أنشئ كنية"
+
+#: src/menubar.cpp:282
+#, kde-format
+msgid "Move To Trash"
+msgstr "انقل إلى المهملات"
+
+#: src/menubar.cpp:285
+#, kde-format
+msgid "Edit"
+msgstr "حرّر"
+
+#: src/menubar.cpp:288
+#, kde-format
+msgid "Undo"
+msgstr "تراجع"
+
+#: src/menubar.cpp:290
+#, kde-format
+msgid "Cut"
+msgstr "قصّ"
+
+#: src/menubar.cpp:291
+#, kde-format
+msgid "Copy"
+msgstr "انسخ"
+
+#: src/menubar.cpp:292
+#, kde-format
+msgid "Paste"
+msgstr "ألصق"
+
+#: src/menubar.cpp:293
+#, kde-format
+msgid "Select All"
+msgstr "حدّد الكلّ"
+
+#: src/menubar.cpp:296
+#, kde-format
+msgid "View"
+msgstr "اعرض"
+
+#: src/menubar.cpp:299
+#, kde-format
+msgid "as Icons"
+msgstr "كأيقونات"
+
+#: src/menubar.cpp:300
+#, kde-format
+msgid "as List"
+msgstr "كقائمة"
+
+#: src/menubar.cpp:301
+#, kde-format
+msgid "as Columns"
+msgstr "كأعمدة"
+
+#: src/menubar.cpp:303 src/menubar.cpp:347
+#, kde-format
+msgid "Show Path Bar"
+msgstr "أظهر شريط المسار"
+
+#: src/menubar.cpp:304 src/menubar.cpp:357
+#, kde-format
+msgid "Show Status Bar"
+msgstr "اعرض شريط الحالة"
+
+#: src/menubar.cpp:305 src/menubar.cpp:337
+#, kde-format
+msgid "Show Sidebar"
+msgstr "أظهر الشريط الجانبي"
+
+#: src/menubar.cpp:307 src/menubar.cpp:367
+#, kde-format
+msgid "Show Toolbar"
+msgstr "اعرض شريط الأدوات"
+
+#: src/menubar.cpp:308 src/menubar.cpp:377
+#, kde-format
+msgid "Customise Toolbar..."
+msgstr "خصص شريط الأدوات…"
+
+#: src/menubar.cpp:311
+#, kde-format
+msgid "Go"
+msgstr "انتقل"
+
+#: src/menubar.cpp:314 src/toolbardelegate.cpp:43
+#, kde-format
+msgid "Back"
+msgstr "عُد"
+
+#: src/menubar.cpp:315 src/toolbardelegate.cpp:44
+#, kde-format
+msgid "Forward"
+msgstr "تقدّم"
+
+#: src/menubar.cpp:316
+#, kde-format
+msgid "Containing Folder"
+msgstr "المجلد الحاوي"
+
+#: src/menubar.cpp:323
+#, kde-format
+msgid "Bookmark Current Folder"
+msgstr "علّم المجلد الحاليّ"
+
+#: src/menubar.cpp:324
+#, kde-format
+msgid "Edit Bookmarks..."
+msgstr "حرّر العلامات"
+
+#: src/menubar.cpp:335
+#, kde-format
+msgid "Hide Sidebar"
+msgstr "أخفِ الشّريط الجانبيّ"
+
+#: src/menubar.cpp:345
+#, kde-format
+msgid "Hide Path Bar"
+msgstr "أخفِ شريط المسار"
+
+#: src/menubar.cpp:355
+#, kde-format
+msgid "Hide Status Bar"
+msgstr "أخف شريط الحالة"
+
+#: src/menubar.cpp:365
+#, kde-format
+msgid "Hide Toolbar"
+msgstr "أخفِ شريط الأدوات"
+
+#: src/menubar.cpp:375
+#, kde-format
+msgid "Finish Customising Toolbar"
+msgstr "أنهِ تخصيص شريط الأدوات"
+
+#: src/toolbardelegate.cpp:45
+#, kde-format
+msgid "Up"
+msgstr "=أعلى"
+
+#: src/toolbardelegate.cpp:46
+#, kde-format
+msgid "Expanding Spacer"
+msgstr "فراغ موسع"
+
+#: src/toolbardelegate.cpp:48
+#, kde-format
+msgid "Create New"
+msgstr "أنشئ جديدًا"
