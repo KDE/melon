@@ -1,418 +1,416 @@
-# Translation for org.kde.melon.po to Euskara/Basque (eu).
-# Copyright (C) 2024 This file is copyright:
+# Lithuanian translations for melon package.
+# Copyright (C) 2025 This file is copyright:
 # This file is distributed under the same license as the melon package.
-# SPDX-FileCopyrightText: 2025 KDE euskaratzeko proiektuaren arduraduna <xalba@ni.eus>
+# Automatically generated, 2025.
 #
-# Translators:
-# SPDX-FileCopyrightText: 2024 Iñigo Salvador Azurmendi <xalba@ni.eus>
 msgid ""
 msgstr ""
 "Project-Id-Version: melon\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-28 01:50+0000\n"
-"PO-Revision-Date: 2025-09-02 00:24+0200\n"
-"Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
-"Language-Team: Basque <kde-i18n-eu@kde.org>\n"
-"Language: eu\n"
+"PO-Revision-Date: 2024-09-28 01:50+0000\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 25.08.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Iñigo Salvador Azurmendi"
+msgstr ""
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "xalba@ni.eus"
+msgstr ""
 
 #: data/AboutDialog.qml:14 src/menubar.cpp:252
 #, kde-format
 msgid "About Melon"
-msgstr "Molon-i buruz"
+msgstr ""
 
 #: data/AboutDialog.qml:51 src/menubar.cpp:249
 #, kde-format
 msgid "Melon"
-msgstr "Melon"
+msgstr ""
 
 #: data/AboutDialog.qml:58
 #, kde-format
 msgid "Simple file manager"
-msgstr "Fitxategi-kudeatze soila"
+msgstr ""
 
 #: data/AboutDialog.qml:64
 #, kde-format
 msgid "Melon Git Master Version"
-msgstr "Melon-en Git Master bertsioa"
+msgstr ""
 
 #: data/AboutDialog.qml:72
 #, kde-format
 msgid "Copyright 2022 Janet Blackquill"
-msgstr "Copyright 2022 Janet Blackquill"
+msgstr ""
 
 #: data/AbstractFileView.qml:37
 #, kde-format
 msgid "Search through:"
-msgstr "Bilatu hemendik:"
+msgstr ""
 
 #: data/AbstractFileView.qml:41
 #, kde-format
 msgid "This Computer"
-msgstr "Ordenagailu honetan"
+msgstr ""
 
 #: data/AbstractFileView.qml:46
 #, kde-format
 msgid "%1"
-msgstr "%1"
+msgstr ""
 
 #: data/AbstractFileView.qml:54
 #, kde-format
 msgid "Contents"
-msgstr "Edukia"
+msgstr ""
 
 #: data/AbstractFileView.qml:59
 #, kde-format
 msgid "File Name"
-msgstr "Fitxategi-izena"
+msgstr ""
 
 #: data/AbstractFileView.qml:67
 #, kde-format
 msgid "Save"
-msgstr "Gorde"
+msgstr ""
 
 #: data/AbstractFileView.qml:89 data/SingleColumn.qml:54
 #, kde-format
 msgid "There are no objects in this directory"
-msgstr "Direktorio honetan ez dago objekturik"
+msgstr ""
 
 #: data/FileItemColumn.qml:77
 #, kde-format
 msgid "Name"
-msgstr "Izena"
+msgstr ""
 
 #: data/FileItemColumn.qml:84
 #, kde-format
 msgid "Type"
-msgstr "Mota"
+msgstr ""
 
 #: data/FileItemColumn.qml:90
 #, kde-format
 msgid "Size"
-msgstr "Neurria"
+msgstr ""
 
 #: data/FileItemColumn.qml:96
 #, kde-format
 msgid "Created"
-msgstr "Sorrera"
+msgstr ""
 
 #: data/FileItemColumn.qml:102
 #, kde-format
 msgid "Changed"
-msgstr "Aldatua"
+msgstr ""
 
 #: data/FileItemColumn.qml:108
 #, kde-format
 msgid "Last Opened"
-msgstr "Azken irekitzea"
+msgstr ""
 
 #: data/FileItemColumn.qml:115
 #, kde-format
 msgid "More Information"
-msgstr "Informazio gehiago"
+msgstr ""
 
 #: data/Window.qml:15
 #, kde-format
 msgid "%1 - Melon"
-msgstr "%1 - Melon"
+msgstr ""
 
 #: data/WindowToolBar.qml:40
 #, kde-format
 msgid "%1 File(s), %2 Folder(s), %3"
-msgstr "%1 Fitxategi, %2 Karpeta, %3"
+msgstr ""
 
 #: src/app.cpp:90
 #, kde-format
 msgctxt "user's downloads folder"
 msgid "Downloads"
-msgstr "Zama-jaitsitakoak"
+msgstr ""
 
 #: src/app.cpp:94
 #, kde-format
 msgctxt "user's documents folder"
 msgid "Documents"
-msgstr "Dokumentuak"
+msgstr ""
 
 #: src/app.cpp:98
 #, kde-format
 msgctxt "user's desktop folder"
 msgid "Desktop"
-msgstr "Mahaigaina"
+msgstr ""
 
 #: src/app.cpp:102
 #, kde-format
 msgctxt "user's home folder"
 msgid "Home"
-msgstr "Etxea"
+msgstr ""
 
 #: src/app.cpp:106
 #, kde-format
 msgctxt "root folder"
 msgid "Computer"
-msgstr "Ordenagailua"
+msgstr ""
 
 #: src/app.cpp:361
 #, kde-format
 msgid "Open In New Tab"
-msgstr "Ireki fitxa berrian"
+msgstr ""
 
 #: src/app.cpp:367
 #, kde-format
 msgid "Open In New Window"
-msgstr "Ireki leiho berrian"
+msgstr ""
 
 #: src/document.cpp:510 src/toolbardelegate.cpp:49
 #, kde-format
 msgid "Search"
-msgstr "Bilatu"
+msgstr ""
 
 #: src/document.cpp:672 src/document.cpp:681
 #, kde-format
 msgctxt "<filename> copy"
 msgid "%1 copy"
-msgstr "%1 kopiatu"
+msgstr ""
 
 #: src/document.cpp:717 src/document.cpp:726
 #, kde-format
 msgctxt "<filename> alias"
 msgid "%1 alias"
-msgstr "%1 ezizena"
+msgstr ""
 
 #: src/document.cpp:770 src/menubar.cpp:277
 #, kde-format
 msgid "Get Info"
-msgstr "Lortu informazioa"
+msgstr ""
 
 #: src/document.cpp:925
 #, kde-format
 msgid "Search for %1 in %2"
-msgstr "Bilatu %1 %2(e)n"
+msgstr ""
 
 #: src/document.cpp:926
 #, kde-format
 msgid "Search for %1"
-msgstr "Bilatu %1"
+msgstr ""
 
 #: src/menubar.cpp:254
 #, kde-format
 msgid "Preferences"
-msgstr "Hobespenak"
+msgstr ""
 
 #: src/menubar.cpp:256
 #, kde-format
 msgid "Empty Trash"
-msgstr "Hustu zakarrontzia"
+msgstr ""
 
 #: src/menubar.cpp:258
 #, kde-format
 msgid "Quit Melon"
-msgstr "Irten Melon-etik"
+msgstr ""
 
 #: src/menubar.cpp:261
 #, kde-format
 msgid "File"
-msgstr "Fitxategia"
+msgstr ""
 
 #: src/menubar.cpp:271 src/toolbardelegate.cpp:47
 #, kde-format
 msgid "New Window"
-msgstr "Leiho berria"
+msgstr ""
 
 #: src/menubar.cpp:272
 #, kde-format
 msgid "New Tab"
-msgstr "Fitxa berria"
+msgstr ""
 
 #: src/menubar.cpp:273
 #, kde-format
 msgid "New File"
-msgstr "Fitxategi berria"
+msgstr ""
 
 #: src/menubar.cpp:274
 #, kde-format
 msgid "Open"
-msgstr "Ireki"
+msgstr ""
 
 #: src/menubar.cpp:275
 #, kde-format
 msgid "Close Window"
-msgstr "Itxi leihoa"
+msgstr ""
 
 #: src/menubar.cpp:278
 #, kde-format
 msgid "Rename"
-msgstr "Berrizendatu"
+msgstr ""
 
 #: src/menubar.cpp:279
 #, kde-format
 msgid "Duplicate"
-msgstr "Bikoiztu"
+msgstr ""
 
 #: src/menubar.cpp:280
 #, kde-format
 msgid "Make Alias"
-msgstr "Sortu ezizena"
+msgstr ""
 
 #: src/menubar.cpp:282
 #, kde-format
 msgid "Move To Trash"
-msgstr "Eraman zakarrontzira"
+msgstr ""
 
 #: src/menubar.cpp:285
 #, kde-format
 msgid "Edit"
-msgstr "Editatu"
+msgstr ""
 
 #: src/menubar.cpp:288
 #, kde-format
 msgid "Undo"
-msgstr "Desegin"
+msgstr ""
 
 #: src/menubar.cpp:290
 #, kde-format
 msgid "Cut"
-msgstr "Ebaki"
+msgstr ""
 
 #: src/menubar.cpp:291
 #, kde-format
 msgid "Copy"
-msgstr "Kopiatu"
+msgstr ""
 
 #: src/menubar.cpp:292
 #, kde-format
 msgid "Paste"
-msgstr "Itsatsi"
+msgstr ""
 
 #: src/menubar.cpp:293
 #, kde-format
 msgid "Select All"
-msgstr "Hautatu dena"
+msgstr ""
 
 #: src/menubar.cpp:296
 #, kde-format
 msgid "View"
-msgstr "Ikuspegia"
+msgstr ""
 
 #: src/menubar.cpp:299
 #, kde-format
 msgid "as Icons"
-msgstr "Ikono gisa"
+msgstr ""
 
 #: src/menubar.cpp:300
 #, kde-format
 msgid "as List"
-msgstr "Zerrenda gisa"
+msgstr ""
 
 #: src/menubar.cpp:301
 #, kde-format
 msgid "as Columns"
-msgstr "Zutabe gisa"
+msgstr ""
 
 #: src/menubar.cpp:303 src/menubar.cpp:347
 #, kde-format
 msgid "Show Path Bar"
-msgstr "Erakutsi bide-izen barra"
+msgstr ""
 
 #: src/menubar.cpp:304 src/menubar.cpp:357
 #, kde-format
 msgid "Show Status Bar"
-msgstr "Erakutsi egoera-barra"
+msgstr ""
 
 #: src/menubar.cpp:305 src/menubar.cpp:337
 #, kde-format
 msgid "Show Sidebar"
-msgstr "Erakutsi Alboko-barra"
+msgstr ""
 
 #: src/menubar.cpp:307 src/menubar.cpp:367
 #, kde-format
 msgid "Show Toolbar"
-msgstr "Erakutsi tresna-barra"
+msgstr ""
 
 #: src/menubar.cpp:308 src/menubar.cpp:377
 #, kde-format
 msgid "Customise Toolbar..."
-msgstr "Tresna-barra neurrira ipini..."
+msgstr ""
 
 #: src/menubar.cpp:311
 #, kde-format
 msgid "Go"
-msgstr "Joan"
+msgstr ""
 
 #: src/menubar.cpp:314 src/toolbardelegate.cpp:43
 #, kde-format
 msgid "Back"
-msgstr "Atzera"
+msgstr ""
 
 #: src/menubar.cpp:315 src/toolbardelegate.cpp:44
 #, kde-format
 msgid "Forward"
-msgstr "Aurrera"
+msgstr ""
 
 #: src/menubar.cpp:316
 #, kde-format
 msgid "Containing Folder"
-msgstr "Hau barruan duen karpeta"
+msgstr ""
 
 #: src/menubar.cpp:323
 #, kde-format
 msgid "Bookmark Current Folder"
-msgstr "Egin uneko karpeta laster-marka"
+msgstr ""
 
 #: src/menubar.cpp:324
 #, kde-format
 msgid "Edit Bookmarks..."
-msgstr "Editatu laster-markak..."
+msgstr ""
 
 #: src/menubar.cpp:335
 #, kde-format
 msgid "Hide Sidebar"
-msgstr "Ezkutatu alboko barra"
+msgstr ""
 
 #: src/menubar.cpp:345
 #, kde-format
 msgid "Hide Path Bar"
-msgstr "Ezkutatu bide-izen barra"
+msgstr ""
 
 #: src/menubar.cpp:355
 #, kde-format
 msgid "Hide Status Bar"
-msgstr "Ezkutatu egoera-barra"
+msgstr ""
 
 #: src/menubar.cpp:365
 #, kde-format
 msgid "Hide Toolbar"
-msgstr "Ezkutatu Tresna-barra"
+msgstr ""
 
 #: src/menubar.cpp:375
 #, kde-format
 msgid "Finish Customising Toolbar"
-msgstr "Bukatu Tresna-barra neurrira ipintzen"
+msgstr ""
 
 #: src/toolbardelegate.cpp:45
 #, kde-format
 msgid "Up"
-msgstr "Gora"
+msgstr ""
 
 #: src/toolbardelegate.cpp:46
 #, kde-format
 msgid "Expanding Spacer"
-msgstr "Bereizle zabalgarria"
+msgstr ""
 
 #: src/toolbardelegate.cpp:48
 #, kde-format
 msgid "Create New"
-msgstr "Sortu berria"
+msgstr ""
