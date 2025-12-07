@@ -1,77 +1,84 @@
 {
-   "command": "org.kde.Melon",
-   "desktop-file-name-suffix": " (Nightly)",
-   "tags": ["nightly"],
-    "finish-args": [
-      "--device=dri",
-      "--share=ipc",
-      "--share=network",
-      "--socket=fallback-x11",
-      "--socket=wayland",
-      "--socket=pulseaudio",
-      "--filesystem=host",
-      "--talk-name=org.freedesktop.Flatpak",
-      "--talk-name=org.kde.kded6",
-      "--talk-name=org.kde.kiod6",
-      "--talk-name=org.kde.JobViewServer",
-      "--talk-name=org.kde.kpasswdserver",
-      "--system-talk-name=org.freedesktop.UDisks2"
+    "command": "org.kde.Melon",
+    "desktop-file-name-suffix": " (Nightly)",
+    "tags": [
+        "nightly"
     ],
-   "id": "org.kde.Melon",
-   "modules": [
-      {
-         "buildsystem": "cmake-ninja",
-         "name": "nongurigaeru",
-         "sources": [
-            {
-               "type": "git",
-               "url": "https://invent.kde.org/libraries/nongurigaeru.git"
-            }
-         ]
-      },
-      {
-          "name": "lmdb",
-          "sources": [
-              {
-                  "type": "git",
-                  "url": "https://github.com/LMDB/lmdb.git",
-                  "tag": "LMDB_0.9.29",
-                  "x-checker-data": {
-                      "type": "git",
-                      "tag-pattern": "^LMDB_([\\d.]+)$"
-                  },
-                  "commit": "8ad7be2510414b9506ec9f9e24f24d04d9b04a1a"
-              }
-          ],
-          "no-autogen": true,
-          "make-install-args": ["prefix=/app"],
-          "subdir" : "libraries/liblmdb"
-      },
-      {
-          "config-opts": ["-DENABLE_TESTING=OFF", "-DLMDB_DIR=/app"],
-          "name": "baloo",
-          "buildsystem": "cmake-ninja",
-          "builddir": true,
-          "sources": [
-              {
-                  "type": "git",
-                  "url": "https://invent.kde.org/frameworks/baloo.git",
-                  "tag": "v6.4.0"
-              }
-          ]
-      },
-      {
-         "buildsystem": "cmake-ninja",
-         "name": "melon",
-         "sources": [
-            {
-               "type": "git",
-               "url": "https://invent.kde.org/system/melon.git"
-            }
-         ]
-      }
-   ],
-   "runtime": "org.kde.Platform",
-   "runtime-version": "6.7",
-   "sdk": "org.kde.Sdk"
+    "finish-args": [
+        "--device=dri",
+        "--share=ipc",
+        "--share=network",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--socket=pulseaudio",
+        "--filesystem=host",
+        "--talk-name=org.freedesktop.Flatpak",
+        "--talk-name=org.kde.kded6",
+        "--talk-name=org.kde.kiod6",
+        "--talk-name=org.kde.JobViewServer",
+        "--talk-name=org.kde.kpasswdserver",
+        "--system-talk-name=org.freedesktop.UDisks2"
+    ],
+    "id": "org.kde.Melon",
+    "modules": [
+        {
+            "buildsystem": "cmake-ninja",
+            "name": "nongurigaeru",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://invent.kde.org/libraries/nongurigaeru.git"
+                }
+            ]
+        },
+        {
+            "name": "lmdb",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/LMDB/lmdb.git",
+                    "tag": "LMDB_0.9.31",
+                    "x-checker-data": {
+                        "type": "git",
+                        "tag-pattern": "^LMDB_([\\d.]+)$"
+                    },
+                    "commit": "ce201088de95d26fc0da36ba805bf2ddc2ba74ff"
+                }
+            ],
+            "no-autogen": true,
+            "make-install-args": [
+                "prefix=/app"
+            ],
+            "subdir": "libraries/liblmdb"
+        },
+        {
+            "config-opts": [
+                "-DENABLE_TESTING=OFF",
+                "-DLMDB_DIR=/app"
+            ],
+            "name": "baloo",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://invent.kde.org/frameworks/baloo.git",
+                    "tag": "v6.4.0"
+                }
+            ]
+        },
+        {
+            "buildsystem": "cmake-ninja",
+            "name": "melon",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://invent.kde.org/system/melon.git"
+                }
+            ]
+        }
+    ],
+    "runtime": "org.kde.Platform",
+    "runtime-version": "6.7",
+    "sdk": "org.kde.Sdk"
 }
