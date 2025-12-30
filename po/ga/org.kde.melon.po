@@ -1,0 +1,415 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the melon package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: melon\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2025-11-17 11:55+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <kde-i18n-doc@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: data/AboutDialog.qml:14 src/menubar.cpp:252
+#, kde-format
+msgid "About Melon"
+msgstr ""
+
+#: data/AboutDialog.qml:51 src/menubar.cpp:249
+#, kde-format
+msgid "Melon"
+msgstr ""
+
+#: data/AboutDialog.qml:58
+#, kde-format
+msgid "Simple file manager"
+msgstr ""
+
+#: data/AboutDialog.qml:64
+#, kde-format
+msgid "Melon Git Master Version"
+msgstr ""
+
+#: data/AboutDialog.qml:72
+#, kde-format
+msgid "Copyright 2022 Janet Blackquill"
+msgstr ""
+
+#: data/AbstractFileView.qml:37
+#, kde-format
+msgid "Search through:"
+msgstr ""
+
+#: data/AbstractFileView.qml:41
+#, kde-format
+msgid "This Computer"
+msgstr ""
+
+#: data/AbstractFileView.qml:46
+#, kde-format
+msgid "%1"
+msgstr ""
+
+#: data/AbstractFileView.qml:54
+#, kde-format
+msgid "Contents"
+msgstr ""
+
+#: data/AbstractFileView.qml:59
+#, kde-format
+msgid "File Name"
+msgstr ""
+
+#: data/AbstractFileView.qml:67
+#, kde-format
+msgid "Save"
+msgstr ""
+
+#: data/AbstractFileView.qml:89 data/SingleColumn.qml:54
+#, kde-format
+msgid "There are no objects in this directory"
+msgstr ""
+
+#: data/FileItemColumn.qml:77
+#, kde-format
+msgid "Name"
+msgstr ""
+
+#: data/FileItemColumn.qml:84
+#, kde-format
+msgid "Type"
+msgstr ""
+
+#: data/FileItemColumn.qml:90
+#, kde-format
+msgid "Size"
+msgstr ""
+
+#: data/FileItemColumn.qml:96
+#, kde-format
+msgid "Created"
+msgstr ""
+
+#: data/FileItemColumn.qml:102
+#, kde-format
+msgid "Changed"
+msgstr ""
+
+#: data/FileItemColumn.qml:108
+#, kde-format
+msgid "Last Opened"
+msgstr ""
+
+#: data/FileItemColumn.qml:115
+#, kde-format
+msgid "More Information"
+msgstr ""
+
+#: data/Window.qml:15
+#, kde-format
+msgid "%1 - Melon"
+msgstr ""
+
+#: data/WindowToolBar.qml:40
+#, kde-format
+msgid "%1 File(s), %2 Folder(s), %3"
+msgstr ""
+
+#: src/app.cpp:90
+#, kde-format
+msgctxt "user's downloads folder"
+msgid "Downloads"
+msgstr ""
+
+#: src/app.cpp:94
+#, kde-format
+msgctxt "user's documents folder"
+msgid "Documents"
+msgstr ""
+
+#: src/app.cpp:98
+#, kde-format
+msgctxt "user's desktop folder"
+msgid "Desktop"
+msgstr ""
+
+#: src/app.cpp:102
+#, kde-format
+msgctxt "user's home folder"
+msgid "Home"
+msgstr ""
+
+#: src/app.cpp:106
+#, kde-format
+msgctxt "root folder"
+msgid "Computer"
+msgstr ""
+
+#: src/app.cpp:361
+#, kde-format
+msgid "Open In New Tab"
+msgstr ""
+
+#: src/app.cpp:367
+#, kde-format
+msgid "Open In New Window"
+msgstr ""
+
+#: src/document.cpp:510 src/toolbardelegate.cpp:49
+#, kde-format
+msgid "Search"
+msgstr ""
+
+#: src/document.cpp:672 src/document.cpp:681
+#, kde-format
+msgctxt "<filename> copy"
+msgid "%1 copy"
+msgstr ""
+
+#: src/document.cpp:717 src/document.cpp:726
+#, kde-format
+msgctxt "<filename> alias"
+msgid "%1 alias"
+msgstr ""
+
+#: src/document.cpp:770 src/menubar.cpp:277
+#, kde-format
+msgid "Get Info"
+msgstr ""
+
+#: src/document.cpp:925
+#, kde-format
+msgid "Search for %1 in %2"
+msgstr ""
+
+#: src/document.cpp:926
+#, kde-format
+msgid "Search for %1"
+msgstr ""
+
+#: src/menubar.cpp:254
+#, kde-format
+msgid "Preferences"
+msgstr ""
+
+#: src/menubar.cpp:256
+#, kde-format
+msgid "Empty Trash"
+msgstr ""
+
+#: src/menubar.cpp:258
+#, kde-format
+msgid "Quit Melon"
+msgstr ""
+
+#: src/menubar.cpp:261
+#, kde-format
+msgid "File"
+msgstr ""
+
+#: src/menubar.cpp:271 src/toolbardelegate.cpp:47
+#, kde-format
+msgid "New Window"
+msgstr ""
+
+#: src/menubar.cpp:272
+#, kde-format
+msgid "New Tab"
+msgstr ""
+
+#: src/menubar.cpp:273
+#, kde-format
+msgid "New File"
+msgstr ""
+
+#: src/menubar.cpp:274
+#, kde-format
+msgid "Open"
+msgstr ""
+
+#: src/menubar.cpp:275
+#, kde-format
+msgid "Close Window"
+msgstr ""
+
+#: src/menubar.cpp:278
+#, kde-format
+msgid "Rename"
+msgstr ""
+
+#: src/menubar.cpp:279
+#, kde-format
+msgid "Duplicate"
+msgstr ""
+
+#: src/menubar.cpp:280
+#, kde-format
+msgid "Make Alias"
+msgstr ""
+
+#: src/menubar.cpp:282
+#, kde-format
+msgid "Move To Trash"
+msgstr ""
+
+#: src/menubar.cpp:285
+#, kde-format
+msgid "Edit"
+msgstr ""
+
+#: src/menubar.cpp:288
+#, kde-format
+msgid "Undo"
+msgstr ""
+
+#: src/menubar.cpp:290
+#, kde-format
+msgid "Cut"
+msgstr ""
+
+#: src/menubar.cpp:291
+#, kde-format
+msgid "Copy"
+msgstr ""
+
+#: src/menubar.cpp:292
+#, kde-format
+msgid "Paste"
+msgstr ""
+
+#: src/menubar.cpp:293
+#, kde-format
+msgid "Select All"
+msgstr ""
+
+#: src/menubar.cpp:296
+#, kde-format
+msgid "View"
+msgstr ""
+
+#: src/menubar.cpp:299
+#, kde-format
+msgid "as Icons"
+msgstr ""
+
+#: src/menubar.cpp:300
+#, kde-format
+msgid "as List"
+msgstr ""
+
+#: src/menubar.cpp:301
+#, kde-format
+msgid "as Columns"
+msgstr ""
+
+#: src/menubar.cpp:303 src/menubar.cpp:347
+#, kde-format
+msgid "Show Path Bar"
+msgstr ""
+
+#: src/menubar.cpp:304 src/menubar.cpp:357
+#, kde-format
+msgid "Show Status Bar"
+msgstr ""
+
+#: src/menubar.cpp:305 src/menubar.cpp:337
+#, kde-format
+msgid "Show Sidebar"
+msgstr ""
+
+#: src/menubar.cpp:307 src/menubar.cpp:367
+#, kde-format
+msgid "Show Toolbar"
+msgstr ""
+
+#: src/menubar.cpp:308 src/menubar.cpp:377
+#, kde-format
+msgid "Customise Toolbar..."
+msgstr ""
+
+#: src/menubar.cpp:311
+#, kde-format
+msgid "Go"
+msgstr ""
+
+#: src/menubar.cpp:314 src/toolbardelegate.cpp:43
+#, kde-format
+msgid "Back"
+msgstr ""
+
+#: src/menubar.cpp:315 src/toolbardelegate.cpp:44
+#, kde-format
+msgid "Forward"
+msgstr ""
+
+#: src/menubar.cpp:316
+#, kde-format
+msgid "Containing Folder"
+msgstr ""
+
+#: src/menubar.cpp:323
+#, kde-format
+msgid "Bookmark Current Folder"
+msgstr ""
+
+#: src/menubar.cpp:324
+#, kde-format
+msgid "Edit Bookmarks..."
+msgstr ""
+
+#: src/menubar.cpp:335
+#, kde-format
+msgid "Hide Sidebar"
+msgstr ""
+
+#: src/menubar.cpp:345
+#, kde-format
+msgid "Hide Path Bar"
+msgstr ""
+
+#: src/menubar.cpp:355
+#, kde-format
+msgid "Hide Status Bar"
+msgstr ""
+
+#: src/menubar.cpp:365
+#, kde-format
+msgid "Hide Toolbar"
+msgstr ""
+
+#: src/menubar.cpp:375
+#, kde-format
+msgid "Finish Customising Toolbar"
+msgstr ""
+
+#: src/toolbardelegate.cpp:45
+#, kde-format
+msgid "Up"
+msgstr ""
+
+#: src/toolbardelegate.cpp:46
+#, kde-format
+msgid "Expanding Spacer"
+msgstr ""
+
+#: src/toolbardelegate.cpp:48
+#, kde-format
+msgid "Create New"
+msgstr ""
