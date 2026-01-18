@@ -105,7 +105,7 @@ msgstr ""
 #: data/FileItemColumn.qml:96
 #, kde-format
 msgid "Created"
-msgstr ""
+msgstr "创建时间"
 
 #: data/FileItemColumn.qml:102
 #, kde-format
