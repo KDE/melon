@@ -1,8 +1,10 @@
 {
    "command": "org.kde.Melon",
    "desktop-file-name-suffix": " (Nightly)",
-   "tags": ["nightly"],
-    "finish-args": [
+   "tags": [
+      "nightly"
+   ],
+   "finish-args": [
       "--device=dri",
       "--share=ipc",
       "--share=network",
@@ -16,7 +18,7 @@
       "--talk-name=org.kde.JobViewServer",
       "--talk-name=org.kde.kpasswdserver",
       "--system-talk-name=org.freedesktop.UDisks2"
-    ],
+   ],
    "id": "org.kde.Melon",
    "modules": [
       {
@@ -30,35 +32,40 @@
          ]
       },
       {
-          "name": "lmdb",
-          "sources": [
-              {
+         "name": "lmdb",
+         "sources": [
+            {
+               "type": "git",
+               "url": "https://github.com/LMDB/lmdb.git",
+               "tag": "LMDB_0.9.35",
+               "x-checker-data": {
                   "type": "git",
-                  "url": "https://github.com/LMDB/lmdb.git",
-                  "tag": "LMDB_0.9.29",
-                  "x-checker-data": {
-                      "type": "git",
-                      "tag-pattern": "^LMDB_([\\d.]+)$"
-                  },
-                  "commit": "8ad7be2510414b9506ec9f9e24f24d04d9b04a1a"
-              }
-          ],
-          "no-autogen": true,
-          "make-install-args": ["prefix=/app"],
-          "subdir" : "libraries/liblmdb"
+                  "tag-pattern": "^LMDB_([\\d.]+)$"
+               },
+               "commit": "69087ced3cb6082f7dcfb4fc2dcaa3b68a7e2e8c"
+            }
+         ],
+         "no-autogen": true,
+         "make-install-args": [
+            "prefix=/app"
+         ],
+         "subdir": "libraries/liblmdb"
       },
       {
-          "config-opts": ["-DENABLE_TESTING=OFF", "-DLMDB_DIR=/app"],
-          "name": "baloo",
-          "buildsystem": "cmake-ninja",
-          "builddir": true,
-          "sources": [
-              {
-                  "type": "git",
-                  "url": "https://invent.kde.org/frameworks/baloo.git",
-                  "tag": "v6.4.0"
-              }
-          ]
+         "config-opts": [
+            "-DENABLE_TESTING=OFF",
+            "-DLMDB_DIR=/app"
+         ],
+         "name": "baloo",
+         "buildsystem": "cmake-ninja",
+         "builddir": true,
+         "sources": [
+            {
+               "type": "git",
+               "url": "https://invent.kde.org/frameworks/baloo.git",
+               "tag": "v6.4.0"
+            }
+         ]
       },
       {
          "buildsystem": "cmake-ninja",
