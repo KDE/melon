@@ -127,7 +127,7 @@ msgstr "Més informació"
 #: data/Window.qml:15
 #, kde-format
 msgid "%1 - Melon"
-msgstr "%1 - Melon"
+msgstr "%1 – Melon"
 
 #: data/WindowToolBar.qml:40
 #, kde-format
